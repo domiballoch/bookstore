@@ -26,7 +26,7 @@ public class BookServiceImpl implements BookService {
     //user-----
 
     /**
-     * {@summary} - Finds all books from Bookstore DB(Book table)
+     * Finds all books from Bookstore DB(Book table)
      * If empty then should return Collections.EMPTY_LIST by default
      *
      * @return - List<Book>
@@ -39,7 +39,7 @@ public class BookServiceImpl implements BookService {
     }
 
     /**
-     * {@summary} - Finds Book from Bookstore DB(Book table) by isbn
+     * Finds Book from Bookstore DB(Book table) by isbn
      *
      * @param - isbn
      * @return - Returns Optional<Book> by isbn else throw BookNotFoundException
@@ -56,7 +56,7 @@ public class BookServiceImpl implements BookService {
     }
 
     /**
-     * {@summary} - Counts results from Bookstore DB(Book table)
+     * Counts results from Bookstore DB(Book table)
      *
      * @param - title
      * @param - author
@@ -71,7 +71,7 @@ public class BookServiceImpl implements BookService {
     }
 
     /**
-     * {@summary} - Stores results from Bookstore DB(Book table) as a List
+     * Stores results from Bookstore DB(Book table) as a List
      *
      * @param - title
      * @param - author
@@ -97,7 +97,7 @@ public class BookServiceImpl implements BookService {
     //admin-----
 
     /**
-     * {summary} - Creates new Book object and saves to Bookstore DB(Book table)
+     * Creates new Book object and saves to Bookstore DB(Book table)
      * Increases Stock of Book
      *
      * @param - isbn
@@ -137,7 +137,7 @@ public class BookServiceImpl implements BookService {
 //    }
 
     /**
-     * {summary} - Deletes single Book from Bookstore DB(Book table)
+     * Deletes single Book from Bookstore DB(Book table)
      * Decreases Stock of Book if already exists
      *
      * @param isbn
@@ -149,10 +149,10 @@ public class BookServiceImpl implements BookService {
         log.info("Deleted book from bookstore by isbn: {}", isbn);
     }
 
-    @Override
-        public void deleteBookByTypeFromBookStoreByIsbn(final long isbn) {
-        log.info(BookConstants.DELETING_GROUP_FROM_BOOKSTORE, isbn);
-        bookRepository.deleteById(isbn); //TODO: Need groupId created in book OR add quantity as another DB
-            log.info(BookConstants.DELETED_GROUP_FROM_BOOKSTORE, isbn);
-        }
+//    @Override
+//        public void deleteBookByTypeFromBookStoreByIsbn(final long isbn) {
+//        log.info(BookConstants.DELETING_GROUP_FROM_BOOKSTORE, isbn);
+//        bookRepository.deleteById(isbn); //TODO: Need groupId created in book OR add quantity as another DB
+//            log.info(BookConstants.DELETED_GROUP_FROM_BOOKSTORE, isbn);
+//        }
 }
