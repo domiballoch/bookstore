@@ -2,6 +2,7 @@ package bookstore.controller;
 
 import bookstore.exception.BookNotFoundException;
 import bookstore.domain.Book;
+import bookstore.service.AdminService;
 import bookstore.service.BookService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,6 +46,9 @@ public class BookRestControllerTest {
 
     @MockBean
     private BookService bookService;
+
+    @MockBean
+    private AdminService adminService;
 
     @SneakyThrows
     @Test

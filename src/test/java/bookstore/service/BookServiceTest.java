@@ -1,9 +1,8 @@
 package bookstore.service;
 
 import bookstore.dao.BookRepository;
-import bookstore.exception.BookNotFoundException;
 import bookstore.domain.Book;
-import bookstore.domain.Category;
+import bookstore.exception.BookNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,17 +11,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static bookstore.utils.BookConstants.BOOK_NOT_FOUND;
 import static bookstore.utils.TestDataUtils.BOOKLIST;
-import static bookstore.utils.TestDataUtils.CREATE_ONE_BOOK;
 import static bookstore.utils.TestDataUtils.returnBookList;
 import static bookstore.utils.TestDataUtils.returnOneBook;
-import static bookstore.utils.BookConstants.BOOK_NOT_FOUND;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -92,31 +89,6 @@ public class BookServiceTest {
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
-    @DisplayName("Should add new book from bookstore")
-    @Test
-    public void shouldAddOneNewBookToBookStore(){
-        final Book newBook = CREATE_ONE_BOOK;
-        when(bookRepository.save(newBook)).thenReturn(newBook);
-        final Book savedBook = bookServiceImpl.addNewBookToBookStore(
-                5,
-                Category.COOKING,
-                "title5",
-                "author5",
-                BigDecimal.valueOf(49.99));
-
-        assertThat(savedBook).isEqualTo(newBook);
-        verify(bookRepository, times(1)).save(any(Book.class));
-    }
-
-    @DisplayName("Should delete one book from bookstore")
-    @Test
-    public void shouldDeleteOneBookFromBookStore(){
-        final long isbn = 4;
-        //doNothing().when(bookRepository.deleteById(isbn));
-        bookServiceImpl.deleteSingleBookFromBookstoreByIsbn(isbn);
-        verify(bookRepository, times(1)).deleteById(any(Long.class));
-    }
-
     @DisplayName("Should return book in stock")
     @Test
     public void shouldReturnBookInStock(){
@@ -126,7 +98,8 @@ public class BookServiceTest {
         final boolean result = bookServiceImpl.inStock("title3", "author3");
 
         assertThat(result).isEqualTo(true);
-        verify(bookRepository, times(1)).findByTitleAndAuthor(any(String.class), any(String.class));
+        verify(bookRepository, times(1)).findByTitleAndAuthor(any(String.class),
+                any(String.class));
     }
 
     //@DisplayName("Should increase stock when add one book")

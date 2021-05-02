@@ -65,7 +65,7 @@ public class BookRestController {
         adminService.deleteSingleBookFromBookstoreByIsbn(isbn);
         return new ResponseEntity<Book>(HttpStatus.OK);
     }
-    
+
 //    @PatchMapping(value = "/amendBookInBookstore/rest", produces = MediaType.APPLICATION_JSON_VALUE)
 //    @ResponseBody
 //    public ResponseEntity<Book> amendBookInBookstore() {
