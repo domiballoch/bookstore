@@ -1,48 +1,48 @@
-#Bookstore service
+<h1>Bookstore service</h1>
 
-##Prerequisites
+<h4>Prerequisites</h4>
 Java 11
-Spring Boot 2.4.5
-Maven 3.6.3
-MySQL 8
+<br/>Spring Boot 2.4.5
+<br/>Maven 3.6.3
+<br/>MySQL 8
 
-##Build project
+<h4>Build project</h4>
 mvn clean install
-spring-boot:run
+<br/>spring-boot:run
 
-##Server port / context path
+<h4>Server port / context path</h4>
 8080/bookstore
 
-##Database schema
+<h4>Database schema</h4
 execute bookstore.sql
 
-##Connection
+<h4>Connection</h4>
 Login with root or create user and change yml
-url: jdbc:mysql://localhost:3306/bookstore
-username: root
+<br/>url: jdbc:mysql://localhost:3306/bookstore
+<br/>username: root
 
-##Endpoints - Rest only (output as JSON)
-###Get
+<h4>Endpoints - Rest only (output as JSON)</h4>
+<h4>Get</h4>
 http://localhost:8080/bookstore/rest/findAllBooks
-http://localhost:8080/bookstore/findBook/rest/{isbn}
-###Post
+<br/>http://localhost:8080/bookstore/findBook/rest/{isbn}
+<h4>Post</h4>
 http://localhost:8080/bookstore/addNewBookToBookstore/rest
-###Put
+<h4>Put</h4>
 http://localhost:8080/bookstore/amendBook/rest
-###Delete
+<h4>Delete</h4>
 http://localhost:8080/bookstore/deleteBookFromBookstore/rest/{isbn}
 
-##Endpoints - with views (output as JSP)
+<h4>Endpoints - with views (output as JSP)</h4>
 http://localhost:8080/bookstore/findAllBooks
-http://localhost:8080/bookstore/findBook/{isbn}
-###Post
+<br/>http://localhost:8080/bookstore/findBook/{isbn}
+<h4>Post</h4>
 http://localhost:8080/bookstore/addNewBookToBookstore
-###Put
+<h4>Put</h4>
 http://localhost:8080/bookstore/amendBook
-###Delete
+<h4>Delete</h4>
 http://localhost:8080/bookstore/deleteBookFromBookstore/{isbn}
 
-##Endpoints - health check exposed only
+<h4>Endpoints - health check exposed only</h4>
 http://localhost:8080/bookstore/actuator/health
 
 ##Swagger - to come...
