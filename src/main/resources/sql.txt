@@ -1,0 +1,22 @@
+use bookstore;
+DROP TABLE IF EXISTS book;
+
+CREATE TABLE IF NOT EXISTS book
+(
+isbn bigint NOT NULL auto_increment,
+category enum('KIDS', 'COOKING', 'SCIENCEFICTION') NOT NULL,
+title varchar(255) NOT NULL,
+author varchar(255) NOT NULL,
+price decimal(19,2) NOT NULL,
+stock integer NOT NULL,
+PRIMARY KEY (isbn)
+)
+engine=InnoDB
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = latin1;
+
+INSERT INTO book (isbn, category, title, author, price, stock)
+VALUES
+(0001, 'KIDS', 'Peppa Pig', 'Miss Pig', 4.99, 25),
+(0002, 'COOKING', 'Italian Dinners', 'J Oliver', 24.99, 50),
+(0003, 'SCIENCEFICTION', 'Mars Robots', 'Mr Bean', 11.99, 10);
