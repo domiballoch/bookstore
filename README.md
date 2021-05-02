@@ -45,7 +45,7 @@ http://localhost:8080/bookstore/deleteBookFromBookstore/{isbn}
 <h4>Endpoints - health check exposed only</h4>
 http://localhost:8080/bookstore/actuator/health
 
-##Swagger - to come...
+<h4>Swagger - to come...</h4>
 
-#Logging level
+<h4>Logging level</h4>
 info - set filepath as/if required
