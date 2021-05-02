@@ -33,6 +33,7 @@ http://localhost:8080/bookstore/amendBook/rest
 http://localhost:8080/bookstore/deleteBookFromBookstore/rest/{isbn}
 
 <h4>Endpoints - with views (output as JSP)</h4>
+<h4>Get</h4>
 http://localhost:8080/bookstore/findAllBooks
 <br/>http://localhost:8080/bookstore/findBook/{isbn}
 <h4>Post</h4>
