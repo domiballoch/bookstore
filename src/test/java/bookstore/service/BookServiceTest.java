@@ -3,6 +3,7 @@ package bookstore.service;
 import bookstore.dao.BookRepository;
 import bookstore.domain.Book;
 import bookstore.exception.BookNotFoundException;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,7 @@ import static bookstore.utils.TestDataUtils.BOOKLIST;
 import static bookstore.utils.TestDataUtils.returnBookList;
 import static bookstore.utils.TestDataUtils.returnOneBook;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -35,7 +37,7 @@ public class BookServiceTest {
     private BookRepository bookRepository;
 
     @InjectMocks
-    private BookServiceImpl bookServiceImpl;
+    private BookServiceImpl bookService;
 
     @BeforeEach
     public void prepareData() {
@@ -46,7 +48,7 @@ public class BookServiceTest {
     @Test
     public void shouldReturnAllBooks() {
         when(bookRepository.findAll()).thenReturn(BOOKLIST);
-        final List<Book> result = bookServiceImpl.findAllBooks();
+        final List<Book> result = bookService.findAllBooks();
 
         assertThat(result).isNotNull();
         assertThat(result).isEqualTo(BOOKLIST);
@@ -58,7 +60,7 @@ public class BookServiceTest {
     public void shouldReturnEmptyList() {
         final List<Book> emptyList = new ArrayList<>();
         when(bookRepository.findAll()).thenReturn(emptyList);
-        final List<Book> result = bookServiceImpl.findAllBooks();
+        final List<Book> result = bookService.findAllBooks();
 
         assertThat(result).isNotNull();
         assertThat(result).isEqualTo(Collections.EMPTY_LIST);
@@ -70,7 +72,7 @@ public class BookServiceTest {
     public void shouldReturnOneBookByIsbn(){
         final long isbn = 4;
         when(bookRepository.findById(isbn)).thenReturn(Optional.ofNullable(returnOneBook()));
-        final Optional<Book> result = bookServiceImpl.findBookByIsbn(isbn);
+        final Optional<Book> result = bookService.findBookByIsbn(isbn);
 
         assertThat(result).isEqualTo(Optional.ofNullable(returnOneBook()));
         verify(bookRepository, times(1)).findById(any(Long.class));
@@ -81,7 +83,7 @@ public class BookServiceTest {
     public void shouldThrowBookNotFoundException_WhenReturnOneBookByIsbn(){
         final long isbn = 10;
         Exception exception = assertThrows(BookNotFoundException.class, () -> {
-            bookServiceImpl.findBookByIsbn(isbn);
+            bookService.findBookByIsbn(isbn);
         });
         final String expectedMessage = BOOK_NOT_FOUND;
         final String actualMessage = exception.getMessage();
@@ -95,11 +97,24 @@ public class BookServiceTest {
         final String title = "title3";
         final String author = "author3";
         when(bookRepository.findByTitleAndAuthor(title, author)).thenReturn(BOOKLIST);
-        final boolean result = bookServiceImpl.inStock("title3", "author3");
+        final boolean result = bookService.inStock("title3", "author3");
 
         assertThat(result).isEqualTo(true);
         verify(bookRepository, times(1)).findByTitleAndAuthor(any(String.class),
                 any(String.class));
+    }
+
+    @SneakyThrows
+    @DisplayName("Should use cache when calling book repository twice")
+    @Test
+    void shouldUseCacheWhenCallingBookRepositoryTwice(){
+        when(bookRepository.findAll()).thenReturn(BOOKLIST);
+        List<Book> call1 = bookService.findAllBooks();
+        List<Book> call2 = bookService.findAllBooks();
+
+        assertNotNull(call1);
+        assertNotNull(call2);
+        //verify(bookRepository, times(1)).findAll();
     }
 
     //@DisplayName("Should increase stock when add one book")

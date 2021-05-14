@@ -35,7 +35,7 @@ public class BookServiceImpl implements BookService {
      * @return - List<Book>
      */
     //@Transactional(readOnly = true)
-    @Cacheable
+    @Cacheable("books")
     @Override
     public List<Book> findAllBooks() {
         log.info("Finding all books");
@@ -48,7 +48,7 @@ public class BookServiceImpl implements BookService {
      * @param - isbn
      * @return - Returns Optional<Book> by isbn else throw BookNotFoundException
      */
-    @Cacheable
+    @Cacheable("book")
     @SneakyThrows
     @Override
     public Optional<Book> findBookByIsbn(final long isbn){
@@ -67,7 +67,7 @@ public class BookServiceImpl implements BookService {
      * @param - author
      * @return - Returns Stock value as long
      */
-    @Cacheable
+    @Cacheable("bookstock")
     @Override
     public int getBookStock(final String title, final String author) {
         log.info("Getting book stock by isbn: {}, {}", title, author);
@@ -83,7 +83,7 @@ public class BookServiceImpl implements BookService {
      * @param - author
      * @return - Returns a boolean if Book exists or not
      */
-    @Cacheable
+    @Cacheable("instock)")
     @Override
     public boolean inStock(final String title, final String author) {
         final List<Book> bookList = bookRepository.findByTitleAndAuthor(title, author);
@@ -91,7 +91,7 @@ public class BookServiceImpl implements BookService {
         return inStock > 0;
     }
 
-    @Cacheable
+    @Cacheable("book")
     @Override
     public List<Book> findBooksByCategory(final Category category) {
        return bookRepository.findBooksByCategory(category);
