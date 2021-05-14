@@ -1,3 +1,5 @@
+[![Actions Status](https://github.com/{domiballoch}/{bookstore}/workflows/{Java CI with Maven}/badge.svg)](https://github.com/{domiballoch}/{bookstore}/actions)
+
 <h1>Bookstore service</h1>
 
 <h4>Prerequisites</h4>
