@@ -28,4 +28,18 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
+        - name: Build with Maven
+            run: mvn test jacoco:report
+              - name: Upload to Codecov
+                env:
+                  CODECOV_TOKEN: a119e6ac-cf86-4a46-a041-65d1ed135194
+                run: bash <(curl -s https://codecov.io/bash)
+              - name: Bookstore
+                run: mvn test
+              - name: Upload Bookstore to Artifacts
+                uses: actions/upload-artifact@v2
+                with:
+                  name: bookstore-tests
+                  path: target/pit-reports/**/*
+
 
