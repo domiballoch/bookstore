@@ -1,6 +1,6 @@
 <h1>Bookstore service</h1>
 
-![Actions Status](https://github.com/domiballoch/bookstore/actions/workflows/maven.yml/badge.svg)(https://github.com/domiballoch/bookstore/actions)
+[![Actions Status](https://github.com/domiballoch/bookstore/actions/workflows/maven.yml/badge.svg)](https://github.com/domiballoch/bookstore/actions)
 [![codecov](https://codecov.io/gh/domiballoch/bookstore/branch/master/graph/badge.svg?token=3DQWELQG2V)](https://codecov.io/gh/domiballoch/bookstore)
 
 <h4>Prerequisites</h4>
