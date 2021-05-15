@@ -26,9 +26,6 @@ jobs:
         distribution: 'adopt'
 
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
-
-    - name: Build with Maven
       run: mvn test jacoco:report
     - name: Upload to Codecov
       env:
@@ -42,4 +39,5 @@ jobs:
         name: bookstore-tests
         path: target/pit-reports/**/*
 
-
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
