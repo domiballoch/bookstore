@@ -15,8 +15,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Start MySQL
-      uses: samin/mysql-action@v1.3
+#    - name: Start MySQL
+#      uses: samin/mysql-action@v1.3
 
     - uses: actions/checkout@v2
     - name: Set up JDK 11
