@@ -1,5 +1,6 @@
 [![Actions Status](https://github.com/domiballoch/bookstore/actions/workflows/maven.yml/badge.svg)](https://github.com/domiballoch/bookstore/actions)
 [![codecov](https://codecov.io/gh/domiballoch/bookstore/branch/master/graph/badge.svg?token=3DQWELQG2V)](https://codecov.io/gh/domiballoch/bookstore)
+[![GitHub version](https://badge.fury.io/gh/domiballoch%2Fbookstore.svg)](https://badge.fury.io/gh/domiballoch%2Fbookstore)
 [![forthebadge](https://forthebadge.com/images/badges/not-a-bug-a-feature.svg)](https://forthebadge.com)
 
 <h1>Bookstore service</h1>
