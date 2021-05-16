@@ -11,7 +11,9 @@ on:
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
+
     steps:
     - name: Start MySQL
       uses: samin/mysql-action@v1.3
@@ -31,9 +33,3 @@ jobs:
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
 
-
-
-    - name: Coveralls
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
