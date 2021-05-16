@@ -1,4 +1,5 @@
 [![Actions Status](https://github.com/domiballoch/bookstore/actions/workflows/maven.yml/badge.svg)](https://github.com/domiballoch/bookstore/actions)
+[![Coverage Status](https://coveralls.io/repos/github/domiballoch/bookstore/badge.svg?branch=master&kill_cache=1)](https://coveralls.io/github/domiballoch/bookstore?branch=master)
 [![codecov](https://codecov.io/gh/domiballoch/bookstore/branch/master/graph/badge.svg?token=3DQWELQG2V)](https://codecov.io/gh/domiballoch/bookstore)
 
 <h1>Bookstore service</h1>
