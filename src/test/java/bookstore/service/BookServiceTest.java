@@ -3,7 +3,6 @@ package bookstore.service;
 import bookstore.dao.BookRepository;
 import bookstore.domain.Book;
 import bookstore.exception.BookNotFoundException;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.cache.CacheManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,7 +22,6 @@ import static bookstore.utils.TestDataUtils.BOOKLIST;
 import static bookstore.utils.TestDataUtils.returnBookList;
 import static bookstore.utils.TestDataUtils.returnOneBook;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -32,6 +31,9 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class BookServiceTest {
+
+    @Mock
+    private CacheManager cacheManager;
 
     @Mock
     private BookRepository bookRepository;
@@ -104,18 +106,6 @@ public class BookServiceTest {
                 any(String.class));
     }
 
-    @SneakyThrows
-    @DisplayName("Should use cache when calling book repository twice")
-    @Test
-    void shouldUseCacheWhenCallingBookRepositoryTwice(){
-        when(bookRepository.findAll()).thenReturn(BOOKLIST);
-        List<Book> call1 = bookService.findAllBooks();
-        List<Book> call2 = bookService.findAllBooks();
-
-        assertNotNull(call1);
-        assertNotNull(call2);
-        //verify(bookRepository, times(1)).findAll();
-    }
 
     //@DisplayName("Should increase stock when add one book")
     //@Test

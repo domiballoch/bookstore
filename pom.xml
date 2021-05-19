@@ -20,6 +20,7 @@
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<project.encoding>UTF-8</project.encoding>
 
+		<jasypt.version>3.0.3</jasypt.version>
 		<lombok.version>1.18.12</lombok.version>
 		<mockito.version>3.7.0</mockito.version>
 		<hamcrest.version>2.2</hamcrest.version>
@@ -122,6 +123,11 @@
 			<groupId>org.webjars</groupId>
 			<artifactId>jquery</artifactId>
 			<version>${jquery.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.ulisesbocchio</groupId>
+			<artifactId>jasypt-spring-boot-starter</artifactId>
+			<version>${jasypt.version}</version>
 		</dependency>
     </dependencies>
 
