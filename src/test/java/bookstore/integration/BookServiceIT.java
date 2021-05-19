@@ -3,7 +3,6 @@ package bookstore.integration;
 
 import bookstore.domain.Book;
 import bookstore.service.BookServiceImpl;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,6 @@ public class BookServiceIT {
     @Autowired
     private BookServiceImpl bookService;
 
-    @SneakyThrows
     @DisplayName("Should use cache when calling book repository twice")
     @Test
     void shouldUseCacheWhenCallingBookRepositoryTwice(){
