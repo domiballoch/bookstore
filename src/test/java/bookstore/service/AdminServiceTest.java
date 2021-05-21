@@ -32,7 +32,7 @@ public class AdminServiceTest {
     @Test
     public void shouldAddOneNewBookToBookStore(){
         final Book newBook = CREATE_ONE_BOOK;
-        when(bookRepository.save(CREATE_ONE_BOOK)).thenReturn(CREATE_ONE_BOOK);
+        when(bookRepository.save(newBook)).thenReturn(newBook);
         final Book savedBook = adminServiceImpl.addNewBookToBookStore(
                 5,
                 Category.COOKING,
