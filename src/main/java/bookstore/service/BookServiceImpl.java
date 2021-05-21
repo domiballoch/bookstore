@@ -1,6 +1,7 @@
 package bookstore.service;
 
 import bookstore.dao.BookRepository;
+import bookstore.domain.Basket;
 import bookstore.domain.Book;
 import bookstore.domain.Category;
 import bookstore.exception.BookNotFoundException;
@@ -9,7 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +30,9 @@ public class BookServiceImpl implements BookService {
 
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private Basket basket;
 
     /**
      * Finds all books from Bookstore DB(Book table)
@@ -94,11 +100,38 @@ public class BookServiceImpl implements BookService {
     @Cacheable("book")
     @Override
     public List<Book> findBooksByCategory(final Category category) {
+        log.info("Finding book by category: {}", category);
        return bookRepository.findBooksByCategory(category);
     }
 
     @Override
     public List<Book> findBookBySearchTerm(final String search) {
+        log.info("Finding book by search term: {}", search);
+        //fuzzy search
         return null; //bookRepository.findBookBySearchTerm);
+    }
+
+    @Override
+    public void addBookToBasket(final Book book) {
+        log.info("Adding book by to basket: {}", book);
+        //add book to a basket list and reduce stock by quantity
+        //cache evict
+        basket.add(book);
+    }
+
+    @Override
+    public void removeBookFromBasket(final Book book) {
+        log.info("Removing book from basket: {}", book);
+        //remove book from basket list and increase stock by quantity
+        List<Object> removedBooks = new ArrayList<>();
+
+        basket.stream().forEach(b -> {
+            b.equals(book);
+            removedBooks.add(b);
+        });
+
+        if(CollectionUtils.containsAny(removedBooks, basket)) {
+            basket.removeAll(removedBooks);
+        }
     }
 }

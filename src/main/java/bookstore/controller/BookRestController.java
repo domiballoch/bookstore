@@ -66,4 +66,14 @@ public class BookRestController {
 //        bookService.amendBookInBookstore();
 //        return new ResponseEntity<Book>(HttpStatus.OK);
 //    }
+
+    public ResponseEntity addBookToBasket(final Book book) {
+        bookService.addBookToBasket(book);
+        return new ResponseEntity<Book>(book, HttpStatus.OK);
+    }
+
+    public ResponseEntity removeBookFromBasket(final Book book) {
+        bookService.removeBookFromBasket(book);
+        return new ResponseEntity<Book>(book, HttpStatus.OK);
+    }
 }

@@ -20,4 +20,8 @@ public interface BookService {
 
     List<Book> findBookBySearchTerm(final String search);
 
+    void addBookToBasket(final Book book);
+
+    void removeBookFromBasket(final Book book);
+
 }
