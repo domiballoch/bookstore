@@ -97,6 +97,13 @@ public class BookServiceImpl implements BookService {
         return inStock > 0;
     }
 
+    /**
+     * Finds Books by Category
+     * //TODO: complete sql call
+     *
+     * @param category
+     * @return List<Book>
+     */
     @Cacheable("book")
     @Override
     public List<Book> findBooksByCategory(final Category category) {
@@ -104,6 +111,13 @@ public class BookServiceImpl implements BookService {
        return bookRepository.findBooksByCategory(category);
     }
 
+    /**
+     * Finds Books by search term using fuzzy search logic
+     * //TODO: add fuzzy search logic
+     *
+     * @param search
+     * @return List<Book>
+     */
     @Override
     public List<Book> findBookBySearchTerm(final String search) {
         log.info("Finding book by search term: {}", search);
@@ -111,6 +125,11 @@ public class BookServiceImpl implements BookService {
         return null; //bookRepository.findBookBySearchTerm);
     }
 
+    /**
+     * Adds Book to Basket(List)
+     *
+     * @param book
+     */
     @Override
     public void addBookToBasket(final Book book) {
         log.info("Adding book by to basket: {}", book);
@@ -119,6 +138,13 @@ public class BookServiceImpl implements BookService {
         basket.add(book);
     }
 
+    /**
+     * Removes Book from Basket(List)
+     * First adds removed Book(s) to separate list the compares against Basket
+     * If Basket contains any then they get removed - avoiding ConcurrentModificationException of Stream
+     *
+     * @param book
+     */
     @Override
     public void removeBookFromBasket(final Book book) {
         log.info("Removing book from basket: {}", book);
