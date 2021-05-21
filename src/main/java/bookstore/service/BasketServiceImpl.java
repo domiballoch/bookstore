@@ -1,7 +1,12 @@
 package bookstore.service;
 
+import bookstore.domain.Basket;
+import bookstore.domain.Book;
+import org.springframework.stereotype.Service;
+
 import java.math.BigDecimal;
 
+@Service
 public class BasketServiceImpl implements BasketService {
 
     /**
@@ -11,8 +16,11 @@ public class BasketServiceImpl implements BasketService {
      */
 
     @Override
-    public BigDecimal calculateBasket() {
-        return null;
+    public BigDecimal calculateBasket(final Basket basket) {
+        final BigDecimal totalPrice = basket.stream()
+                                            .map(Book::getPrice)
+                                            .reduce(BigDecimal.ZERO, BigDecimal::add);
+        return totalPrice;
     }
 
     @Override

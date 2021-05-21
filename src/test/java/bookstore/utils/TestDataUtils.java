@@ -24,6 +24,22 @@ public class TestDataUtils {
             .price(BigDecimal.valueOf(49.99))
             .build();
 
+    public static final Book CREATE_ANOTHER_BOOK = Book.builder()
+            .isbn(6)
+            .category(Category.HORROR)
+            .title("title6")
+            .author("author6")
+            .price(BigDecimal.valueOf(24.49))
+            .build();
+
+    public static final Book CREATE_YET_ANOTHER_BOOK = Book.builder()
+            .isbn(7)
+            .category(Category.ROMANCE)
+            .title("title7")
+            .author("author7")
+            .price(BigDecimal.valueOf(14.19))
+            .build();
+
     //private Map<Category, List<Book>> booksByCategory = new HashMap<>();
 
     public static void filterBookListByTitleAndAuthor(String title, String author) {
