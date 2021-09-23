@@ -2,7 +2,7 @@ package bookstore.service;
 
 import bookstore.dao.BookRepository;
 import bookstore.domain.Book;
-import bookstore.exception.BookNotFoundException;
+import bookstore.exception.BookDataException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static bookstore.utils.BookConstants.BOOK_NOT_FOUND;
+import static bookstore.utils.BookConstants.DATABASE_NOT_AVAILABLE;
 import static bookstore.utils.TestDataUtils.BOOKLIST;
 import static bookstore.utils.TestDataUtils.returnBookList;
 import static bookstore.utils.TestDataUtils.returnOneBook;
@@ -84,10 +84,10 @@ public class BookServiceTest {
     @Test
     public void shouldThrowBookNotFoundException_WhenReturnOneBookByIsbn(){
         final long isbn = 10;
-        Exception exception = assertThrows(BookNotFoundException.class, () -> {
+        Exception exception = assertThrows(BookDataException.class, () -> {
             bookService.findBookByIsbn(isbn);
         });
-        final String expectedMessage = BOOK_NOT_FOUND;
+        final String expectedMessage = DATABASE_NOT_AVAILABLE;
         final String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));

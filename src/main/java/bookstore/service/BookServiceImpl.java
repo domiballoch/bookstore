@@ -4,7 +4,7 @@ import bookstore.dao.BookRepository;
 import bookstore.domain.Basket;
 import bookstore.domain.Book;
 import bookstore.domain.Category;
-import bookstore.exception.BookNotFoundException;
+import bookstore.exception.BookDataException;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static bookstore.utils.BookConstants.BOOK_NOT_FOUND;
+import static bookstore.utils.BookConstants.DATABASE_NOT_AVAILABLE;
 
 /**
  * Using Cachable to speed up processing
@@ -61,9 +61,7 @@ public class BookServiceImpl implements BookService {
         log.info("Finding book by isbn: {}", isbn);
         //return bookRepository.findById(isbn);
         return Optional.ofNullable(bookRepository.findById(isbn)
-                //Should not be handling controller level exceptions here
-                //Should be handling DB exceptions in service layer
-                .orElseThrow(() -> new BookNotFoundException(BOOK_NOT_FOUND)));
+                .orElseThrow(() -> new BookDataException(DATABASE_NOT_AVAILABLE)));
     }
 
     /**

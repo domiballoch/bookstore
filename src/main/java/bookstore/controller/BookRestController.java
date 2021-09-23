@@ -1,9 +1,7 @@
 package bookstore.controller;
 
 import bookstore.domain.Book;
-import bookstore.domain.Category;
 import bookstore.exception.BookNotFoundException;
-import bookstore.service.AdminService;
 import bookstore.service.BookService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -11,13 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,9 +24,6 @@ public class BookRestController {
 
     @Autowired
     private BookService bookService;
-
-    @Autowired
-    private AdminService adminService;
 
     @GetMapping(value = "/findAllBooks/rest", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Book>> findAllBooks() {
@@ -46,25 +38,5 @@ public class BookRestController {
                 .orElseThrow(() -> new BookNotFoundException(BOOK_NOT_FOUND)));
             return new ResponseEntity<Optional<Book>>(book, HttpStatus.OK);
     }
-
-    @PostMapping(value = "/addNewBookToBookstore/rest", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Book> addNewBookToBookstore(@PathVariable final long isbn, @PathVariable
-                                final Category category, @PathVariable final String title, @PathVariable
-                                        final String author, @PathVariable final BigDecimal price) {
-        adminService.addNewBookToBookStore(isbn, category, title, author, price);
-        return new ResponseEntity<Book>(HttpStatus.OK);
-    }
-
-    @DeleteMapping(value = "/deleteBookFromBookstore/rest", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Book> deleteBookFromBookstore(@PathVariable final long isbn) {
-        adminService.deleteSingleBookFromBookstoreByIsbn(isbn);
-        return new ResponseEntity<Book>(HttpStatus.OK);
-    }
-
-//    @PatchMapping(value = "/amendBookInBookstore/rest", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<Book> amendBookInBookstore() {
-//        bookService.amendBookInBookstore();
-//        return new ResponseEntity<Book>(HttpStatus.OK);
-//    }
 
 }
