@@ -25,18 +25,18 @@ public class AdminController {
     final Category category, @PathVariable final String title, @PathVariable
                                                       final String author, @PathVariable final BigDecimal price) {
         adminService.addNewBookToBookStore(isbn, category, title, author, price);
-        return new ResponseEntity<Book>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/deleteBookFromBookstore/rest", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Book> deleteBookFromBookstore(@PathVariable final long isbn) {
         adminService.deleteSingleBookFromBookstoreByIsbn(isbn);
-        return new ResponseEntity<Book>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 //    @PatchMapping(value = "/amendBookInBookstore/rest", produces = MediaType.APPLICATION_JSON_VALUE)
 //    public ResponseEntity<Book> amendBookInBookstore() {
 //        bookService.amendBookInBookstore();
-//        return new ResponseEntity<Book>(HttpStatus.OK);
+//        return new ResponseEntity<>(HttpStatus.OK);
 //    }
 }

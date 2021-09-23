@@ -28,7 +28,7 @@ public class BookRestController {
     @GetMapping(value = "/findAllBooks/rest", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Book>> findAllBooks() {
         final List<Book> bookList = bookService.findAllBooks();
-        return new ResponseEntity<List<Book>>(bookList, HttpStatus.OK);
+        return new ResponseEntity<>(bookList, HttpStatus.OK);
     }
 
     @SneakyThrows
@@ -36,7 +36,7 @@ public class BookRestController {
     public ResponseEntity<Optional<Book>> findBookByIsbn(@PathVariable final long isbn) {
         final Optional<Book> book = Optional.ofNullable(bookService.findBookByIsbn(isbn)
                 .orElseThrow(() -> new BookNotFoundException(BOOK_NOT_FOUND)));
-            return new ResponseEntity<Optional<Book>>(book, HttpStatus.OK);
+            return new ResponseEntity<>(book, HttpStatus.OK);
     }
 
 }
