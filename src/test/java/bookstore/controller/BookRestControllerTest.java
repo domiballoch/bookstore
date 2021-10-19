@@ -55,7 +55,7 @@ public class BookRestControllerTest {
     public void findAllBooks() {
         when(bookService.findAllBooks()).thenReturn(BOOKLIST);
         final ResultActions resultActions =
-                mockMvc.perform(get("/findAllBooks/rest")
+                mockMvc.perform(get("/rest/findAllBooks")
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
@@ -71,7 +71,7 @@ public class BookRestControllerTest {
     public void findBookByIsbn() {
         when(bookService.findBookByIsbn(4)).thenReturn(Optional.ofNullable(returnOneBook()));
         final ResultActions resultActions =
-                mockMvc.perform(get("/findBook/rest/{isbn}", 4)
+                mockMvc.perform(get("/rest/findBook/{isbn}", 4)
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -85,7 +85,7 @@ public class BookRestControllerTest {
     @SneakyThrows
     @Test
     public void shouldThrow_BookNotFoundException() {
-        mockMvc.perform(get("/findBook/rest/{isbn}", 10)
+        mockMvc.perform(get("/rest/findBook/{isbn}", 10)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof BookNotFoundException))

@@ -68,6 +68,10 @@ spring:
       prefix: /WEB-INF/jsp/
       suffix: .jsp
 
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+
 log:
   service: ${spring.application.name}
   appender: CONSOLE

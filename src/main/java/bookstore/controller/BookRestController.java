@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -20,19 +21,20 @@ import static bookstore.utils.BookConstants.BOOK_NOT_FOUND;
 
 @RestController
 @Slf4j
+@RequestMapping(value = "/rest", produces = MediaType.APPLICATION_JSON_VALUE)
 public class BookRestController {
 
     @Autowired
     private BookService bookService;
 
-    @GetMapping(value = "/findAllBooks/rest", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/findAllBooks")
     public ResponseEntity<List<Book>> findAllBooks() {
         final List<Book> bookList = bookService.findAllBooks();
         return new ResponseEntity<>(bookList, HttpStatus.OK);
     }
 
     @SneakyThrows
-    @GetMapping(value = "/findBook/rest/{isbn}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/findBook/{isbn}")
     public ResponseEntity<Optional<Book>> findBookByIsbn(@PathVariable final long isbn) {
         final Optional<Book> book = Optional.ofNullable(bookService.findBookByIsbn(isbn)
                 .orElseThrow(() -> new BookNotFoundException(BOOK_NOT_FOUND)));
