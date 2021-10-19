@@ -10,7 +10,7 @@
   </head>   
   
   <br>
-  <p>TODO: add divs and bootstrap</p>
+  <p>TODO: Add divs and bootstrap...</p>
   <br>
   
   <body>
