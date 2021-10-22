@@ -1,4 +1,4 @@
-package bookstore.controller;
+package bookstore.controller.rest;
 
 import bookstore.domain.Book;
 import bookstore.domain.Category;

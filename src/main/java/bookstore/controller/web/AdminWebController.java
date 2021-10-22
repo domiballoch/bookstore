@@ -1,19 +1,9 @@
-package bookstore.controller;
+package bookstore.controller.web;
 
-import bookstore.dao.BookRepository;
 import bookstore.domain.Book;
-import bookstore.domain.Category;
 import bookstore.service.AdminService;
 import bookstore.service.BookService;
 import lombok.extern.slf4j.Slf4j;
-
-import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Optional;
-
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -21,17 +11,17 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
+
+import javax.validation.Valid;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -42,12 +32,25 @@ public class AdminWebController {
     private AdminService adminService;
     
     @Autowired
-    private BookService bookService; //Combine these into 1 webService/webController
-    								 //Change views to lower-case and call then views instead of forms?
+    private BookService bookService;
+
+    //Add comments to new methods
+	//Fix delete and update web
+	//Combine these into 1 webService/webController or split into 2 packages
+	//Change views to lower-case and call then views instead of forms?
+	//Change long to Long
+	//Add stock to tests
+	//Add controllerAdvice
+	//Removed caches and just keep ref data
+	//Finish update book for rest
+	//Clean up code and complete more tests
+	//Add security and admin rights
+	//Complete Basket logic / buttons and add strategy
+	//Add css, bootstrap or JS
+	//Add search function
     
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
-		// Date - dd/MM/yyyy
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		binder.registerCustomEditor(LocalDate.class, new CustomDateEditor(
 				dateFormat, false));

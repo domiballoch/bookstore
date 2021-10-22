@@ -1,4 +1,4 @@
-package bookstore.controller;
+package bookstore.controller.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
