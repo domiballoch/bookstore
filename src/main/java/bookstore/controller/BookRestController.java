@@ -35,7 +35,7 @@ public class BookRestController {
 
     @SneakyThrows
     @GetMapping(value = "/findBook/{isbn}")
-    public ResponseEntity<Optional<Book>> findBookByIsbn(@PathVariable final long isbn) {
+    public ResponseEntity<Optional<Book>> findBookByIsbn(@PathVariable final Long isbn) {
         final Optional<Book> book = Optional.ofNullable(bookService.findBookByIsbn(isbn)
                 .orElseThrow(() -> new BookNotFoundException(BOOK_NOT_FOUND)));
             return new ResponseEntity<>(book, HttpStatus.OK);

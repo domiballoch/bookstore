@@ -17,7 +17,7 @@ public class TestDataUtils {
     public static final List<Book> BOOKLIST = new ArrayList<>();
     //public static final Optional<List<Book>> RETURN_BOOKS_BY_TITLE_AND_AUTHOR;
     public static final Book CREATE_ONE_BOOK = Book.builder()
-            .isbn(5)
+            .isbn(5L)
             .category(Category.COOKING)
             .title("title5")
             .author("author5")
@@ -25,7 +25,7 @@ public class TestDataUtils {
             .build();
 
     public static final Book CREATE_ANOTHER_BOOK = Book.builder()
-            .isbn(6)
+            .isbn(6L)
             .category(Category.HORROR)
             .title("title6")
             .author("author6")
@@ -33,7 +33,7 @@ public class TestDataUtils {
             .build();
 
     public static final Book CREATE_YET_ANOTHER_BOOK = Book.builder()
-            .isbn(7)
+            .isbn(7L)
             .category(Category.ROMANCE)
             .title("title7")
             .author("author7")
@@ -51,7 +51,7 @@ public class TestDataUtils {
 
     public static Book returnOneBook() {
         return Book.builder()
-                .isbn(4)
+                .isbn(4L)
                 .category(Category.SCIENCE_FICTION)
                 .title("title4")
                 .author("author4")
@@ -61,7 +61,7 @@ public class TestDataUtils {
 
     public static void returnBookList() {
         Book book1 = Book.builder()
-                .isbn(1)
+                .isbn(1L)
                 .category(Category.SCIENCE_FICTION)
                 .title("title1")
                 .author("author1")
@@ -69,7 +69,7 @@ public class TestDataUtils {
                 .build();
 
         Book book2 = Book.builder()
-                .isbn(2)
+                .isbn(2L)
                 .category(Category.COOKING)
                 .title("title2")
                 .author("author2")
@@ -77,7 +77,7 @@ public class TestDataUtils {
                 .build();
 
         Book book3 = Book.builder()
-                .isbn(3)
+                .isbn(3L)
                 .category(Category.KIDS)
                 .title("title3")
                 .author("author3")

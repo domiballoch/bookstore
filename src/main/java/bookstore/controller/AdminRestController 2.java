@@ -23,10 +23,10 @@ public class AdminRestController {
     private AdminService adminService;
 
     @PostMapping(value = "/addNewBookToBookstore")
-    public ResponseEntity<Book> addNewBookToBookstore(@PathVariable final Long isbn, @PathVariable
+    public ResponseEntity<Book> addNewBookToBookstore(@PathVariable final long isbn, @PathVariable
     final Category category, @PathVariable final String title, @PathVariable
-                                                      final String author, @PathVariable final BigDecimal price, final int stock) {
-        adminService.addNewBookToBookStore(isbn, category, title, author, price, stock);
+                                                      final String author, @PathVariable final BigDecimal price) {
+        adminService.addNewBookToBookStore(isbn, category, title, author, price);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

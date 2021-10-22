@@ -38,7 +38,8 @@ public class AdminServiceTest {
                 Category.COOKING,
                 "title5",
                 "author5",
-                BigDecimal.valueOf(49.99));
+                BigDecimal.valueOf(49.99),
+                10);
 
         assertThat(savedBook).isEqualTo(newBook);
         verify(bookRepository, times(1)).save(any(Book.class));
