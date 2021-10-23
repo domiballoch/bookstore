@@ -42,9 +42,9 @@
 						<td>${book.price}</td>
 						<td>${book.stock}</td>
 						<td><a type="button" class="btn btn-success"
-							href="/updateBook?isbn=${book.isbn}">Update</a></td>
+							href="updateBook?isbn=${book.isbn}">Update</a></td>
 						<td><a type="button" class="btn btn-warning"
-							href="/deleteBook?isbn=${book.isbn}">Delete</a></td>
+							href="deleteBook?isbn=${book.isbn}">Delete</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

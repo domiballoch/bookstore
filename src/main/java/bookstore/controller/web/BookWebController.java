@@ -15,24 +15,21 @@ public class BookWebController {
     @Autowired
     private BookService bookService;
     
-    
     @GetMapping(value = "/findAllBooks")
     public ModelAndView findAllBooks() {
 //		String name = getLoggedInUserName(model);
 //		model.put("todos", repository.findByUser(name));
     	// if user instanceOf user then hide admin buttons
-        return new ModelAndView("showAllBooks", "books", bookService.findAllBooks());
+        return new ModelAndView("show-all-books", "books", bookService.findAllBooks());
 
     }
-    
-    
+
     //findBookBySearch - first 3 letters
     //searchByCategory, author
-    
 
     @GetMapping(value = "/hello-html")
     public String helloHtml() {
-        return "hello.html";
+        return "hello";
     }
 
     @GetMapping(value = "/hello-jsp")

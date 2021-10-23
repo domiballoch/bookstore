@@ -36,18 +36,17 @@ public class AdminWebController {
 
     //Add comments to new methods
 	//Fix delete and update web
-	//Combine these into 1 webService/webController or split into 2 packages
-	//Change views to lower-case and call then views instead of forms?
+	//Add all categories to DB enum type
 	//Change long to Long
 	//Add stock to tests
 	//Add controllerAdvice
-	//Removed caches and just keep ref data
+	//Removed caches and just keep category ref data
 	//Finish update book for rest
 	//Clean up code and complete more tests
 	//Add security and admin rights
-	//Complete Basket logic / buttons and add strategy
+	//Complete Basket logic - buttons and add strategy
 	//Add css, bootstrap or JS
-	//Add search function
+	//Add search function - 3 chars
     
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -62,8 +61,8 @@ public class AdminWebController {
     
     @GetMapping(value = "/addNewBook")
     public String addNewBookToBookstore(final Model model, final Book book) {
-    	model.addAttribute("addNewBook", book);
-    	return "addNewBook";
+    	model.addAttribute(book);
+    	return "add-new-book";
     }
     
     @PostMapping(value = "/addNewBook")
@@ -97,7 +96,7 @@ public class AdminWebController {
 		} else {
 			model.put("book", book);
 		}
-		return "addNewBook";
+		return "add-new-book";
 	}
 
 	@PostMapping(value = "/updateBook")
