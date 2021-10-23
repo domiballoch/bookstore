@@ -23,6 +23,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import static bookstore.utils.BookConstants.BOOK_NOT_FOUND;
+
 @Slf4j
 @Controller
 @RequestMapping(value = "/web")
@@ -35,7 +37,6 @@ public class AdminWebController {
     private BookService bookService;
 
     //Add comments to new methods
-	//Fix delete and update web
 	//Add all categories to DB enum type
 	//Change long to Long
 	//Add stock to tests
@@ -81,7 +82,8 @@ public class AdminWebController {
     @GetMapping(value = "/deleteBook")
     public String deleteBookFromBookstore(final @RequestParam Long isbn) {
     	adminService.deleteSingleBookFromBookstoreByIsbn(isbn);
-    	//finish exception handling 
+    	//logic here - if valid return success else findAllBooks
+    	//return "delete-book-success"; //not working
         return "redirect:/web/findAllBooks";
     }
     
@@ -91,7 +93,7 @@ public class AdminWebController {
 	public String updateBook(@RequestParam Long isbn, ModelMap model) {
 		Optional<Book> book = bookService.findBookByIsbn(isbn);
 		if(!book.isPresent()) {
-			log.warn("Book not present: {}", book);
+			log.warn(BOOK_NOT_FOUND, book);
 			return "/findAllBooks";
 		} else {
 			model.put("book", book);
