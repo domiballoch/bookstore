@@ -1,6 +1,8 @@
 package bookstore.controller.web;
 
 import bookstore.domain.Book;
+import bookstore.domain.Category;
+import bookstore.exception.BookNotFoundException;
 import bookstore.service.AdminService;
 import bookstore.service.BookService;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +39,6 @@ public class AdminWebController {
     private BookService bookService;
 
     //Add comments to new methods
-	//Add all categories to DB enum type
 	//Change long to Long
 	//Add stock to tests
 	//Add controllerAdvice
@@ -87,19 +88,30 @@ public class AdminWebController {
         return "redirect:/web/findAllBooks";
     }
     
-    //deleted book success?
-    
-	@GetMapping(value = "/updateBook")
+	@GetMapping(value = "/updateBook") //TODO:Not working
 	public String updateBook(@RequestParam Long isbn, ModelMap model) {
-		Optional<Book> book = bookService.findBookByIsbn(isbn);
-		if(!book.isPresent()) {
-			log.warn(BOOK_NOT_FOUND, book);
+		try {
+		final Book book = bookService.findBookByIsbnWeb(isbn);
+		model.put("book", book);
+		model.put("category", Category.values());
+		} catch(BookNotFoundException e) {
+			log.info(BOOK_NOT_FOUND, e.getMessage());
 			return "/findAllBooks";
-		} else {
-			model.put("book", book);
-		}
+		} 
 		return "add-new-book";
 	}
+    
+//	@GetMapping(value = "/updateBook")
+//	public String updateBook(@RequestParam Long isbn, ModelMap model) {
+//		Optional<Book> book = bookService.findBookByIsbn(isbn);
+//		if(!book.isPresent()) {
+//			log.warn(BOOK_NOT_FOUND, book);
+//			return "/findAllBooks";
+//		} else {
+//			model.put("book", book);
+//		}
+//		return "add-new-book";
+//	}
 
 	@PostMapping(value = "/updateBook")
 	public String saveUpdatedBook(ModelMap model, @Valid Book book, BindingResult result) {

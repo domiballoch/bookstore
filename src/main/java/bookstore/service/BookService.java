@@ -11,6 +11,8 @@ public interface BookService {
     List<Book> findAllBooks();
 
     Optional<Book> findBookByIsbn(final long isbn);
+    
+    Book findBookByIsbnWeb(final long isbn);
 
     int getBookStock(final String title, final String Author);
 

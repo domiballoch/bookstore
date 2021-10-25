@@ -40,7 +40,7 @@
 				<form:input path="stock" type="text" class="form-control" required="required" />
 				<form:errors path="stock" cssClass="text-warning" />
 
-			<button type="submit" class="btn btn-success">Submit new book</button>
+			<button type="submit" class="btn btn-success">Submit/Update book</button>
 		</form:form>
 	</div>
 </body>

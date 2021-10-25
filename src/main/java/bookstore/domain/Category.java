@@ -7,6 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum Category {
 
+	NONE(""),
     ARTS_AND_MUSIC("ARTS"),
     BIOGRAPHIES("BIO"),
     KIDS("KIDS"),
