@@ -1,4 +1,4 @@
-package bookstore.controller;
+package bookstore.controller.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,19 +17,19 @@ public class BookWebController {
     
     @GetMapping(value = "/findAllBooks")
     public ModelAndView findAllBooks() {
-        return new ModelAndView("showAllBooks", "books", bookService.findAllBooks());
+//		String name = getLoggedInUserName(model);
+//		model.put("todos", repository.findByUser(name));
+    	// if user instanceOf user then hide admin buttons
+        return new ModelAndView("show-all-books", "books", bookService.findAllBooks());
 
     }
-    
-    //findBookById
-    //removeBookById
-    //addNewBook
-    //updateBookById
-    
+
+    //findBookBySearch - first 3 letters
+    //searchByCategory, author
 
     @GetMapping(value = "/hello-html")
     public String helloHtml() {
-        return "hello.html";
+        return "hello";
     }
 
     @GetMapping(value = "/hello-jsp")

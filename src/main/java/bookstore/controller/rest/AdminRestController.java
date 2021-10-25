@@ -1,4 +1,4 @@
-package bookstore.controller;
+package bookstore.controller.rest;
 
 import bookstore.domain.Book;
 import bookstore.domain.Category;
@@ -23,10 +23,10 @@ public class AdminRestController {
     private AdminService adminService;
 
     @PostMapping(value = "/addNewBookToBookstore")
-    public ResponseEntity<Book> addNewBookToBookstore(@PathVariable final long isbn, @PathVariable
+    public ResponseEntity<Book> addNewBookToBookstore(@PathVariable final Long isbn, @PathVariable
     final Category category, @PathVariable final String title, @PathVariable
-                                                      final String author, @PathVariable final BigDecimal price) {
-        adminService.addNewBookToBookStore(isbn, category, title, author, price);
+                                                      final String author, @PathVariable final BigDecimal price, final int stock) {
+        adminService.addNewBookToBookStore(isbn, category, title, author, price, stock);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

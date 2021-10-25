@@ -1,4 +1,4 @@
-package bookstore.controller;
+package bookstore.controller.rest;
 
 import bookstore.domain.Basket;
 import bookstore.service.BasketService;

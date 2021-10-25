@@ -59,9 +59,17 @@ public class BookServiceImpl implements BookService {
     @Override
     public Optional<Book> findBookByIsbn(final long isbn){
         log.info("Finding book by isbn: {}", isbn);
-        //return bookRepository.findById(isbn);
         return Optional.ofNullable(bookRepository.findById(isbn)
                 .orElseThrow(() -> new BookDataException(DATABASE_NOT_AVAILABLE)));
+    }
+    
+
+    
+    @Override
+    public Book findBookByIsbnWeb(final long isbn){
+        log.info("Finding book by isbn: {}", isbn);
+        return bookRepository.findById(isbn)
+                .orElseThrow(() -> new BookDataException(DATABASE_NOT_AVAILABLE));
     }
 
     /**

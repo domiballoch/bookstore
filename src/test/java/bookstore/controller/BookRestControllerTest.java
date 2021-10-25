@@ -1,5 +1,6 @@
 package bookstore.controller;
 
+import bookstore.controller.rest.BookRestController;
 import bookstore.exception.BookNotFoundException;
 import bookstore.domain.Book;
 import bookstore.service.AdminService;
