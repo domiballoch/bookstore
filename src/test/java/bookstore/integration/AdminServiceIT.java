@@ -35,6 +35,12 @@ public class AdminServiceIT {
 				.jsonPath("$.length()").isNotEmpty();
 	}
 
+	//examples
+
+	//for post -
+	// .contentType(MediaType.APPLICATION_JSON
+	// .body(Mono.just(json), String.class)
+
 //	  this.webTestClient
 //			  .get()
 //			  .uri("/api/users")
