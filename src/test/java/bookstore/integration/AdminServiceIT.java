@@ -22,8 +22,6 @@ public class AdminServiceIT {
 	@Autowired
 	private BookRepository bookRepository;
 
-	//add beforeEach which resets the DB to 3 book entries
-
 	@Test
 	public void shouldReturnAllBooks() {
 		webTestClient.get()
@@ -40,6 +38,8 @@ public class AdminServiceIT {
 	//for post -
 	// .contentType(MediaType.APPLICATION_JSON
 	// .body(Mono.just(json), String.class)
+
+	//from web
 
 //	  this.webTestClient
 //			  .get()
