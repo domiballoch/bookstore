@@ -41,6 +41,7 @@ public class BookServiceImpl implements BookService {
      * @return - List<Book>
      */
     //@Transactional(readOnly = true)
+    //Pagination required
     @Cacheable("books")
     @Override
     public List<Book> findAllBooks() {
@@ -125,10 +126,10 @@ public class BookServiceImpl implements BookService {
      * @return List<Book>
      */
     @Override
-    public List<Book> findBookBySearchTerm(final String search) {
+    public List<Book> findBookBySearchTermIgnoreCase(final String search) {
         log.info("Finding book by search term: {}", search);
-        //fuzzy search
-        return null; //bookRepository.findBookBySearchTerm);
+        //fuzzy search by first three chars
+        return bookRepository.findBookBySearchTermIgnoreCase(search);
     }
 
     /**

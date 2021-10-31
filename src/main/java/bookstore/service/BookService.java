@@ -20,7 +20,7 @@ public interface BookService {
 
     List<Book> findBooksByCategory(final Category category);
 
-    List<Book> findBookBySearchTerm(final String search);
+    List<Book> findBookBySearchTermIgnoreCase(final String search);
 
     void addBookToBasket(final Book book);
 

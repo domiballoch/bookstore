@@ -33,6 +33,21 @@ public class AdminServiceIT {
 				.jsonPath("$.length()").isNotEmpty();
 	}
 
+	@Test
+	public void shouldReturnBookByIsbn() {
+		webTestClient.get()
+				.uri(ENDPOINT + "/findBookByIsbn/{1}", 1)
+				.accept(MediaType.APPLICATION_JSON)
+				.exchange()
+				.expectStatus().isOk()
+//				.expectBody()
+//				.jsonPath("$.isbn").isEqualTo(1)
+//				.jsonPath("$.category").isEqualTo(1)
+//				.jsonPath("$.title").isEqualTo(1)
+//				.jsonPath("$.author").isEqualTo(1)
+		;
+	}
+
 	//examples
 
 	//for post -
