@@ -1,6 +1,7 @@
 package bookstore.controller.rest;
 
 import bookstore.domain.Book;
+import bookstore.domain.Category;
 import bookstore.exception.BookNotFoundException;
 import bookstore.service.BookService;
 import lombok.SneakyThrows;
@@ -30,6 +31,9 @@ public class BookRestController {
     @GetMapping(value = "/findAllBooks")
     public ResponseEntity<List<Book>> findAllBooks() {
         final List<Book> bookList = bookService.findAllBooks();
+        if(bookList.isEmpty()) {
+            noResultsFound(bookList, "All books");
+        }
         return new ResponseEntity<>(bookList, HttpStatus.OK);
     }
 
@@ -44,8 +48,23 @@ public class BookRestController {
     @GetMapping(value = "/search/{search}")
     public ResponseEntity<List<Book>> findBooksBySearchTerm(@PathVariable final String search) {
         final List<Book> results = bookService.findBookBySearchTermIgnoreCase(search);
+        if(results.isEmpty()) {
+            noResultsFound(results, search);
+        }
         return new ResponseEntity<>(results, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/category/{category}")
+    public ResponseEntity<List<Book>> findBooksByCategory(@PathVariable final Category category) {
+        final List<Book> results = bookService.findBooksByCategory(category);
+        if(results.isEmpty()) {
+            noResultsFound(results, category);
+        }
+        return new ResponseEntity<>(results, HttpStatus.OK);
+    }
 
+    public ResponseEntity<List<Book>> noResultsFound(List<Book> list, Object object) {
+        log.info("No results found: {}", object);
+        return new ResponseEntity<>(list, HttpStatus.NO_CONTENT);
+    }
 }
