@@ -2,6 +2,7 @@ package bookstore.service;
 
 import bookstore.dao.BookRepository;
 import bookstore.domain.Book;
+import bookstore.domain.Category;
 import bookstore.exception.BookDataException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -120,10 +121,18 @@ public class BookServiceTest {
         verify(bookRepository, times(1)).findBookBySearchTermIgnoreCase(any(String.class));
     }
 
-    @DisplayName("Should return book by search term")
+    @DisplayName("Should return book by category")
     @Test
     public void shouldReturnBookByCategory(){
+        List<Book> resultList = new ArrayList<>();
+        resultList.add(returnOneBook());
+        when(bookRepository.findBooksByCategory(Category.SCIENCE_FICTION)).thenReturn(resultList);
+        final List<Book> results = bookService.findBooksByCategory(Category.SCIENCE_FICTION);
 
+        assertThat(results).isNotNull();
+        assertThat(results.get(0).getCategory()).isEqualTo(Category.SCIENCE_FICTION);
+        assertThat(results.get(0)).isEqualTo(returnOneBook());
+        verify(bookRepository, times(1)).findBooksByCategory(any(Category.class));
     }
 
 
