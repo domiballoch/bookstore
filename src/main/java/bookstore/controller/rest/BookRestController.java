@@ -63,7 +63,7 @@ public class BookRestController {
         return new ResponseEntity<>(results, HttpStatus.OK);
     }
 
-    public ResponseEntity<List<Book>> noResultsFound(List<Book> list, Object object) {
+    private ResponseEntity<List<Book>> noResultsFound(final List<Book> list, final Object object) {
         log.info("No results found: {}", object);
         return new ResponseEntity<>(list, HttpStatus.NO_CONTENT);
     }
