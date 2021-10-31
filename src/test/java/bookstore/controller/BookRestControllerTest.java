@@ -1,6 +1,7 @@
 package bookstore.controller;
 
 import bookstore.controller.rest.BookRestController;
+import bookstore.domain.Category;
 import bookstore.exception.BookNotFoundException;
 import bookstore.domain.Book;
 import bookstore.service.AdminService;
@@ -16,6 +17,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,7 +63,7 @@ public class BookRestControllerTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
-                //.andExpect(jsonPath("$.[*]", hasSize(4)));
+                //.andExpect(jsonPath("$.[]", hasSize(4)));
 
         final List<Book> result = getResponseFrom(resultActions, objectMapper, new TypeReference<List<Book>>() {});
         assertThat(result).isEqualTo((BOOKLIST));
@@ -79,6 +82,7 @@ public class BookRestControllerTest {
                 .andExpect(jsonPath("$.isbn").value(4));
 
         final Book result = getResponseFrom(resultActions, objectMapper, new TypeReference<Book>() {});
+        assertThat(result.getIsbn()).isEqualTo(4);
         assertThat(result).isEqualTo(returnOneBook());
         verify(bookService, times(1)).findBookByIsbn(any(Long.class));
     }
@@ -91,5 +95,67 @@ public class BookRestControllerTest {
                 .andExpect(status().isNotFound())
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof BookNotFoundException))
                 .andExpect(result -> assertEquals(result.getResolvedException().getMessage(), BOOK_NOT_FOUND));
+    }
+
+    @SneakyThrows
+    @Test
+    public void findBookBySearchTerm() {
+        List<Book> resultList = new ArrayList<>();
+        resultList.add(returnOneBook());
+        when(bookService.findBookBySearchTermIgnoreCase("ti")).thenReturn(resultList);
+        final ResultActions resultActions =
+        mockMvc.perform(get("/rest/search/{search}", "ti")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.[0].title").value("title4"));
+
+        final List<Book> results = getResponseFrom(resultActions, objectMapper, new TypeReference<List<Book>>() {});
+        assertThat(results.get(0).getTitle()).isEqualTo("title4");
+        assertThat(results.get(0)).isEqualTo(returnOneBook());
+        verify(bookService, times(1)).findBookBySearchTermIgnoreCase(any(String.class));
+    }
+
+    @SneakyThrows
+    @Test
+    public void findBookByCategory() {
+        List<Book> resultList = new ArrayList<>();
+        resultList.add(returnOneBook());
+        when(bookService.findBooksByCategory(Category.SCIENCE_FICTION)).thenReturn(resultList);
+        final ResultActions resultActions =
+                mockMvc.perform(get("/rest/category/{category}", "SCIENCE_FICTION")
+                        .contentType(MediaType.APPLICATION_JSON))
+                        .andDo(print())
+                        .andExpect(status().isOk())
+                        .andExpect(jsonPath("$.[0].category").value("SCIENCE_FICTION"));
+
+        final List<Book> results = getResponseFrom(resultActions, objectMapper, new TypeReference<List<Book>>() {});
+        assertThat(results.get(0).getCategory()).isEqualTo(Category.SCIENCE_FICTION);
+        assertThat(results.get(0)).isEqualTo(returnOneBook());
+        verify(bookService, times(1)).findBooksByCategory(any(Category.class));
+    }
+
+    @SneakyThrows
+    @Test
+    public void findBookBySearchTermNoContent() {
+        when(bookService.findBookBySearchTermIgnoreCase(any(String.class))).thenReturn(Collections.emptyList());
+        final ResultActions resultActions =
+                mockMvc.perform(get("/rest/search/{search}", "abcdefg")
+                        .contentType(MediaType.APPLICATION_JSON))
+                        .andDo(print())
+                        .andExpect(status().isNoContent());
+        verify(bookService, times(1)).findBookBySearchTermIgnoreCase(any(String.class));
+    }
+
+    @SneakyThrows
+    @Test
+    public void findBookByCategoryNoContent() {
+        when(bookService.findBooksByCategory(any(Category.class))).thenReturn(Collections.emptyList());
+        final ResultActions resultActions =
+                mockMvc.perform(get("/rest/category/{category}", "VOID")
+                        .contentType(MediaType.APPLICATION_JSON))
+                        .andDo(print())
+                        .andExpect(status().isNoContent());
+        verify(bookService, times(1)).findBooksByCategory(any(Category.class));
     }
 }

@@ -143,5 +143,4 @@ public class BookServiceTest {
     //@DisplayName("Should decrease stock when delete one book")
     //@DisplayName("Should return true when book is in stock")
     //@DisplayName("Should return false when book is out of stock")
-    //@DisplayName("Should return books by category")
 }
