@@ -106,6 +106,20 @@ public class BookServiceTest {
                 any(String.class));
     }
 
+    @DisplayName("Should return book in stock")
+    @Test
+    public void shouldReturnBookBySearchTerm(){
+        List<Book> resultList = new ArrayList<>();
+        resultList.add(returnOneBook());
+        when(bookRepository.findBookBySearchTermIgnoreCase("ti")).thenReturn(resultList);
+        final List<Book> results = bookService.findBookBySearchTermIgnoreCase("ti");
+
+        assertThat(results).isNotNull();
+        assertThat(results.get(0).getTitle()).isEqualTo("title4");
+        assertThat(results.get(0)).isEqualTo(returnOneBook());
+        verify(bookRepository, times(1)).findBookBySearchTermIgnoreCase(any(String.class));
+    }
+
 
     //@DisplayName("Should increase stock when add one book")
     //@Test
