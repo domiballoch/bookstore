@@ -41,4 +41,11 @@ public class BookRestController {
             return new ResponseEntity<>(book, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/search/{search}")
+    public ResponseEntity<List<Book>> findBooksBySearchTerm(@PathVariable final String search) {
+        final List<Book> results = bookService.findBookBySearchTermIgnoreCase(search);
+        return new ResponseEntity<>(results, HttpStatus.OK);
+    }
+
+
 }
