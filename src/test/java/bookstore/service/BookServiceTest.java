@@ -106,7 +106,7 @@ public class BookServiceTest {
                 any(String.class));
     }
 
-    @DisplayName("Should return book in stock")
+    @DisplayName("Should return book by search term")
     @Test
     public void shouldReturnBookBySearchTerm(){
         List<Book> resultList = new ArrayList<>();
@@ -120,6 +120,12 @@ public class BookServiceTest {
         verify(bookRepository, times(1)).findBookBySearchTermIgnoreCase(any(String.class));
     }
 
+    @DisplayName("Should return book by search term")
+    @Test
+    public void shouldReturnBookByCategory(){
+
+    }
+
 
     //@DisplayName("Should increase stock when add one book")
     //@Test
@@ -129,5 +135,4 @@ public class BookServiceTest {
     //@DisplayName("Should return true when book is in stock")
     //@DisplayName("Should return false when book is out of stock")
     //@DisplayName("Should return books by category")
-    //@DisplayName("Should return books by search term")
 }
