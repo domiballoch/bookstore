@@ -10,13 +10,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
 
 @RestController
-@RequestMapping(value = "/rest", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/rest",
+        consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdminRestController {
 
     @Autowired
@@ -25,7 +27,7 @@ public class AdminRestController {
     @PostMapping(value = "/addNewBookToBookstore")
     public ResponseEntity<Book> addNewBookToBookstore(@PathVariable final Long isbn, @PathVariable
     final Category category, @PathVariable final String title, @PathVariable
-                                                      final String author, @PathVariable final BigDecimal price, final int stock) {
+                    final String author, @PathVariable final BigDecimal price, final int stock) {
         adminService.addNewBookToBookStore(isbn, category, title, author, price, stock);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -33,6 +35,15 @@ public class AdminRestController {
     @DeleteMapping(value = "/deleteBookFromBookstore")
     public ResponseEntity<Book> deleteBookFromBookstore(@PathVariable final long isbn) {
         adminService.deleteSingleBookFromBookstoreByIsbn(isbn);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    //Using PUT for idempotency - resending the whole Entity
+    @PutMapping(value = "/updateBookInBookstore")
+    public ResponseEntity<Book> updateBookInBookstore(@PathVariable final Long isbn, @PathVariable
+    final Category category, @PathVariable final String title, @PathVariable
+                    final String author, @PathVariable final BigDecimal price, final int stock) {
+        adminService.updateBook(isbn, category, title, author, price, stock);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

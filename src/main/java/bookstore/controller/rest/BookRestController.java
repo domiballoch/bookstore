@@ -22,7 +22,8 @@ import static bookstore.utils.BookConstants.BOOK_NOT_FOUND;
 
 @RestController
 @Slf4j
-@RequestMapping(value = "/rest", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/rest",
+        consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 public class BookRestController {
 
     @Autowired
@@ -65,6 +66,6 @@ public class BookRestController {
 
     private ResponseEntity<List<Book>> noResultsFound(final List<Book> list, final Object object) {
         log.info("No results found: {}", object);
-        return new ResponseEntity<>(list, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(list, HttpStatus.NOT_FOUND);
     }
 }

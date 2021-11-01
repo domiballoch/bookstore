@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Optional;
 
 import static bookstore.utils.BookConstants.BOOK_NOT_FOUND;
 
@@ -118,7 +117,7 @@ public class AdminWebController {
 		if (result.hasErrors()) {
 			return "book";
 		}
-		adminService.updateBook(book);
+		adminService.updateBookWeb(book);
 		return "redirect:/web/findAllBooks";
 	}
 
