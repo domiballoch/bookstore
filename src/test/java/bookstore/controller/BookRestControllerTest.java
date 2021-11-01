@@ -61,7 +61,7 @@ public class BookRestControllerTest {
         when(bookService.findAllBooks()).thenReturn(BOOKLIST);
         final ResultActions resultActions =
                 mockMvc.perform(get("/rest/findAllBooks")
-                .accept(MediaType.APPLICATION_JSON))
+                .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().isOk());
                 //.andExpect(jsonPath("$.[]", hasSize(4)));
@@ -77,7 +77,7 @@ public class BookRestControllerTest {
         when(bookService.findBookByIsbn(4)).thenReturn(Optional.ofNullable(returnOneBook()));
         final ResultActions resultActions =
                 mockMvc.perform(get("/rest/findBook/{isbn}", 4)
-                .accept(MediaType.APPLICATION_JSON))
+                .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.isbn").value(4));
@@ -92,7 +92,7 @@ public class BookRestControllerTest {
     @Test
     public void shouldThrow_BookNotFoundException() {
         mockMvc.perform(get("/rest/findBook/{isbn}", 10)
-                .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof BookNotFoundException))
                 .andExpect(result -> assertEquals(result.getResolvedException().getMessage(), BOOK_NOT_FOUND));
@@ -106,7 +106,7 @@ public class BookRestControllerTest {
         when(bookService.findBookBySearchTermIgnoreCase("ti")).thenReturn(resultList);
         final ResultActions resultActions =
         mockMvc.perform(get("/rest/search/{search}", "ti")
-                .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.[0].title").value("title4"));
@@ -125,7 +125,7 @@ public class BookRestControllerTest {
         when(bookService.findBooksByCategory(Category.SCIENCE_FICTION)).thenReturn(resultList);
         final ResultActions resultActions =
                 mockMvc.perform(get("/rest/category/{category}", "SCIENCE_FICTION")
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
                         .andDo(print())
                         .andExpect(status().isOk())
                         .andExpect(jsonPath("$.[0].category").value("SCIENCE_FICTION"));
@@ -143,7 +143,7 @@ public class BookRestControllerTest {
         when(bookService.findBookBySearchTermIgnoreCase(any(String.class))).thenReturn(Collections.emptyList());
         final ResultActions resultActions =
                 mockMvc.perform(get("/rest/search/{search}", "abcdefg")
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
                         .andDo(print())
                         .andExpect(status().isNotFound());
         verify(bookService, times(1)).findBookBySearchTermIgnoreCase(any(String.class));
@@ -156,7 +156,7 @@ public class BookRestControllerTest {
         when(bookService.findBooksByCategory(any(Category.class))).thenReturn(Collections.emptyList());
         final ResultActions resultActions =
                 mockMvc.perform(get("/rest/category/{category}", "VOID")
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
                         .andDo(print())
                         .andExpect(status().isNotFound());
         verify(bookService, times(1)).findBooksByCategory(any(Category.class));

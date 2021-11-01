@@ -9,14 +9,16 @@ public interface AdminService {
 
     Book addNewBookToBookStore(final long isbn, final Category category, final String title,
                                final String author, final BigDecimal price, final int stock);
-    
+
+    Book addNewBookToBookStore2(final Book book);
+
     Book addNewBookToBookStoreWeb(final Book book);
 
     void deleteSingleBookFromBookstoreByIsbn(final long isbn);
 
 	void updateBookWeb(final Book book);
 
-    void updateBook(final Long isbn, final Category category, final String title, final String author,
+    void updateBook(final long isbn, final Category category, final String title, final String author,
                     final BigDecimal price, final int stock);
 
 }

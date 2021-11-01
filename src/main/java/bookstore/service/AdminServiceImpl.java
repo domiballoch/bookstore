@@ -48,6 +48,24 @@ public class AdminServiceImpl implements AdminService {
         log.info("New book added to bookstore: {}", newBook.toString());
         return newBook;
     }
+
+    @Override
+    public Book addNewBookToBookStore2(final Book book) {
+        log.info("Adding new book to bookstore");
+        final Book newBook = Book.builder()
+                .isbn(book.getIsbn())
+                .category(book.getCategory())
+                .title(book.getTitle())
+                .author(book.getAuthor())
+                .price(book.getPrice())
+                .stock(book.getStock())
+                .build();
+        bookRepository.save(newBook);
+
+        //TODO: Need to increase stock of book per isbn
+        log.info("New book added to bookstore: {}", newBook.toString());
+        return newBook;
+    }
     
     @Override
     public Book addNewBookToBookStoreWeb(final Book book) {
@@ -94,7 +112,7 @@ public class AdminServiceImpl implements AdminService {
     //Todo:Change this stuff so controller accepts JSON - then just use Postman
     // and pass in Book Entity instead of PathVariables, duh!
     @Override
-    public void updateBook(final Long isbn, final Category category, final String title,
+    public void updateBook(final long isbn, final Category category, final String title,
                            final String author, final BigDecimal price, final int stock) {
         log.info("Updating book: {}, {}, {}, {}, {}, [}", isbn, category, title, author, price, stock);
         final Book book = Book.builder()
