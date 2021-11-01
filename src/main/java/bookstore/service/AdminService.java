@@ -5,8 +5,6 @@ import bookstore.domain.Category;
 
 import java.math.BigDecimal;
 
-import javax.validation.Valid;
-
 public interface AdminService {
 
     Book addNewBookToBookStore(final long isbn, final Category category, final String title,
@@ -16,9 +14,9 @@ public interface AdminService {
 
     void deleteSingleBookFromBookstoreByIsbn(final long isbn);
 
-	void updateBook(final Book book);
+	void updateBookWeb(final Book book);
 
-    //Book amendBook(final long isbn, final Category category, final String title,
-    //final String author, final BigDecimal price);
+    void updateBook(final Long isbn, final Category category, final String title, final String author,
+                    final BigDecimal price, final int stock);
 
 }

@@ -9,6 +9,7 @@ import bookstore.service.BookService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -135,6 +136,7 @@ public class BookRestControllerTest {
         verify(bookService, times(1)).findBooksByCategory(any(Category.class));
     }
 
+    @Disabled
     @SneakyThrows
     //@Test
     public void findBookBySearchTermNoContent() {
@@ -143,10 +145,11 @@ public class BookRestControllerTest {
                 mockMvc.perform(get("/rest/search/{search}", "abcdefg")
                         .contentType(MediaType.APPLICATION_JSON))
                         .andDo(print())
-                        .andExpect(status().isNoContent());
+                        .andExpect(status().isNotFound());
         verify(bookService, times(1)).findBookBySearchTermIgnoreCase(any(String.class));
     }
 
+    @Disabled
     @SneakyThrows
     //@Test
     public void findBookByCategoryNoContent() {
@@ -155,7 +158,7 @@ public class BookRestControllerTest {
                 mockMvc.perform(get("/rest/category/{category}", "VOID")
                         .contentType(MediaType.APPLICATION_JSON))
                         .andDo(print())
-                        .andExpect(status().isNoContent());
+                        .andExpect(status().isNotFound());
         verify(bookService, times(1)).findBooksByCategory(any(Category.class));
     }
 }
