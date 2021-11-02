@@ -31,7 +31,7 @@ public class AdminServiceImpl implements AdminService {
      * @return - Book object
      */
     @Override
-    public Book addNewBookToBookStore(final long isbn, final Category category, final String title,
+    public Book addNewBookToBookStorePathVariable(final long isbn, final Category category, final String title,
                                       final String author, final BigDecimal price, final int stock) {
         log.info("Adding new book to bookstore");
         final Book newBook = Book.builder()
@@ -50,10 +50,9 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Book addNewBookToBookStore2(final Book book) {
+    public Book addNewBookToBookstoreJsonRequest(final Book book) {
         log.info("Adding new book to bookstore");
         final Book newBook = Book.builder()
-                .isbn(book.getIsbn())
                 .category(book.getCategory())
                 .title(book.getTitle())
                 .author(book.getAuthor())
@@ -71,7 +70,6 @@ public class AdminServiceImpl implements AdminService {
     public Book addNewBookToBookStoreWeb(final Book book) {
         log.info("Adding new book to bookstore");
         final Book newBook = Book.builder()
-                .isbn(book.getIsbn())
                 .category(book.getCategory())
                 .title(book.getTitle())
                 .author(book.getAuthor())
@@ -112,11 +110,10 @@ public class AdminServiceImpl implements AdminService {
     //Todo:Change this stuff so controller accepts JSON - then just use Postman
     // and pass in Book Entity instead of PathVariables, duh!
     @Override
-    public void updateBook(final long isbn, final Category category, final String title,
+    public void updateBook(final Category category, final String title,
                            final String author, final BigDecimal price, final int stock) {
-        log.info("Updating book: {}, {}, {}, {}, {}, [}", isbn, category, title, author, price, stock);
+        log.info("Updating book: {}, {}, {}, {}, {}, [}", category, title, author, price, stock);
         final Book book = Book.builder()
-                .isbn(isbn)
                 .category(category)
                 .title(title)
                 .author(author)

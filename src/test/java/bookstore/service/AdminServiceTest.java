@@ -30,10 +30,10 @@ public class AdminServiceTest {
 
     @DisplayName("Should add new book from bookstore")
     @Test
-    public void shouldAddOneNewBookToBookStore(){
+    public void shouldAddOneNewBookToBookStoreUsingPathVariable(){
         final Book newBook = CREATE_ONE_BOOK;
         when(bookRepository.save(newBook)).thenReturn(newBook);
-        final Book savedBook = adminServiceImpl.addNewBookToBookStore(
+        final Book savedBook = adminServiceImpl.addNewBookToBookStorePathVariable(
                 5,
                 Category.COOKING,
                 "title5",
@@ -44,6 +44,8 @@ public class AdminServiceTest {
         assertThat(savedBook).isEqualTo(newBook);
         verify(bookRepository, times(1)).save(any(Book.class));
     }
+
+    //TODO: json request test - plus add admin controller tests
 
     @DisplayName("Should delete one book from bookstore")
     @Test

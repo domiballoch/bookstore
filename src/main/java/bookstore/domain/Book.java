@@ -1,6 +1,5 @@
 package bookstore.domain;
 
-import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -43,7 +42,6 @@ public class Book implements Serializable {
     @Column(name = "isbn")
     private Long isbn;
 
-    @JsonValue
     @NotNull(message = "Category cannot be null")
     @Enumerated(EnumType.STRING)
     @Column(name = "category")
