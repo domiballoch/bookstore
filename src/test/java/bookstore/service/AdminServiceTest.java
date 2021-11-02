@@ -53,4 +53,10 @@ public class AdminServiceTest {
         adminServiceImpl.deleteSingleBookFromBookstoreByIsbn(isbn);
         verify(bookRepository, times(1)).deleteById(any(Long.class));
     }
+
+    //should update book
+    @Test
+    public void shouldUpdateOneBookFromBookStore(){
+        //adminServiceImpl.updateBook();
+    }
 }

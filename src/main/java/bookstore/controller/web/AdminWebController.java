@@ -38,7 +38,6 @@ public class AdminWebController {
     private BookService bookService;
 
     //Add comments to new methods
-	//Change long to Long
 	//Add stock to tests
 	//Add controllerAdvice
 	//Removed caches and just keep category ref data
@@ -47,7 +46,6 @@ public class AdminWebController {
 	//Add security and admin rights
 	//Complete Basket logic - buttons and add strategy
 	//Add css, bootstrap or JS
-	//Add search function - 3 chars
     
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -80,7 +78,7 @@ public class AdminWebController {
     }
 
     @GetMapping(value = "/deleteBook")
-    public String deleteBookFromBookstore(final @RequestParam Long isbn) {
+    public String deleteBookFromBookstore(final @RequestParam long isbn) {
     	adminService.deleteSingleBookFromBookstoreByIsbn(isbn);
     	//logic here - if valid return success else findAllBooks
     	//return "delete-book-success"; //not working
@@ -88,7 +86,7 @@ public class AdminWebController {
     }
     
 	@GetMapping(value = "/updateBook") //TODO:Not working
-	public String updateBook(@RequestParam Long isbn, ModelMap model) {
+	public String updateBook(@RequestParam long isbn, ModelMap model) {
 		try {
 		final Book book = bookService.findBookByIsbnWeb(isbn);
 		model.put("book", book);
@@ -101,7 +99,7 @@ public class AdminWebController {
 	}
     
 //	@GetMapping(value = "/updateBook")
-//	public String updateBook(@RequestParam Long isbn, ModelMap model) {
+//	public String updateBook(@RequestParam long isbn, ModelMap model) {
 //		Optional<Book> book = bookService.findBookByIsbn(isbn);
 //		if(!book.isPresent()) {
 //			log.warn(BOOK_NOT_FOUND, book);

@@ -1,5 +1,6 @@
 package bookstore.domain;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,7 +8,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -16,7 +16,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
@@ -26,9 +25,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 @Builder(toBuilder = true)
 @Data
@@ -47,6 +43,7 @@ public class Book implements Serializable {
     @Column(name = "isbn")
     private Long isbn;
 
+    @JsonValue
     @NotNull(message = "Category cannot be null")
     @Enumerated(EnumType.STRING)
     @Column(name = "category")
@@ -86,6 +83,6 @@ public class Book implements Serializable {
 //    @Column(name="created_at")
 //    @Temporal(TemporalType.DATE)
 //    @DateTimeFormat(pattern="yyyy-MM-dd")
-//    private Date createdAt = new Date();
+//    private Date createdAt = new LocalDateTime();
 
 }

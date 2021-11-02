@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,10 +26,16 @@ public class AdminRestController {
     private AdminService adminService;
 
     @PostMapping(value = "/addNewBookToBookstore")
-    public ResponseEntity<Book> addNewBookToBookstore(@PathVariable final Long isbn, @PathVariable
+    public ResponseEntity<Book> addNewBookToBookstore(@PathVariable final long isbn, @PathVariable
     final Category category, @PathVariable final String title, @PathVariable
                     final String author, @PathVariable final BigDecimal price, final int stock) {
         adminService.addNewBookToBookStore(isbn, category, title, author, price, stock);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/addNewBookToBookstore2")
+    public ResponseEntity<Book> addNewBookToBookstore2(@RequestBody final Book book) {
+        adminService.addNewBookToBookStore2(book);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -40,7 +47,7 @@ public class AdminRestController {
 
     //Using PUT for idempotency - resending the whole Entity
     @PutMapping(value = "/updateBookInBookstore")
-    public ResponseEntity<Book> updateBookInBookstore(@PathVariable final Long isbn, @PathVariable
+    public ResponseEntity<Book> updateBookInBookstore(@PathVariable final long isbn, @PathVariable
     final Category category, @PathVariable final String title, @PathVariable
                     final String author, @PathVariable final BigDecimal price, final int stock) {
         adminService.updateBook(isbn, category, title, author, price, stock);

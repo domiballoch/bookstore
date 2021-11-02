@@ -22,8 +22,7 @@ import static bookstore.utils.BookConstants.BOOK_NOT_FOUND;
 
 @RestController
 @Slf4j
-@RequestMapping(value = "/rest",
-        consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/rest", produces = MediaType.APPLICATION_JSON_VALUE)
 public class BookRestController {
 
     @Autowired
@@ -40,7 +39,7 @@ public class BookRestController {
 
     @SneakyThrows
     @GetMapping(value = "/findBook/{isbn}")
-    public ResponseEntity<Optional<Book>> findBookByIsbn(@PathVariable final Long isbn) {
+    public ResponseEntity<Optional<Book>> findBookByIsbn(@PathVariable final long isbn) {
         final Optional<Book> book = Optional.ofNullable(bookService.findBookByIsbn(isbn)
                 .orElseThrow(() -> new BookNotFoundException(BOOK_NOT_FOUND)));
             return new ResponseEntity<>(book, HttpStatus.OK);
