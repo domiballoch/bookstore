@@ -7,10 +7,10 @@ import java.math.BigDecimal;
 
 public interface AdminService {
 
-    Book addNewBookToBookStore(final long isbn, final Category category, final String title,
+    Book addNewBookToBookStorePathVariable(final long isbn, final Category category, final String title,
                                final String author, final BigDecimal price, final int stock);
 
-    Book addNewBookToBookStore2(final Book book);
+    Book addNewBookToBookstoreJsonRequest(final Book book);
 
     Book addNewBookToBookStoreWeb(final Book book);
 
@@ -18,7 +18,7 @@ public interface AdminService {
 
 	void updateBookWeb(final Book book);
 
-    void updateBook(final long isbn, final Category category, final String title, final String author,
+    void updateBook(final Category category, final String title, final String author,
                     final BigDecimal price, final int stock);
 
 }

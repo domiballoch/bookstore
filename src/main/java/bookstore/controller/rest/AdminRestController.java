@@ -25,17 +25,17 @@ public class AdminRestController {
     @Autowired
     private AdminService adminService;
 
-    @PostMapping(value = "/addNewBookToBookstore")
-    public ResponseEntity<Book> addNewBookToBookstore(@PathVariable final long isbn, @PathVariable
-    final Category category, @PathVariable final String title, @PathVariable
-                    final String author, @PathVariable final BigDecimal price, final int stock) {
-        adminService.addNewBookToBookStore(isbn, category, title, author, price, stock);
+    @PostMapping(value = "/addNewBookToBookStorePv")
+    public ResponseEntity<Book> addNewBookToBookStorePathVariable(@PathVariable final long isbn, @PathVariable
+    final Category category, @PathVariable final String title, @PathVariable final String author, @PathVariable
+                    final BigDecimal price, @PathVariable final int stock) {
+        adminService.addNewBookToBookStorePathVariable(isbn, category, title, author, price, stock);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping(value = "/addNewBookToBookstore2")
+    @PostMapping(value = "/addNewBookToBookstoreJsonRequest")
     public ResponseEntity<Book> addNewBookToBookstore2(@RequestBody final Book book) {
-        adminService.addNewBookToBookStore2(book);
+        adminService.addNewBookToBookstoreJsonRequest(book);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -47,10 +47,10 @@ public class AdminRestController {
 
     //Using PUT for idempotency - resending the whole Entity
     @PutMapping(value = "/updateBookInBookstore")
-    public ResponseEntity<Book> updateBookInBookstore(@PathVariable final long isbn, @PathVariable
+    public ResponseEntity<Book> updateBookInBookstore(@PathVariable
     final Category category, @PathVariable final String title, @PathVariable
                     final String author, @PathVariable final BigDecimal price, final int stock) {
-        adminService.updateBook(isbn, category, title, author, price, stock);
+        adminService.updateBook(category, title, author, price, stock);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
