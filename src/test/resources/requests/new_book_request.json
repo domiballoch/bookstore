@@ -1,7 +1,7 @@
 {
-  "category": {},
-  "title": {},
-  "author": {},
-  "price": {},
-  "stock": {}
+  "category": "KIDS",
+  "title": "Book Request",
+  "author": "Mr Dom",
+  "price": "100",
+  "stock": "1"
 }

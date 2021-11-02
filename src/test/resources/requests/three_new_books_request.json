@@ -1,0 +1,21 @@
+{
+  "books" : [{
+    "category": "SCIENCE_FICTION",
+    "title": "Book1",
+    "author": "Author1",
+    "price": "10.00",
+    "stock": "10"
+  }, {
+    "category": "TRAVEL",
+    "title": "Book2",
+    "author": "Author2",
+    "price": "25.00",
+    "stock": "25"
+  }, {
+    "category": "COOKING",
+    "title": "Book3",
+    "author": "Author3",
+    "price": "50.00",
+    "stock": "5"
+  }]
+}

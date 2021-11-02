@@ -1,6 +1,6 @@
 package bookstore.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -43,7 +43,7 @@ public class Book implements Serializable {
     @Column(name = "isbn")
     private Long isbn;
 
-    @JsonProperty
+    @JsonValue
     @NotNull(message = "Category cannot be null")
     @Enumerated(EnumType.STRING)
     @Column(name = "category")
@@ -83,6 +83,6 @@ public class Book implements Serializable {
 //    @Column(name="created_at")
 //    @Temporal(TemporalType.DATE)
 //    @DateTimeFormat(pattern="yyyy-MM-dd")
-//    private Date createdAt = new Date();
+//    private Date createdAt = new LocalDateTime();
 
 }
