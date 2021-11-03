@@ -29,22 +29,11 @@ public class BookWebController {
     @GetMapping(value = "/findAllBooksHtml")
     public String findAllBooksHtml(Model model) {
         log.info("in controller");
-//		String name = getLoggedInUserName(model);
-//		model.put("todos", repository.findByUser(name));
-        // if user instanceOf user then hide admin buttons
-//        ModelAndView mv = null;
-//        try {
-//            log.info("in try");
-//            mv = new ModelAndView("show-all-books-th", "books", bookService.findAllBooks());
-//        } catch(Exception e) {
-//            log.info("Can't show page", e.getMessage());
-//        }
+		//String name = getLoggedInUserName(model);
+        //if user instanceOf user then hide admin buttons
         model.addAttribute("books", bookService.findAllBooks());
         return "show-all-books-th";
     }
-
-    //findBookBySearch - first 3 letters
-    //searchByCategory, author
 
     @GetMapping(value = "/hello-html")
     public String helloHtml() {

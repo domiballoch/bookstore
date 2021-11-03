@@ -11,7 +11,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.cache.CacheManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,9 +31,6 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class BookServiceTest {
-
-    @Mock
-    private CacheManager cacheManager;
 
     @Mock
     private BookRepository bookRepository;
@@ -74,7 +70,7 @@ public class BookServiceTest {
     @Test
     public void shouldReturnOneBookByIsbn(){
         final long isbn = 4;
-        when(bookRepository.findById(isbn)).thenReturn(Optional.ofNullable(returnOneBook()));
+        when(bookRepository.findById(any(Long.class))).thenReturn(Optional.ofNullable(returnOneBook()));
         final Optional<Book> result = bookService.findBookByIsbn(isbn);
 
         assertThat(result).isEqualTo(Optional.ofNullable(returnOneBook()));
@@ -99,7 +95,7 @@ public class BookServiceTest {
     public void shouldReturnBookInStock(){
         final String title = "title3";
         final String author = "author3";
-        when(bookRepository.findByTitleAndAuthor(title, author)).thenReturn(BOOKLIST);
+        when(bookRepository.findByTitleAndAuthor(any(String.class), any(String.class))).thenReturn(BOOKLIST);
         final boolean result = bookService.inStock("title3", "author3");
 
         assertThat(result).isEqualTo(true);
@@ -112,7 +108,7 @@ public class BookServiceTest {
     public void shouldReturnBookBySearchTerm(){
         List<Book> resultList = new ArrayList<>();
         resultList.add(returnOneBook());
-        when(bookRepository.findBookBySearchTermIgnoreCase("ti")).thenReturn(resultList);
+        when(bookRepository.findBookBySearchTermIgnoreCase(any(String.class))).thenReturn(resultList);
         final List<Book> results = bookService.findBookBySearchTermIgnoreCase("ti");
 
         assertThat(results).isNotNull();
@@ -126,7 +122,7 @@ public class BookServiceTest {
     public void shouldReturnBookByCategory(){
         List<Book> resultList = new ArrayList<>();
         resultList.add(returnOneBook());
-        when(bookRepository.findBooksByCategory(Category.SCIENCE_FICTION)).thenReturn(resultList);
+        when(bookRepository.findBooksByCategory(any(Category.class))).thenReturn(resultList);
         final List<Book> results = bookService.findBooksByCategory(Category.SCIENCE_FICTION);
 
         assertThat(results).isNotNull();
@@ -137,9 +133,6 @@ public class BookServiceTest {
 
 
     //@DisplayName("Should increase stock when add one book")
-    //@Test
-    //public void shouldIncreaseStockWhenAddOneBook(){}
-
     //@DisplayName("Should decrease stock when delete one book")
     //@DisplayName("Should return true when book is in stock")
     //@DisplayName("Should return false when book is out of stock")

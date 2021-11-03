@@ -53,10 +53,6 @@ public class AdminWebController {
 		binder.registerCustomEditor(LocalDate.class, new CustomDateEditor(
 				dateFormat, false));
 	}
-
-    //TODO: Admin must see all books and have option to add, remove or edit
-    //TODO: Each action will redirect to another view / jsp page
-    //TODO: Common headers should be visible for navigation
     
     @GetMapping(value = "/addNewBook")
     public String addNewBookToBookstore(final Model model, final Book book) {
@@ -85,7 +81,7 @@ public class AdminWebController {
         return "redirect:/web/findAllBooks";
     }
     
-	@GetMapping(value = "/updateBook") //TODO:Not working
+	@GetMapping(value = "/updateBook") //TODO:Not working - add modelAttribute?
 	public String updateBook(@RequestParam long isbn, ModelMap model) {
 		try {
 		final Book book = bookService.findBookByIsbnWeb(isbn);
@@ -115,7 +111,7 @@ public class AdminWebController {
 		if (result.hasErrors()) {
 			return "book";
 		}
-		adminService.updateBookWeb(book);
+		adminService.updateBookInBookstoreWeb(book);
 		return "redirect:/web/findAllBooks";
 	}
 

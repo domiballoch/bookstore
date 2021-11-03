@@ -22,6 +22,7 @@ public class TestDataUtils {
             .title("title5")
             .author("author5")
             .price(BigDecimal.valueOf(49.99))
+            .stock(10)
             .build();
 
     public static final Book CREATE_ANOTHER_BOOK = Book.builder()
@@ -30,6 +31,7 @@ public class TestDataUtils {
             .title("title6")
             .author("author6")
             .price(BigDecimal.valueOf(24.49))
+            .stock(10)
             .build();
 
     public static final Book CREATE_YET_ANOTHER_BOOK = Book.builder()
@@ -38,6 +40,7 @@ public class TestDataUtils {
             .title("title7")
             .author("author7")
             .price(BigDecimal.valueOf(14.19))
+            .stock(10)
             .build();
 
     //private Map<Category, List<Book>> booksByCategory = new HashMap<>();
@@ -56,6 +59,7 @@ public class TestDataUtils {
                 .title("title4")
                 .author("author4")
                 .price(BigDecimal.valueOf(39.99))
+                .stock(10)
                 .build();
     }
 
@@ -66,6 +70,7 @@ public class TestDataUtils {
                 .title("title1")
                 .author("author1")
                 .price(BigDecimal.valueOf(9.99))
+                .stock(10)
                 .build();
 
         Book book2 = Book.builder()
@@ -74,6 +79,7 @@ public class TestDataUtils {
                 .title("title2")
                 .author("author2")
                 .price(BigDecimal.valueOf(19.99))
+                .stock(10)
                 .build();
 
         Book book3 = Book.builder()
@@ -82,6 +88,7 @@ public class TestDataUtils {
                 .title("title3")
                 .author("author3")
                 .price(BigDecimal.valueOf(29.99))
+                .stock(10)
                 .build();
 
         BOOKLIST.addAll(Arrays.asList(book1, book2, book3));
