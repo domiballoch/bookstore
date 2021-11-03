@@ -109,7 +109,7 @@ public class BookServiceImpl implements BookService {
      * //TODO: complete sql call
      *
      * @param category
-     * @return List<Book>
+     * @return - List<Book>
      */
     @Cacheable("book")
     @Override
@@ -123,7 +123,7 @@ public class BookServiceImpl implements BookService {
      * //TODO: add fuzzy search logic
      *
      * @param search
-     * @return List<Book>
+     * @return - List<Book>
      */
     @Override
     public List<Book> findBookBySearchTermIgnoreCase(final String search) {

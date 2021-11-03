@@ -20,8 +20,9 @@ import java.util.Optional;
 
 import static bookstore.utils.BookConstants.BOOK_NOT_FOUND;
 
-@RestController
+//TODO:Add controller advice
 @Slf4j
+@RestController
 @RequestMapping(value = "/rest", produces = MediaType.APPLICATION_JSON_VALUE)
 public class BookRestController {
 

@@ -2,13 +2,10 @@ package bookstore.service;
 
 import bookstore.dao.BookRepository;
 import bookstore.domain.Book;
-import bookstore.domain.Category;
 import bookstore.exception.BookNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
 
 import static bookstore.utils.BookConstants.BOOK_NOT_FOUND;
 
@@ -20,37 +17,13 @@ public class AdminServiceImpl implements AdminService {
     private BookRepository bookRepository;
 
     /**
-     * Creates new Book object and saves to Bookstore DB(Book table)
-     * Increases Stock of Book
+     * Adds new book to bookstore by Json request
      *
-     * @param - isbn
-     * @param - category
-     * @param - title
-     * @param - author
-     * @param - price
-     * @return - Book object
+     * @param book
+     * @return book
      */
     @Override
-    public Book addNewBookToBookStorePathVariable(final long isbn, final Category category, final String title,
-                                      final String author, final BigDecimal price, final int stock) {
-        log.info("Adding new book to bookstore");
-        final Book newBook = Book.builder()
-                .isbn(isbn)
-                .category(category)
-                .title(title)
-                .author(author)
-                .price(price)
-                .stock(stock)
-                .build();
-        bookRepository.save(newBook);
-
-        //TODO: Need to increase stock of book per isbn in many to one
-        log.info("New book added to bookstore: {}", newBook.toString());
-        return newBook;
-    }
-
-    @Override
-    public Book addNewBookToBookstoreJsonRequest(final Book book) {
+    public Book addNewBookToBookstoreJson(final Book book) {
         log.info("Adding new book to bookstore");
         final Book newBook = Book.builder()
                 .category(book.getCategory())
@@ -65,7 +38,13 @@ public class AdminServiceImpl implements AdminService {
         log.info("New book added to bookstore: {}", newBook.toString());
         return newBook;
     }
-    
+
+    /**
+     * Adds new book to bookstore by web page
+     *
+     * @param book
+     * @return book
+     */
     @Override
     public Book addNewBookToBookStoreWeb(final Book book) {
         log.info("Adding new book to bookstore");
@@ -98,31 +77,36 @@ public class AdminServiceImpl implements AdminService {
         	log.warn(BOOK_NOT_FOUND);
         }
         log.info("Deleted book from bookstore by isbn: {}", isbn);
-    }   
+    }
 
+    /**
+     * Updates book in bookstore by web page
+     *
+     * @param book
+     * @return book
+     */
     @Override
-    public void updateBookWeb(final Book book) {
+    public Book updateBookInBookstoreWeb(final Book book) {
         log.info("Updating book: {}", book.toString());
         bookRepository.delete(book);
         bookRepository.save(book);
+        log.info("Saving book: {}", book.toString());
+        return book;
     }
 
-    //Todo:Change this stuff so controller accepts JSON - then just use Postman
-    // and pass in Book Entity instead of PathVariables, duh!
+    /**
+     * Updates book in bookstore by Json request
+     *
+     * @param book
+     * @return book
+     */
     @Override
-    public void updateBook(final Category category, final String title,
-                           final String author, final BigDecimal price, final int stock) {
-        log.info("Updating book: {}, {}, {}, {}, {}, [}", category, title, author, price, stock);
-        final Book book = Book.builder()
-                .category(category)
-                .title(title)
-                .author(author)
-                .price(price)
-                .stock(stock)
-                .build();
-        bookRepository.deleteById(book.getIsbn());
+    public Book updateBookInBookstoreJson(final Book book) {
+        log.info("Updating book: {}", book.toString());
+        bookRepository.delete(book);
         bookRepository.save(book);
-        log.info("Saved new book: {}", book.toString());
+        log.info("Saving book: {}", book.toString());
+        return book;
     }
 
 }

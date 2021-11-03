@@ -52,9 +52,6 @@ public class BookRestControllerTest {
     @MockBean
     private BookService bookService;
 
-    @MockBean
-    private AdminService adminService;
-
     @SneakyThrows
     @Test
     public void findAllBooks() {
