@@ -2,6 +2,7 @@ package bookstore.controller.rest;
 
 import bookstore.domain.Book;
 import bookstore.service.AdminService;
+import bookstore.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 //TODO:Add controller advice
 @RestController
 @RequestMapping(value = "/rest", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -22,22 +25,26 @@ public class AdminRestController {
     @Autowired
     private AdminService adminService;
 
-    @PostMapping(value = "/addNewBookToBookstoreJsonRequest")
+    @Autowired
+    private BookService bookService;
+
+    @PostMapping(value = "/addNewBookToBookstore")
     public ResponseEntity<Book> addNewBookToBookstore(@RequestBody final Book book) {
-        adminService.addNewBookToBookstoreJson(book);
-        return new ResponseEntity<>(HttpStatus.OK);
+        final Book addedBook = adminService.addNewBookToBookstoreJson(book);
+        return new ResponseEntity<>(addedBook, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/deleteBookFromBookstore")
-    public ResponseEntity<Book> deleteBookFromBookstore(@PathVariable final long isbn) {
+    public ResponseEntity<Optional<Book>> deleteBookFromBookstore(@PathVariable final long isbn) {
+        final Optional<Book> deletedBook = bookService.findBookByIsbn(isbn);
         adminService.deleteSingleBookFromBookstoreByIsbn(isbn);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(deletedBook, HttpStatus.OK);
     }
 
     //Using PUT for idempotency - resending the whole Entity
     @PutMapping(value = "/updateBookInBookstore")
     public ResponseEntity<Book> updateBookInBookstore(@RequestBody final Book book) {
-        adminService.updateBookInBookstoreJson(book);
-        return new ResponseEntity<>(HttpStatus.OK);
+        final Book updatedBook = adminService.updateBookInBookstoreJson(book);
+        return new ResponseEntity<>(updatedBook, HttpStatus.OK);
     }
 }
