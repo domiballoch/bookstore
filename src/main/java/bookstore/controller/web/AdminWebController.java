@@ -75,14 +75,14 @@ public class AdminWebController {
 
     @GetMapping(value = "/deleteBook")
     public String deleteBookFromBookstore(final @RequestParam long isbn) {
-    	adminService.deleteSingleBookFromBookstoreByIsbn(isbn);
+    	adminService.deleteBookFromBookstoreByIsbn(isbn);
     	//logic here - if valid return success else findAllBooks
     	//return "delete-book-success"; //not working
         return "redirect:/web/findAllBooks";
     }
     
 	@GetMapping(value = "/updateBook") //TODO:Not working - add modelAttribute?
-	public String updateBook(@RequestParam long isbn, ModelMap model) {
+	public String updateBookInBookstore(@RequestParam long isbn, ModelMap model) {
 		try {
 		final Book book = bookService.findBookByIsbnWeb(isbn);
 		model.put("book", book);
