@@ -69,7 +69,7 @@ public class AdminServiceImpl implements AdminService {
      * @param isbn
      */
     @Override
-    public void deleteSingleBookFromBookstoreByIsbn(final long isbn) {
+    public void deleteBookFromBookstoreByIsbn(final long isbn) {
         log.info("Deleting book from bookstore by isbn: {}", isbn);
         try {
         bookRepository.deleteById(isbn);

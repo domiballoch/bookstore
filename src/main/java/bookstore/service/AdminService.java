@@ -8,7 +8,7 @@ public interface AdminService {
 
     Book addNewBookToBookStoreWeb(final Book book);
 
-    void deleteSingleBookFromBookstoreByIsbn(final long isbn);
+    void deleteBookFromBookstoreByIsbn(final long isbn);
 
 	Book updateBookInBookstoreWeb(final Book book);
 

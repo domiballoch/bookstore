@@ -42,7 +42,7 @@ public class AdminServiceTest {
     @Test
     public void shouldDeleteOneBookFromBookStore(){
         final long isbn = 4;
-        adminServiceImpl.deleteSingleBookFromBookstoreByIsbn(isbn);
+        adminServiceImpl.deleteBookFromBookstoreByIsbn(isbn);
         verify(bookRepository, times(1)).deleteById(any(Long.class));
     }
 
