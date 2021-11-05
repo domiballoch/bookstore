@@ -131,9 +131,39 @@ public class BookServiceTest {
         verify(bookRepository, times(1)).findBooksByCategory(any(Category.class));
     }
 
+    @DisplayName("Should return book stock")
+    @Test
+    public void shouldReturnBookStock() {
+        when(bookRepository.getBookStock(any(String.class), any(String.class))).thenReturn(1);
+        final int result = bookService.getBookStock("Title", "Author");
+
+        assertThat(result).isEqualTo(1);
+        verify(bookRepository, times(1)).getBookStock(any(String.class), any(String.class));
+    }
+
+    @DisplayName("Should return book stock")
+    @Test
+    public void shouldReturnTrueIfBookIsInStock() {
+        when(bookRepository.findByTitleAndAuthor(any(String.class), any(String.class))).thenReturn(List.of(returnOneBook()));
+        final boolean result = bookService.inStock("Title", "Author");
+
+        assertThat(result).isEqualTo(true);
+        verify(bookRepository, times(1)).findByTitleAndAuthor(any(String.class), any(String.class));
+    }
+
+    @DisplayName("Should return book out of stock")
+    @Test
+    public void shouldReturnFalseIfBookIsOutOfStock() {
+        when(bookRepository.findByTitleAndAuthor(any(String.class), any(String.class))).thenReturn(Collections.EMPTY_LIST);
+        final boolean result = bookService.inStock("Title", "Author");
+
+        assertThat(result).isEqualTo(false);
+        verify(bookRepository, times(1)).findByTitleAndAuthor(any(String.class), any(String.class));
+    }
 
     //@DisplayName("Should increase stock when add one book")
     //@DisplayName("Should decrease stock when delete one book")
-    //@DisplayName("Should return true when book is in stock")
     //@DisplayName("Should return false when book is out of stock")
+    //@DisplayName("Should add book to basket")
+    //@DisplayName("Should remove book from basket")
 }
