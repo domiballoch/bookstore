@@ -61,4 +61,6 @@ public class AdminServiceTest {
         assertThat(updatedBook).isEqualTo(newBookDetails);
         verify(bookRepository, times(2)).save(any(Book.class));
     }
+
+    //add web service tests for completeness
 }
