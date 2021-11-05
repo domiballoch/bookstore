@@ -141,7 +141,7 @@ public class BookServiceTest {
         verify(bookRepository, times(1)).getBookStock(any(String.class), any(String.class));
     }
 
-    @DisplayName("Should return book stock")
+    @DisplayName("Should return book is in stock")
     @Test
     public void shouldReturnTrueIfBookIsInStock() {
         when(bookRepository.findByTitleAndAuthor(any(String.class), any(String.class))).thenReturn(List.of(returnOneBook()));
