@@ -166,4 +166,7 @@ public class BookServiceTest {
     //@DisplayName("Should return false when book is out of stock")
     //@DisplayName("Should add book to basket")
     //@DisplayName("Should remove book from basket")
+
+    //unhappy paths
+    //@DisplayName("Should not allow empty or null or min or max - separate tests")
 }

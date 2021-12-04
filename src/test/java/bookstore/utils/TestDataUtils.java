@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @UtilityClass
 public class TestDataUtils {
@@ -92,6 +93,16 @@ public class TestDataUtils {
                 .build();
 
         BOOKLIST.addAll(Arrays.asList(book1, book2, book3));
+    }
+
+    public List<Book> getSpecificBookFromBookList_IfMatchByName(final String param) {
+        //initialise
+        returnBookList();
+        final String name = "^(" + param + ").*"; //regex
+
+       return BOOKLIST.stream().filter(book -> book.getTitle()
+                               .matches(name))
+                               .collect(Collectors.toList());
     }
 
 //        book.getBookList().clear();

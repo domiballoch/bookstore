@@ -70,13 +70,17 @@ public class Book implements Serializable {
     @Column(name = "stock")
     private int stock;
 
-    //    @NotNull(message = "Category cannot be null")
-    //    @Column(name = "quantity")
-    //    private int quantity;
+//    @ManyToOne(cascade = { CascadeType.ALL })
+//    @JoinColumn(name="orderId")
+//    private Order order;
 
-    //    public Map<Category, List<Book>> getBooksByCategory() {
-    //    return booksByCategory;
-    //    }
+//    @NotNull(message = "Category cannot be null")
+//    @Column(name = "quantity")
+//    private int quantity;
+
+//    public Map<Category, List<Book>> getBooksByCategory() {
+//    return booksByCategory;
+//    }
     
 //    @Column(name="created_at")
 //    @Temporal(TemporalType.DATE)
