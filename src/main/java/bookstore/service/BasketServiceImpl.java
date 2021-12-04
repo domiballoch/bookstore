@@ -27,4 +27,15 @@ public class BasketServiceImpl implements BasketService {
     public void submitOrder() {
 
     }
+
+    @Override
+    public void removeBookFromBasket() {
+
+    }
+
+    @Override
+    public void clearBasket() {
+
+    }
+
 }

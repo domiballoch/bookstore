@@ -9,4 +9,8 @@ public interface BasketService {
     BigDecimal calculateBasket(final Basket basket);
 
     void submitOrder();
+
+    void removeBookFromBasket();
+
+    void clearBasket();
 }

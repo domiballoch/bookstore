@@ -101,7 +101,7 @@ public class AdminServiceImpl implements AdminService {
      * @return book
      */
     @Override
-    public Book updateBookInBookstoreJson(final Book book) {
+    public Book updateBookInBookstoreJson(final Book book) { //Need to amend this code
         log.info("Updating book: {}", book.toString());
         bookRepository.delete(book);
         bookRepository.save(book);
