@@ -1,6 +1,5 @@
-package bookstore.service;
+package bookstore.dao;
 
-import bookstore.dao.BookRepository;
 import bookstore.domain.Book;
 import bookstore.domain.Category;
 import org.junit.jupiter.api.Disabled;
