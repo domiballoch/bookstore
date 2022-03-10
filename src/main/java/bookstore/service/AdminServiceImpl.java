@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 import static bookstore.utils.BookConstants.BOOK_NOT_FOUND;
 
 @Service
@@ -101,9 +103,12 @@ public class AdminServiceImpl implements AdminService {
      * @return book
      */
     @Override
-    public Book updateBookInBookstoreJson(final Book book) { //Need to amend this code
-        log.info("Updating book: {}", book.toString());
-        bookRepository.delete(book);
+    public Book updateBookInBookstoreJson(final Book book, final long isbn) {
+        Optional<Book> foundBook = Optional.ofNullable(bookRepository.findById(isbn)
+                .orElseThrow(() -> new BookNotFoundException(BOOK_NOT_FOUND)));
+        log.info("Updating book: {}", foundBook.toString());
+        bookRepository.delete(foundBook.get());
+        book.setIsbn(isbn);
         bookRepository.save(book);
         log.info("Saving book: {}", book.toString());
         return book;

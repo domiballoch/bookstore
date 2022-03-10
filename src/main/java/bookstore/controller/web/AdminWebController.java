@@ -1,7 +1,6 @@
 package bookstore.controller.web;
 
 import bookstore.domain.Book;
-import bookstore.domain.Category;
 import bookstore.exception.BookNotFoundException;
 import bookstore.service.AdminService;
 import bookstore.service.BookService;
@@ -68,7 +67,7 @@ public class AdminWebController {
 		try {
 			adminService.addNewBookToBookStoreWeb(book);
     	}catch(Exception e) {
-    		e.getMessage(); //make this better...
+			log.error("Error adding book to bookstore {} {}", book, e.getMessage());
     	}
     	return "redirect:/web/findAllBooks";
     }
@@ -82,15 +81,15 @@ public class AdminWebController {
     }
     
 	@GetMapping(value = "/updateBook") //TODO:Not working - add modelAttribute?
-	public String updateBookInBookstore(@RequestParam long isbn, ModelMap model) {
+	public String updateBookInBookstore(@RequestParam final long isbn, final ModelMap model) {
 		try {
 		final Book book = bookService.findBookByIsbnWeb(isbn);
 		model.put("book", book);
-		model.put("category", Category.values());
+		//model.addAttribute("category", Category.values());
 		} catch(BookNotFoundException e) {
 			log.info(BOOK_NOT_FOUND, e.getMessage());
 			return "/findAllBooks";
-		} 
+		}
 		return "add-new-book";
 	}
     

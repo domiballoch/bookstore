@@ -12,6 +12,6 @@ public interface AdminService {
 
 	Book updateBookInBookstoreWeb(final Book book);
 
-    Book updateBookInBookstoreJson(final Book book);
+    Book updateBookInBookstoreJson(final Book book, final long isbn);
 
 }
