@@ -35,9 +35,9 @@ public class AdminRestController {
     }
 
     //Using PUT for idempotency - resending the whole Entity
-    @PutMapping(value = "/updateBook")
-    public ResponseEntity<Book> updateBookInBookstore(@RequestBody final Book book) {
-        final Book updatedBook = adminService.updateBookInBookstoreJson(book);
+    @PutMapping(value = "/updateBook/{isbn}")
+    public ResponseEntity<Book> updateBookInBookstore(@RequestBody final Book book, @PathVariable final long isbn) {
+        final Book updatedBook = adminService.updateBookInBookstoreJson(book, isbn);
         return new ResponseEntity<>(updatedBook, HttpStatus.OK);
     }
 }

@@ -73,9 +73,9 @@ public class AdminRestControllerTest {
     @SneakyThrows
     @Test
     public void updateBookInBookstore() {
-        when(adminService.updateBookInBookstoreJson(any(Book.class))).thenReturn(returnOneBook());
+        when(adminService.updateBookInBookstoreJson(any(Book.class), any(Long.class))).thenReturn(returnOneBook());
         final ResultActions resultActions =
-                mockMvc.perform(put("/rest/updateBook")
+                mockMvc.perform(put("/rest/updateBook/{isbn}", 4)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(CREATE_ONE_BOOK))
                         .accept(MediaType.APPLICATION_JSON_VALUE))
@@ -84,6 +84,6 @@ public class AdminRestControllerTest {
 
         final Book result = getResponseFrom(resultActions, objectMapper, new TypeReference<>() {});
         assertThat(result).isEqualTo((returnOneBook()));
-        verify(adminService, times(1)).updateBookInBookstoreJson(any(Book.class));
+        verify(adminService, times(1)).updateBookInBookstoreJson(any(Book.class), any(Long.class));
     }
 }

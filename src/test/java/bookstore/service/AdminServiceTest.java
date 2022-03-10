@@ -2,12 +2,15 @@ package bookstore.service;
 
 import bookstore.dao.BookRepository;
 import bookstore.domain.Book;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.Optional;
 
 import static bookstore.utils.TestDataUtils.CREATE_ANOTHER_BOOK;
 import static bookstore.utils.TestDataUtils.CREATE_ONE_BOOK;
@@ -46,18 +49,19 @@ public class AdminServiceTest {
         verify(bookRepository, times(1)).deleteById(any(Long.class));
     }
 
+    @Disabled
     @DisplayName("Should update one book from bookstore")
     @Test
     public void shouldUpdateOneBookFromBookStore(){
-        final Book book = CREATE_ONE_BOOK;
-        bookRepository.save(book);
+        Book book = (CREATE_ONE_BOOK);
+        final Book newBookDetails = (CREATE_ANOTHER_BOOK);
 
-        //when->thenReturn not having any effect???
-
-        final Book newBookDetails = CREATE_ANOTHER_BOOK;
+        when(bookRepository.findById(5L)).thenReturn(Optional.of(book));
+        when(adminServiceImpl.updateBookInBookstoreJson(newBookDetails, 5)).thenReturn(newBookDetails);
         newBookDetails.setIsbn(CREATE_ONE_BOOK.getIsbn());
 
-        final Book updatedBook = adminServiceImpl.updateBookInBookstoreJson(newBookDetails);
+        bookRepository.save(book);
+        final Book updatedBook = adminServiceImpl.updateBookInBookstoreJson(newBookDetails, 5);
         assertThat(updatedBook).isEqualTo(newBookDetails);
         verify(bookRepository, times(2)).save(any(Book.class));
     }

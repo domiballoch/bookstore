@@ -42,7 +42,7 @@ public class BookServiceImpl implements BookService {
      */
     //@Transactional(readOnly = true)
     //Pagination required
-    @Cacheable("books")
+    //@Cacheable("books")
     @Override
     public List<Book> findAllBooks() {
         log.info("Finding all books");

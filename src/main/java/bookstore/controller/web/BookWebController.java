@@ -4,7 +4,6 @@ import bookstore.service.BookService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,22 +25,4 @@ public class BookWebController {
 
     }
 
-    @GetMapping(value = "/findAllBooksHtml")
-    public String findAllBooksHtml(Model model) {
-        log.info("in controller");
-		//String name = getLoggedInUserName(model);
-        //if user instanceOf user then hide admin buttons
-        model.addAttribute("books", bookService.findAllBooks());
-        return "show-all-books-th";
-    }
-
-    @GetMapping(value = "/hello-html")
-    public String helloHtml() {
-        return "hello";
-    }
-
-    @GetMapping(value = "/hello-jsp")
-    public String helloJsp() {
-        return "hello";
-    }
 }
