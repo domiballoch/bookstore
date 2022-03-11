@@ -40,7 +40,7 @@ public class BasketServiceImpl implements BasketService {
 
     @Override
     public void submitOrder() {
-        //orderRepo.save items in basket with user key
+        //orderRepo.save purchaseDTO
         //update book.Repo stock
         //log.info("Items ordered: {}, basket)
         //clearBasket();
@@ -56,7 +56,6 @@ public class BasketServiceImpl implements BasketService {
     @Override
     public void removeBookFromBasket(final Book book) {
         log.info("Removing book from basket: {}", book);
-        //remove book from basket list and increase stock by quantity
         List<Object> removedBooks = new ArrayList<>();
 
         basket.stream().forEach(b -> {
@@ -66,6 +65,7 @@ public class BasketServiceImpl implements BasketService {
 
         if(CollectionUtils.containsAny(removedBooks, basket)) {
             basket.removeAll(removedBooks);
+            log.info("Removed book(s) from basket: {}", removedBooks);
             book.setStock(book.getStock() +1);
         }
     }
