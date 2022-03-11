@@ -29,8 +29,9 @@ public class BasketServiceTest {
     @DisplayName("Should remove book from basket and increase stock")
     @Test
     public void shouldRemoveBookFromBasketAndIncreaseStock() {
-        //stock is 10
         final Book book = CREATE_ONE_BOOK;
+        //stock is 10
+        book.setStock(10);
         bookService.addBookToBasket(book);
 
         assertThat(book.getStock()).isEqualTo(9);

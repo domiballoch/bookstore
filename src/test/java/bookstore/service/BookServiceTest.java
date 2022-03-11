@@ -172,6 +172,7 @@ public class BookServiceTest {
     public void shouldAddBookToBasketAndReduceBookStock() {
         final Book book = CREATE_ONE_BOOK;
         //stock is 10
+        book.setStock(10);
         bookService.addBookToBasket(book);
 
         assertThat(basket.size()).isEqualTo(1);

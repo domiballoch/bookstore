@@ -50,7 +50,7 @@ public class Orders implements Serializable {
 
     @ManyToOne(cascade = { CascadeType.ALL })
     @JoinColumn(name="userId")
-    private List<Users> users;
+    private Users users;
 
     @OneToMany(mappedBy = "isbn", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
     private List<Book> books;

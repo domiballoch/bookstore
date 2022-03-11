@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.List;
 
 @Builder(toBuilder = true)
 @Data
@@ -50,5 +51,5 @@ public class Users implements Serializable {
     private String postCode;
 
     @OneToMany(mappedBy = "orderId", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-    private Orders orders;
+    private List<Orders> orders;
 }
