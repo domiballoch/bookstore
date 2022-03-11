@@ -36,7 +36,6 @@ public class AdminServiceImpl implements AdminService {
                 .build();
         bookRepository.save(newBook);
 
-        //TODO: Need to increase stock of book per isbn
         log.info("New book added to bookstore: {}", newBook.toString());
         return newBook;
     }
@@ -59,14 +58,12 @@ public class AdminServiceImpl implements AdminService {
                 .build();
         bookRepository.save(newBook);
 
-        //TODO: Need to increase stock of book per isbn
         log.info("New book added to bookstore: {}", newBook.toString());
         return newBook;
     }
 
     /**
-     * Deletes single Book from Bookstore DB(Book table)
-     * Decreases Stock of Book if already exists
+     * Deletes Book from Bookstore DB(Book table)
      *
      * @param isbn
      */

@@ -24,6 +24,4 @@ public interface BookService {
 
     void addBookToBasket(final Book book);
 
-    void removeBookFromBasket(final Book book);
-
 }

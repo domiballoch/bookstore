@@ -1,6 +1,7 @@
 package bookstore.service;
 
 import bookstore.domain.Basket;
+import bookstore.domain.Book;
 
 import java.math.BigDecimal;
 
@@ -10,7 +11,7 @@ public interface BasketService {
 
     void submitOrder();
 
-    void removeBookFromBasket();
+    void removeBookFromBasket(final Book book);
 
     void clearBasket();
 }

@@ -1,15 +1,18 @@
 package bookstore.service;
 
 import bookstore.dao.BookRepository;
+import bookstore.domain.Basket;
 import bookstore.domain.Book;
 import bookstore.domain.Category;
 import bookstore.exception.BookDataException;
+import bookstore.utils.TestDataUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
@@ -31,6 +34,9 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class BookServiceTest {
+
+    @Spy
+    private Basket basket;
 
     @Mock
     private BookRepository bookRepository;
@@ -161,12 +167,18 @@ public class BookServiceTest {
         verify(bookRepository, times(1)).findByTitleAndAuthor(any(String.class), any(String.class));
     }
 
-    //@DisplayName("Should increase stock when add one book")
-    //@DisplayName("Should decrease stock when delete one book")
-    //@DisplayName("Should return false when book is out of stock")
-    //@DisplayName("Should add book to basket")
-    //@DisplayName("Should remove book from basket")
+    @DisplayName("Should add book to basket and reduce stock")
+    @Test
+    public void shouldAddBookToBasketAndReduceBookStock() {
+        final Book book = TestDataUtils.CREATE_ONE_BOOK;
+        //stock is 10
+        bookService.addBookToBasket(book);
+
+        assertThat(basket.size()).isEqualTo(1);
+        assertThat(book.getStock()).isEqualTo(9);
+    }
 
     //unhappy paths
+    //@DisplayName("Should return false when book is out of stock")
     //@DisplayName("Should not allow empty or null or min or max - separate tests")
 }

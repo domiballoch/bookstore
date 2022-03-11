@@ -2,7 +2,6 @@ package bookstore.service;
 
 import bookstore.dao.BookRepository;
 import bookstore.domain.Book;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -49,7 +48,6 @@ public class AdminServiceTest {
         verify(bookRepository, times(1)).deleteById(any(Long.class));
     }
 
-    @Disabled
     @DisplayName("Should update one book from bookstore")
     @Test
     public void shouldUpdateOneBookFromBookStore(){

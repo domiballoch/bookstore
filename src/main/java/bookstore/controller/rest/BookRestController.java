@@ -4,7 +4,6 @@ import bookstore.domain.Book;
 import bookstore.domain.Category;
 import bookstore.exception.BookNotFoundException;
 import bookstore.service.BookService;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,7 +37,6 @@ public class BookRestController {
         return new ResponseEntity<>(bookList, HttpStatus.OK);
     }
 
-    @SneakyThrows
     @GetMapping(value = "/findBook/{isbn}")
     public ResponseEntity<Optional<Book>> findBookByIsbn(@PathVariable final long isbn) {
         final Optional<Book> book = Optional.ofNullable(bookService.findBookByIsbn(isbn)
