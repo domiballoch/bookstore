@@ -28,30 +28,30 @@ Login with root or create user and change yml
 
 <h4>Endpoints - Rest only (output as JSON)</h4>
 Get
-http://localhost:8080/bookstore/rest/findAllBooks
-<br/>http://localhost:8080/bookstore/findBook/rest/{isbn}
-<br>Post
+<br>http://localhost:8080/bookstore/rest/findAllBooks<br/>
+http://localhost:8080/bookstore/findBook/rest/{isbn}
+<br>Post<br/>
 http://localhost:8080/bookstore/addNewBookToBookstore/rest
-<br>Put
+<br>Put<br/>
 http://localhost:8080/bookstore/updateBook/rest/{isbn}
-<br>Delete
+<br>Delete<br/>
 http://localhost:8080/bookstore/deleteBook/rest/{isbn}
-<br>Add new book
+<br>Add new book<br/>
 http://localhost:8080/bookstore/addNewBook/rest/{isbn}
-<br>Search by search term
+<br>Search by search term<br/>
 http://localhost:8080/bookstore/search/rest/{search}
-<br>Search by category
+<br>Search by category<br/>
 http://localhost:8080/bookstore/category/rest/{category}
 
 <h4>Endpoints - with views (output as JSP)</h4>
 Get
-http://localhost:8080/bookstore/findAllBooks
-<br/>http://localhost:8080/bookstore/findBook
-<br>Post
+<br>http://localhost:8080/bookstore/findAllBooks<br/>
+http://localhost:8080/bookstore/findBook
+<br>Post<br/>
 http://localhost:8080/bookstore/addNewBook
-<br>Put
+<br>Put<br/>
 http://localhost:8080/bookstore/updateBook
-<br>Delete
+<br>Delete<br/>
 http://localhost:8080/bookstore/deleteBook
 
 Endpoints - health check exposed only
