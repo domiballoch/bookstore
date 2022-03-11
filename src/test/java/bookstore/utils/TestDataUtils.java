@@ -16,7 +16,7 @@ public class TestDataUtils {
     public static final String TITLE = "title1";
     public static final String AUTHOR ="author1";
     public static final List<Book> BOOKLIST = new ArrayList<>();
-    //public static final Optional<List<Book>> RETURN_BOOKS_BY_TITLE_AND_AUTHOR;
+
     public static final Book CREATE_ONE_BOOK = Book.builder()
             .isbn(5L)
             .category(Category.COOKING)
@@ -43,8 +43,6 @@ public class TestDataUtils {
             .price(BigDecimal.valueOf(14.19))
             .stock(10)
             .build();
-
-    //private Map<Category, List<Book>> booksByCategory = new HashMap<>();
 
     public static void filterBookListByTitleAndAuthor(String title, String author) {
         long inStock = BOOKLIST.stream()
