@@ -27,31 +27,37 @@ Login with root or create user and change yml
 <br/>username: root
 
 <h4>Endpoints - Rest only (output as JSON)</h4>
-<h4>Get</h4>
+Get
 http://localhost:8080/bookstore/rest/findAllBooks
 <br/>http://localhost:8080/bookstore/findBook/rest/{isbn}
-<h4>Post</h4>
+<br>Post
 http://localhost:8080/bookstore/addNewBookToBookstore/rest
-<h4>Put</h4>
-http://localhost:8080/bookstore/amendBook/rest
-<h4>Delete</h4>
-http://localhost:8080/bookstore/deleteBookFromBookstore/rest/{isbn}
+<br>Put
+http://localhost:8080/bookstore/updateBook/rest/{isbn}
+<br>Delete
+http://localhost:8080/bookstore/deleteBook/rest/{isbn}
+<br>Add new book
+http://localhost:8080/bookstore/addNewBook/rest/{isbn}
+<br>Search by search term
+http://localhost:8080/bookstore/search/rest/{search}
+<br>Search by category
+http://localhost:8080/bookstore/category/rest/{category}
 
 <h4>Endpoints - with views (output as JSP)</h4>
-<h4>Get</h4>
+Get
 http://localhost:8080/bookstore/findAllBooks
-<br/>http://localhost:8080/bookstore/findBook/{isbn}
-<h4>Post</h4>
-http://localhost:8080/bookstore/addNewBookToBookstore
-<h4>Put</h4>
-http://localhost:8080/bookstore/amendBook
-<h4>Delete</h4>
-http://localhost:8080/bookstore/deleteBookFromBookstore/{isbn}
+<br/>http://localhost:8080/bookstore/findBook
+<br>Post
+http://localhost:8080/bookstore/addNewBook
+<br>Put
+http://localhost:8080/bookstore/updateBook
+<br>Delete
+http://localhost:8080/bookstore/deleteBook
 
-<h4>Endpoints - health check exposed only</h4>
+Endpoints - health check exposed only
 http://localhost:8080/bookstore/actuator/health
 
-<h4>Swagger - to come...</h4>
+Swagger - to come...
 
 <h4>Logging level</h4>
 info - set filepath as/if required
