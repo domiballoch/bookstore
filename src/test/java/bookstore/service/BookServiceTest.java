@@ -5,7 +5,6 @@ import bookstore.domain.Basket;
 import bookstore.domain.Book;
 import bookstore.domain.Category;
 import bookstore.exception.BookDataException;
-import bookstore.utils.TestDataUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,6 +19,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static bookstore.utils.TestDataUtils.CREATE_ONE_BOOK;
 import static bookstore.utils.BookConstants.DATABASE_NOT_AVAILABLE;
 import static bookstore.utils.TestDataUtils.BOOKLIST;
 import static bookstore.utils.TestDataUtils.returnBookList;
@@ -170,7 +170,7 @@ public class BookServiceTest {
     @DisplayName("Should add book to basket and reduce stock")
     @Test
     public void shouldAddBookToBasketAndReduceBookStock() {
-        final Book book = TestDataUtils.CREATE_ONE_BOOK;
+        final Book book = CREATE_ONE_BOOK;
         //stock is 10
         bookService.addBookToBasket(book);
 

@@ -2,7 +2,6 @@ package bookstore.service;
 
 import bookstore.domain.Basket;
 import bookstore.domain.Book;
-import bookstore.utils.TestDataUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +26,11 @@ public class BasketServiceTest {
     @Autowired
     private Basket basket;
 
-    @DisplayName("Should remove book from basket")
+    @DisplayName("Should remove book from basket and increase stock")
     @Test
-    public void shouldRemoveBookFromBasket() {
+    public void shouldRemoveBookFromBasketAndIncreaseStock() {
         //stock is 10
-        final Book book = TestDataUtils.CREATE_ONE_BOOK;
+        final Book book = CREATE_ONE_BOOK;
         bookService.addBookToBasket(book);
 
         assertThat(book.getStock()).isEqualTo(9);
@@ -52,5 +51,23 @@ public class BasketServiceTest {
         final BigDecimal totalPrice = basketService.calculateBasket(basket);
 
         assertThat(totalPrice).isEqualByComparingTo(new BigDecimal("88.67"));
+    }
+
+    @DisplayName("Should clear basket")
+    @Test
+    public void shouldClearBasket() {
+        final Book book1 = CREATE_ONE_BOOK;
+        final Book book2 = CREATE_ANOTHER_BOOK;
+        final Book book3 = CREATE_YET_ANOTHER_BOOK;
+        bookService.addBookToBasket(book1);
+        bookService.addBookToBasket(book2);
+        bookService.addBookToBasket(book3);
+
+        assertThat(basket).size().isEqualTo(3);
+
+        basketService.clearBasket();
+
+        assertThat(basket).size().isEqualTo(0);
+
     }
 }
