@@ -54,7 +54,7 @@ http://localhost:8080/bookstore/updateBook
 <br>Delete<br/>
 http://localhost:8080/bookstore/deleteBook
 
-Endpoints - health check exposed only
+<br>Endpoints - health check exposed only<br/>
 http://localhost:8080/bookstore/actuator/health
 
 Swagger - to come...
