@@ -1,9 +1,18 @@
-use bookstore;
-DROP TABLE IF EXISTS book;
+#SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS;
+#SET FOREIGN_KEY_CHECKS=0;
+#SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 
+#DROP SCHEMA IF EXISTS `bookstore` ;
+#CREATE SCHEMA IF NOT EXISTS `bookstore` DEFAULT CHARACTER SET latin1 ;
+use bookstore;
+
+
+### BOOK TABLE ###
+
+DROP TABLE IF EXISTS book;
 CREATE TABLE IF NOT EXISTS book
 (
-isbn bigint NOT NULL auto_increment, 
+isbn bigint NOT NULL auto_increment,
 category enum(
     'NONE',
     'ARTS_AND_MUSIC',
@@ -24,15 +33,74 @@ category enum(
 title varchar(255) NOT NULL,
 author varchar(255) NOT NULL,
 price decimal(19,2) NOT NULL,
-stock integer NOT NULL, 
+stock integer NOT NULL,
 PRIMARY KEY (isbn)
 )
 engine=InnoDB
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
 
+
+### USER TABLE ###
+
+DROP TABLE IF EXISTS users;
+CREATE TABLE IF NOT EXISTS users
+(
+user_id bigint NOT NULL auto_increment,
+order_id bigint NOT NULL,
+first_name varchar(255) NOT NULL,
+last_name varchar(255) NOT NULL,
+address_line_1 varchar(255) NOT NULL,
+address_line_2 varchar(255) NOT NULL,
+post_code varchar(255) NOT NULL,
+PRIMARY KEY (user_id)
+#FOREIGN KEY (order_id) REFERENCES orders(order_id)
+)
+engine=InnoDB
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = latin1;
+
+alter table users
+add foreign key (order_id) references orders(order_id);
+
+
+### ORDER TABLE ###
+
+DROP TABLE IF EXISTS orders;
+CREATE TABLE IF NOT EXISTS orders
+(
+order_id bigint NOT NULL auto_increment,
+user_id bigint NOT NULL,
+total_items integer NOT NULL,
+total_price decimal(19,2) NOT NULL,
+order_date datetime NOT NULL,
+PRIMARY KEY (order_id)
+#FOREIGN KEY (user_id) REFERENCES users(user_id)
+)
+engine=InnoDB
+AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = latin1;
+
+alter table orders
+add foreign key (user_id) references users(user_id);
+
+
+## INSERT DATA ##
+
 INSERT INTO book (isbn, category, title, author, price, stock)
-VALUES 
+VALUES
 (0001, 'KIDS', 'Peppa Pig', 'Miss Pig', 4.99, 25),
 (0002, 'COOKING', 'Italian Dinners', 'J Oliver', 24.99, 50),
 (0003, 'SCIENCE_FICTION', 'Mars Robots', 'Mr Bean', 11.99, 10);
+
+INSERT INTO users (user_id, order_id, first_name, last_name, address_line_1, address_line_2, post_code)
+VALUES
+(0001, 0001, 'John', 'Smith', '10 Apple Lane', 'London', 'SW12PQ'),
+(0002, 0002, 'Jane', 'Richards', '20 Orange Close', 'London', 'SW14TY'),
+(0003, 0003, 'James', 'Jones', '30 Cherry Tree Road', 'London', 'SW18RP');
+
+INSERT INTO orders (order_id, user_id, total_items, total_price, order_date)
+VALUES
+(0001, 0001, 1, 25.00, '2022-03-11'),
+(0002, 0002, 2, 40.00, '2022-03-11'),
+(0003, 0003, 3, 100.00, '2022-03-11');

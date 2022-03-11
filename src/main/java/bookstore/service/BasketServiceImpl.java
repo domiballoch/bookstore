@@ -40,7 +40,10 @@ public class BasketServiceImpl implements BasketService {
 
     @Override
     public void submitOrder() {
-
+        //orderRepo.save items in basket with user key
+        //update book.Repo stock
+        //log.info("Items ordered: {}, basket)
+        //clearBasket();
     }
 
     /**
