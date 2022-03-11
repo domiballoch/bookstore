@@ -10,9 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,8 +61,6 @@ public class BookServiceImpl implements BookService {
         return Optional.ofNullable(bookRepository.findById(isbn)
                 .orElseThrow(() -> new BookDataException(DATABASE_NOT_AVAILABLE)));
     }
-    
-
     
     @Override
     public Book findBookByIsbnWeb(final long isbn){
@@ -143,28 +139,7 @@ public class BookServiceImpl implements BookService {
         //add book to a basket list and reduce stock by quantity
         //cache evict
         basket.add(book);
+        book.setStock(book.getStock()-1);
     }
 
-    /**
-     * Removes Book from Basket(List)
-     * First adds removed Book(s) to separate list the compares against Basket
-     * If Basket contains any then they get removed - avoiding ConcurrentModificationException of Stream
-     *
-     * @param book
-     */
-    @Override
-    public void removeBookFromBasket(final Book book) {
-        log.info("Removing book from basket: {}", book);
-        //remove book from basket list and increase stock by quantity
-        List<Object> removedBooks = new ArrayList<>();
-
-        basket.stream().forEach(b -> {
-            b.equals(book);
-            removedBooks.add(b);
-        });
-
-        if(CollectionUtils.containsAny(removedBooks, basket)) {
-            basket.removeAll(removedBooks);
-        }
-    }
 }
