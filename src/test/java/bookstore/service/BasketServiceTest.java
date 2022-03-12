@@ -46,9 +46,15 @@ public class BasketServiceTest {
     @DisplayName("Should sum total price of basket")
     @Test
     public void shouldSumTotalPriceOfBasket() {
-        bookService.addBookToBasket(CREATE_ONE_BOOK);
-        bookService.addBookToBasket(CREATE_ANOTHER_BOOK);
-        bookService.addBookToBasket(CREATE_YET_ANOTHER_BOOK);
+        final Book book1 = CREATE_ONE_BOOK;
+        final Book book2 = CREATE_ANOTHER_BOOK;
+        final Book book3 = CREATE_YET_ANOTHER_BOOK;
+        book1.setStock(10);
+        book2.setStock(10);
+        book3.setStock(10);
+        bookService.addBookToBasket(book1);
+        bookService.addBookToBasket(book2);
+        bookService.addBookToBasket(book3);
         final BigDecimal totalPrice = basketService.calculateBasket(basket);
 
         assertThat(totalPrice).isEqualByComparingTo(new BigDecimal("88.67"));
@@ -60,15 +66,23 @@ public class BasketServiceTest {
         final Book book1 = CREATE_ONE_BOOK;
         final Book book2 = CREATE_ANOTHER_BOOK;
         final Book book3 = CREATE_YET_ANOTHER_BOOK;
+        book1.setStock(10);
+        book2.setStock(10);
+        book3.setStock(10);
         bookService.addBookToBasket(book1);
         bookService.addBookToBasket(book2);
         bookService.addBookToBasket(book3);
 
         assertThat(basket).size().isEqualTo(3);
+        assertThat(book1.getStock()).isEqualTo(9);
+        assertThat(book2.getStock()).isEqualTo(9);
+        assertThat(book3.getStock()).isEqualTo(9);
 
         basketService.clearBasket();
 
         assertThat(basket).size().isEqualTo(0);
-
+        assertThat(book1.getStock()).isEqualTo(10);
+        assertThat(book2.getStock()).isEqualTo(10);
+        assertThat(book3.getStock()).isEqualTo(10);
     }
 }
