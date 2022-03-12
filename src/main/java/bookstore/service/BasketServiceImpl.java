@@ -71,10 +71,11 @@ public class BasketServiceImpl implements BasketService {
     }
 
     /**
-     * Clears basket
+     * Clears basket and update stock
      */
     @Override
     public void clearBasket() {
+        basket.forEach(book -> book.setStock(book.getStock()+1));
         basket.clear();
         log.info("Basket cleared");
     }
