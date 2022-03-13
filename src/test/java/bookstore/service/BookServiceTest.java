@@ -4,7 +4,7 @@ import bookstore.dao.BookRepository;
 import bookstore.domain.Basket;
 import bookstore.domain.Book;
 import bookstore.domain.Category;
-import bookstore.exception.BookDataException;
+import bookstore.exception.BookstoreDataException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -85,9 +85,9 @@ public class BookServiceTest {
 
     @DisplayName("Should throw book not found exception when return one book by isbn")
     @Test
-    public void shouldThrowBookNotFoundException_WhenReturnOneBookByIsbn(){
+    public void shouldThrowBookstoreNotFoundException_WhenReturnOneBookByIsbn(){
         final long isbn = 10;
-        Exception exception = assertThrows(BookDataException.class, () -> {
+        Exception exception = assertThrows(BookstoreDataException.class, () -> {
             bookService.findBookByIsbn(isbn);
         });
         final String expectedMessage = DATABASE_NOT_AVAILABLE;
@@ -180,6 +180,5 @@ public class BookServiceTest {
     }
 
     //unhappy paths
-    //@DisplayName("Should return false when book is out of stock")
     //@DisplayName("Should not allow empty or null or min or max - separate tests")
 }

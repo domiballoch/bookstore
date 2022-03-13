@@ -19,6 +19,7 @@ public class BookConstants {
     public static final String BOOK_OUT_OF_STOCK = "Sorry, this book is out of stock";
     public static final String CURRENT_STOCK_OF_ITEM = "Books in stock: ";
     public static final String BOOK_NOT_FOUND = "Book not found: ";
+    public static final String USER_NOT_FOUND = "User not found: ";
     public static final String DATABASE_NOT_AVAILABLE = "Database not available: ";
 
     public static final String ADDING_BOOK_TO_BASKET = "Adding book to basket: ";

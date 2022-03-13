@@ -1,5 +1,6 @@
 package bookstore.service;
 
+import bookstore.dao.OrderRepository;
 import bookstore.domain.Basket;
 import bookstore.domain.Book;
 import org.junit.jupiter.api.DisplayName;
@@ -25,6 +26,9 @@ public class BasketServiceTest {
 
     @Autowired
     private Basket basket;
+
+    @Autowired
+    private OrderRepository orderRepository;
 
     @DisplayName("Should remove book from basket and increase stock")
     @Test
@@ -85,4 +89,28 @@ public class BasketServiceTest {
         assertThat(book2.getStock()).isEqualTo(10);
         assertThat(book3.getStock()).isEqualTo(10);
     }
+
+//    @Disabled
+//    @DisplayName("Should submit order")
+//    @Test
+//    public void shouldSubmitOrder() {
+//        final Book book1 = CREATE_ONE_BOOK;
+//        final Book book2 = CREATE_ANOTHER_BOOK;
+//        final Book book3 = CREATE_YET_ANOTHER_BOOK;
+//        book1.setStock(10);
+//        book2.setStock(10);
+//        book3.setStock(10);
+//        bookService.addBookToBasket(book1);
+//        bookService.addBookToBasket(book2);
+//        bookService.addBookToBasket(book3);
+//
+//        final Basket basket = basketService.getBasket();
+//        assertThat(basket).size().isEqualTo(3);
+//        //TODO:unfinished...
+//        //create user
+//        //create orderDetails
+//        //Save order
+//        //assert order
+//        //assert book stock
+//    }
 }

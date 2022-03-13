@@ -4,8 +4,7 @@ import bookstore.dao.BookRepository;
 import bookstore.domain.Basket;
 import bookstore.domain.Book;
 import bookstore.domain.Category;
-import bookstore.exception.BookDataException;
-import lombok.SneakyThrows;
+import bookstore.exception.BookstoreDataException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -38,9 +37,6 @@ public class BookServiceImpl implements BookService {
      *
      * @return - List<Book>
      */
-    //@Transactional(readOnly = true)
-    //Pagination required
-    //@Cacheable("books")
     @Override
     public List<Book> findAllBooks() {
         log.info("Finding all books");
@@ -54,19 +50,18 @@ public class BookServiceImpl implements BookService {
      * @return - Returns Optional<Book> by isbn else throw BookNotFoundException
      */
     @Cacheable("book")
-    @SneakyThrows
     @Override
     public Optional<Book> findBookByIsbn(final long isbn){
         log.info("Finding book by isbn: {}", isbn);
         return Optional.ofNullable(bookRepository.findById(isbn)
-                .orElseThrow(() -> new BookDataException(DATABASE_NOT_AVAILABLE)));
+                .orElseThrow(() -> new BookstoreDataException(DATABASE_NOT_AVAILABLE)));
     }
     
     @Override
     public Book findBookByIsbnWeb(final long isbn){
         log.info("Finding book by isbn: {}", isbn);
         return bookRepository.findById(isbn)
-                .orElseThrow(() -> new BookDataException(DATABASE_NOT_AVAILABLE));
+                .orElseThrow(() -> new BookstoreDataException(DATABASE_NOT_AVAILABLE));
     }
 
     /**

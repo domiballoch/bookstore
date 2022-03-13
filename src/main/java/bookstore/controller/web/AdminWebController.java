@@ -1,7 +1,7 @@
 package bookstore.controller.web;
 
 import bookstore.domain.Book;
-import bookstore.exception.BookNotFoundException;
+import bookstore.exception.BookstoreNotFoundException;
 import bookstore.service.AdminService;
 import bookstore.service.BookService;
 import lombok.extern.slf4j.Slf4j;
@@ -86,7 +86,7 @@ public class AdminWebController {
 		final Book book = bookService.findBookByIsbnWeb(isbn);
 		model.put("book", book);
 		//model.addAttribute("category", Category.values());
-		} catch(BookNotFoundException e) {
+		} catch(BookstoreNotFoundException e) {
 			log.info(BOOK_NOT_FOUND, e.getMessage());
 			return "/findAllBooks";
 		}

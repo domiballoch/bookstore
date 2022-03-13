@@ -2,7 +2,7 @@ package bookstore.service;
 
 import bookstore.dao.BookRepository;
 import bookstore.domain.Book;
-import bookstore.exception.BookNotFoundException;
+import bookstore.exception.BookstoreNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,7 +72,7 @@ public class AdminServiceImpl implements AdminService {
         log.info("Deleting book from bookstore by isbn: {}", isbn);
         try {
         bookRepository.deleteById(isbn);
-        } catch(BookNotFoundException e) {
+        } catch(BookstoreNotFoundException e) {
         	log.warn(BOOK_NOT_FOUND);
         }
         log.info("Deleted book from bookstore by isbn: {}", isbn);
@@ -102,7 +102,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Book updateBookInBookstoreJson(final Book book, final long isbn) {
         Optional<Book> foundBook = Optional.ofNullable(bookRepository.findById(isbn)
-                .orElseThrow(() -> new BookNotFoundException(BOOK_NOT_FOUND)));
+                .orElseThrow(() -> new BookstoreNotFoundException(BOOK_NOT_FOUND)));
         log.info("Updating book: {}", foundBook.toString());
         bookRepository.delete(foundBook.get());
         book.setIsbn(isbn);
@@ -110,5 +110,4 @@ public class AdminServiceImpl implements AdminService {
         log.info("Saving book: {}", book.toString());
         return book;
     }
-
 }

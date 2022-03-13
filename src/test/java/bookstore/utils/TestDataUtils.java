@@ -2,6 +2,7 @@ package bookstore.utils;
 
 import bookstore.domain.Book;
 import bookstore.domain.Category;
+import bookstore.domain.Users;
 import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
@@ -12,6 +13,8 @@ import java.util.stream.Collectors;
 
 @UtilityClass
 public class TestDataUtils {
+
+    //----- Book data -----//
 
     public static final String TITLE = "title1";
     public static final String AUTHOR ="author1";
@@ -48,7 +51,6 @@ public class TestDataUtils {
         long inStock = BOOKLIST.stream()
                 .filter(book ->
                         book.getTitle() == title && book.getAuthor() == author).count();
-        //boolean inStock = (booklist > 0) ? true : false;
     }
 
     public static Book returnOneBook() {
@@ -103,32 +105,51 @@ public class TestDataUtils {
                                .collect(Collectors.toList());
     }
 
-//        book.getBookList().clear();
-//        basket.getBasketList().clear();
+    //----- User data -----//
 
+    public static final Users CREATE_ONE_USER = Users.builder()
+            .firstName("Bob")
+            .lastName("Jones")
+            .addressLine1("99 Orange Grove")
+            .addressLine2("London")
+            .postCode("SW4").build();
 
-//    public static void prepareUserData(){
-//        User user = new User();
-//        user.getUserList().clear();
-//        new User(1,
-//                "Francis",
-//                "Baker",
-//                "10",
-//                "Park Lane",
-//                "London",
-//                "Essex",
-//                "SW1",
-//                "07432931421");
-//        new User(2,
-//                "Emily",
-//                "Porter",
-//                "285",
-//                "Mayflower Street",
-//                "London",
-//                "Essex",
-//                "SW2",
-//                "07325857480");
-//    }
+    public static Users returnOneUser() {
+        return Users.builder()
+                .firstName("Jo")
+                .lastName("Williams")
+                .addressLine1("77 Canopy Canyon")
+                .addressLine2("London")
+                .postCode("SW5").build();
+    }
+
+    public static final List<Users> USERLIST = new ArrayList<>();
+
+    public static void returnUserData(){
+        Users user1 = Users.builder()
+                .userId(1L)
+                .firstName("Francis")
+                .lastName("Baker")
+                .addressLine1("10 Park Lane")
+                .addressLine2("London")
+                .postCode("SW1").build();
+        Users user2 = Users.builder()
+                .userId(2L)
+                .firstName("Emily")
+                .lastName("Porter")
+                .addressLine1("285 Mayflower Street")
+                .addressLine2("London")
+                .postCode("SW2").build();
+        Users user3 = Users.builder()
+                .userId(3L)
+                .firstName("Mavis")
+                .lastName("Threephorn")
+                .addressLine1("100 Castle Close")
+                .addressLine2("London")
+                .postCode("SW3").build();
+
+        USERLIST.addAll(Arrays.asList(user1, user2, user3));
+    }
 
 //    public static void prepareAccountData(){
 //        new Account(1,
