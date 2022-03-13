@@ -2,7 +2,7 @@ package bookstore.controller.rest;
 
 import bookstore.domain.Book;
 import bookstore.domain.Category;
-import bookstore.exception.BookNotFoundException;
+import bookstore.exception.BookstoreNotFoundException;
 import bookstore.service.BookService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class BookRestController {
     @GetMapping(value = "/findBook/{isbn}")
     public ResponseEntity<Optional<Book>> findBookByIsbn(@PathVariable final long isbn) {
         final Optional<Book> book = Optional.ofNullable(bookService.findBookByIsbn(isbn)
-                .orElseThrow(() -> new BookNotFoundException(BOOK_NOT_FOUND)));
+                .orElseThrow(() -> new BookstoreNotFoundException(BOOK_NOT_FOUND)));
             return new ResponseEntity<>(book, HttpStatus.OK);
     }
 
@@ -62,8 +62,8 @@ public class BookRestController {
         return new ResponseEntity<>(results, HttpStatus.OK);
     }
 
-    private ResponseEntity<List<Book>> noResultsFound(final List<Book> list, final Object object) {
-        log.info("No results found: {}", object);
-        return new ResponseEntity<>(list, HttpStatus.NOT_FOUND);
+    private <T>  ResponseEntity<T> noResultsFound(final T t, final T r) {
+        log.info("No results found: {}", r);
+        return new ResponseEntity<T>(t, HttpStatus.NOT_FOUND);
     }
 }

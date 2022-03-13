@@ -1,5 +1,6 @@
 package bookstore.service;
 
+import bookstore.dao.OrderRepository;
 import bookstore.domain.Basket;
 import bookstore.domain.Book;
 import lombok.extern.slf4j.Slf4j;
@@ -16,13 +17,16 @@ import java.util.List;
 public class BasketServiceImpl implements BasketService {
 
     @Autowired
+    private OrderRepository orderRepository;
+
+    @Autowired
     private Basket basket;
 
-    /**
-     * Initial methods...
-     * When order is submitted - basket is saved in new table
-     * and has entity relationship with User.
-     */
+    public Basket getBasket() {
+        //show books and price calc
+        calculateBasket(basket);
+        return basket;
+    }
 
     /**
      * Calculates total of basket
@@ -40,10 +44,14 @@ public class BasketServiceImpl implements BasketService {
 
     @Override
     public void submitOrder() {
-        //orderRepo.save purchaseDTO
-        //update book.Repo stock
-        //log.info("Items ordered: {}, basket)
-        //clearBasket();
+//        log.info("Saving order: {}", basket);
+//        Orders order = Orders.builder()
+//                .totalItems(basket.size())
+//                .totalPrice(calculateBasket(basket))
+//                .orderDate(LocalDateTime.now()).build();
+//        orderRepository.save(order);
+//        log.info("Order complete: {} {}", order.toString(), user.toString());
+//        clearBasketAfterOrder();
     }
 
     /**
@@ -71,13 +79,20 @@ public class BasketServiceImpl implements BasketService {
     }
 
     /**
-     * Clears basket and update stock
+     * Clears basket after order
+     */
+    public void clearBasketAfterOrder() {
+        basket.clear();
+        log.info("Basket cleared");
+    }
+
+    /**
+     * Clears basket and resets stock
      */
     @Override
     public void clearBasket() {
         basket.forEach(book -> book.setStock(book.getStock()+1));
         basket.clear();
-        log.info("Basket cleared");
+        log.info("Basket cleared and stock reset");
     }
-
 }

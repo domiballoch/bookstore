@@ -7,11 +7,15 @@ import java.math.BigDecimal;
 
 public interface BasketService {
 
+    Basket getBasket();
+
     BigDecimal calculateBasket(final Basket basket);
 
     void submitOrder();
 
     void removeBookFromBasket(final Book book);
+
+    void clearBasketAfterOrder();
 
     void clearBasket();
 }

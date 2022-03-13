@@ -2,9 +2,8 @@ package bookstore.controller;
 
 import bookstore.controller.rest.BookRestController;
 import bookstore.domain.Category;
-import bookstore.exception.BookNotFoundException;
+import bookstore.exception.BookstoreNotFoundException;
 import bookstore.domain.Book;
-import bookstore.service.AdminService;
 import bookstore.service.BookService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -91,7 +90,7 @@ public class BookRestControllerTest {
         mockMvc.perform(get("/rest/findBook/{isbn}", 10)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
-                .andExpect(result -> assertTrue(result.getResolvedException() instanceof BookNotFoundException))
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof BookstoreNotFoundException))
                 .andExpect(result -> assertEquals(result.getResolvedException().getMessage(), BOOK_NOT_FOUND));
     }
 

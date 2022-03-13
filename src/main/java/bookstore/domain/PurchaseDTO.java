@@ -1,12 +1,15 @@
 package bookstore.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.ToString;
 
-import java.util.List;
-
+@Getter
+@ToString
 @AllArgsConstructor
 public class PurchaseDTO {
 
-    private List<Book> orderList;
+    private Basket basket;
     private Users user;
+    private Orders order;
 }

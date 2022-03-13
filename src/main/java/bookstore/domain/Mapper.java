@@ -2,16 +2,13 @@ package bookstore.domain;
 
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Component
 class Mapper {
 
-    public PurchaseDTO toDto(final Basket basket, final Users user) {
+    public PurchaseDTO toDto(final Basket basket, final Users user, final Orders order) {
 
-        final List<Book> orderList = new ArrayList<>();
-        for(Book mappedBook : orderList) {
+        final Basket mappedBasket = null;
+        for(Book mappedBook : mappedBasket) {
             for(Book basketBook : basket) {
                 mappedBook.setTitle(basketBook.getTitle());
                 mappedBook.setAuthor(basketBook.getAuthor());
@@ -27,6 +24,11 @@ class Mapper {
         mappedUser.setAddressLine2(user.getAddressLine2());
         mappedUser.setPostCode(user.getPostCode());
 
-        return new PurchaseDTO(orderList, mappedUser);
+        final Orders mappedOrder = null;
+        mappedOrder.setTotalItems(order.getTotalItems());
+        mappedOrder.setTotalPrice(order.getTotalPrice());
+        mappedOrder.setOrderDate(order.getOrderDate());
+
+        return new PurchaseDTO(mappedBasket, mappedUser, mappedOrder);
     }
 }

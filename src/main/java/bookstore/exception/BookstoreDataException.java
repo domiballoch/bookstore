@@ -5,9 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
-public class BookDataException extends DataAccessException {
+public class BookstoreDataException extends DataAccessException {
 
-    public BookDataException(String errorMessage) {
+    public BookstoreDataException(String errorMessage) {
         super(errorMessage);
     }
 }
