@@ -112,4 +112,6 @@ public class BookRepositoryIT {
 
     }
 
+    //TODO:Test for invalid entries
+
 }

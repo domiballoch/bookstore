@@ -7,7 +7,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -73,7 +72,7 @@ public class Book implements Serializable {
     @Column(name = "stock")
     private int stock;
 
-    @ManyToOne(cascade = { CascadeType.ALL })
+    @ManyToOne(targetEntity = Orders.class)
     @JoinColumn(name="orderId")
     private Orders order;
 
