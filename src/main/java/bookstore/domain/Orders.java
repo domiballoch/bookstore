@@ -23,6 +23,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Builder(toBuilder = true)
 @Data
@@ -39,6 +40,9 @@ public class Orders implements Serializable {
     @Column(name = "order_id")
     private Long orderId;
 
+    @Column(insertable = false, updatable = false)
+    private Long userId;
+
     @Column(name = "total_items")
     private int totalItems;
 
@@ -48,9 +52,9 @@ public class Orders implements Serializable {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime orderDate;
 
-    @ManyToOne(cascade = { CascadeType.ALL })
+    @ManyToOne(targetEntity = Users.class)
     @JoinColumn(name="userId")
-    private Users users;
+    private Optional<Users> users;
 
     @OneToMany(mappedBy = "isbn", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
     private List<Book> booksList;

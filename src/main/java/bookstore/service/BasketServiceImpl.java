@@ -1,16 +1,21 @@
 package bookstore.service;
 
 import bookstore.dao.OrderRepository;
+import bookstore.dao.UserRepository;
 import bookstore.domain.Basket;
 import bookstore.domain.Book;
+import bookstore.domain.Orders;
+import bookstore.domain.Users;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -18,6 +23,9 @@ public class BasketServiceImpl implements BasketService {
 
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private Basket basket;
@@ -42,16 +50,24 @@ public class BasketServiceImpl implements BasketService {
         return totalPrice;
     }
 
+    /**
+     * Saves order to DB
+     *
+     * @param user
+     * @return
+     */
     @Override
-    public void submitOrder() {
-//        log.info("Saving order: {}", basket);
-//        Orders order = Orders.builder()
-//                .totalItems(basket.size())
-//                .totalPrice(calculateBasket(basket))
-//                .orderDate(LocalDateTime.now()).build();
-//        orderRepository.save(order);
-//        log.info("Order complete: {} {}", order.toString(), user.toString());
-//        clearBasketAfterOrder();
+    public Orders submitOrder(final Optional<Users> user) {
+        log.info("Saving order: {} {}", user.toString(), basket);
+        Orders order = Orders.builder()
+                .totalItems(basket.size())
+                .totalPrice(calculateBasket(basket))
+                .orderDate(LocalDateTime.now())
+                .build();
+        orderRepository.save(order);
+        log.info("Order complete: {} {}", order.toString(), user.toString());
+        clearBasketAfterOrder();
+        return order; //TODO: Need to amend this when orderDetails is complete
     }
 
     /**
