@@ -108,14 +108,32 @@ public class TestDataUtils {
     //----- User data -----//
 
     public static final Users CREATE_ONE_USER = Users.builder()
+            .userId(1L)
             .firstName("Bob")
             .lastName("Jones")
             .addressLine1("99 Orange Grove")
             .addressLine2("London")
             .postCode("SW4").build();
 
+    public static final Users CREATE_ANOTHER_USER = Users.builder()
+            .userId(2L)
+            .firstName("Harry")
+            .lastName("Peters")
+            .addressLine1("77 Pine Forest")
+            .addressLine2("London")
+            .postCode("SW5").build();
+
+    public static final Users CREATE_YET_ANOTHER_USER = Users.builder()
+            .userId(3L)
+            .firstName("Mia")
+            .lastName("Cho")
+            .addressLine1("50 Flora Grange")
+            .addressLine2("London")
+            .postCode("SW6").build();
+
     public static Users returnOneUser() {
         return Users.builder()
+                .userId(4L)
                 .firstName("Jo")
                 .lastName("Williams")
                 .addressLine1("77 Canopy Canyon")

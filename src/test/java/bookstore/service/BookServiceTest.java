@@ -83,7 +83,7 @@ public class BookServiceTest {
         verify(bookRepository, times(1)).findById(any(Long.class));
     }
 
-    @DisplayName("Should throw book not found exception when return one book by isbn")
+    @DisplayName("Should throw bookstore not found exception when return one book by isbn")
     @Test
     public void shouldThrowBookstoreNotFoundException_WhenReturnOneBookByIsbn(){
         final long isbn = 10;

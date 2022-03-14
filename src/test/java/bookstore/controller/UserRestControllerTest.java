@@ -15,11 +15,15 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.util.List;
+import java.util.Optional;
+
 import static bookstore.utils.BookConstants.USER_NOT_FOUND;
-import static bookstore.utils.TestDataUtils.CREATE_ONE_USER;
-import static bookstore.utils.TestDataUtils.returnOneUser;
 import static bookstore.utils.RestControllerTestHelper.getResponseFrom;
+import static bookstore.utils.TestDataUtils.CREATE_ONE_USER;
+import static bookstore.utils.TestDataUtils.USERLIST;
 import static bookstore.utils.TestDataUtils.returnOneBook;
+import static bookstore.utils.TestDataUtils.returnOneUser;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -32,6 +36,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(UserRestController.class)
@@ -45,6 +50,39 @@ public class UserRestControllerTest {
 
     @MockBean
     private UserService userService;
+
+    @SneakyThrows
+    @Test
+    public void findAllUsers() {
+        when(userService.findAllUsers()).thenReturn(USERLIST);
+        final ResultActions resultActions =
+                mockMvc.perform(get("/rest/findAllUsers")
+                        .accept(MediaType.APPLICATION_JSON_VALUE))
+                        .andDo(print())
+                        .andExpect(status().isOk());
+        //.andExpect(jsonPath("$.[]", hasSize(4)));
+
+        final List<Users> result = getResponseFrom(resultActions, objectMapper, new TypeReference<>() {});
+        assertThat(result).isEqualTo((USERLIST));
+        verify(userService, times(1)).findAllUsers();
+    }
+
+    @SneakyThrows
+    @Test
+    public void findUserById() {
+        when(userService.findUserById(4)).thenReturn(Optional.ofNullable(returnOneUser()));
+        final ResultActions resultActions =
+                mockMvc.perform(get("/rest/findUser/{userId}", 4)
+                        .accept(MediaType.APPLICATION_JSON_VALUE))
+                        .andDo(print())
+                        .andExpect(status().isOk())
+                        .andExpect(jsonPath("$.userId").value(4));
+
+        final Users result = getResponseFrom(resultActions, objectMapper, new TypeReference<>() {});
+        assertThat(result.getUserId()).isEqualTo(4);
+        assertThat(result).isEqualTo(returnOneUser());
+        verify(userService, times(1)).findUserById(any(Long.class));
+    }
 
     @SneakyThrows
     @Test
