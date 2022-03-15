@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+import static bookstore.utils.TestDataUtils.CREATE_ONE_BOOK;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -99,17 +100,28 @@ public class BookRepositoryIT {
 
     @Test
     public void saveOneBook() {
+        final Book book = CREATE_ONE_BOOK;
+        book.setIsbn(1006L);
+        bookRepository.save(book);
+        final List<Book> bookList = bookRepository.findAll();
 
+        assertThat(bookRepository.count()).isEqualTo(6);
+        assertThat(bookList.size()).isEqualTo(6);
+        assertThat(bookList.get(5).getIsbn()).isEqualTo(1006L);
+        assertThat(bookList.get(5).getTitle()).isEqualTo("title5");
+        assertThat(bookList.get(5).getAuthor()).isEqualTo("author5");
+        assertThat(bookList.get(5).getCategory()).isEqualTo(Category.COOKING);
+        assertThat(bookList.get(5).getPrice()).isEqualTo(BigDecimal.valueOf(49.99));
+        assertThat(bookList.get(5).getStock()).isEqualTo(10);
     }
 
     @Test
     public void deleteOneBook() {
+        bookRepository.deleteById(1005L);
+        final List<Book> bookList = bookRepository.findAll();
 
-    }
-
-    @Test
-    public void updateOneBook() {
-
+        assertThat(bookList.size()).isEqualTo(4);
+        assertThat(bookRepository.findById(1005L)).isEqualTo(Optional.empty());
     }
 
     //TODO:Test for invalid entries

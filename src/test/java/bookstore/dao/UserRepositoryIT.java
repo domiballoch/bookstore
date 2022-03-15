@@ -69,12 +69,7 @@ public class UserRepositoryIT {
         final List<Users> userList = userRepository.findAll();
 
         assertThat(userList.size()).isEqualTo(4);
-        assertThat(userRepository.findById(2005L)).isNull();
-    }
-
-    @Test
-    public void updateOneUser() {
-
+        assertThat(userRepository.findById(2005L)).isEqualTo(Optional.empty());
     }
 
 }
