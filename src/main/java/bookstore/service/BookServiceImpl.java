@@ -67,15 +67,14 @@ public class BookServiceImpl implements BookService {
     /**
      * Counts results from Bookstore DB(Book table)
      *
-     * @param - title
-     * @param - author
+     * @param - isbn
      * @return - Returns Stock value as long
      */
     @Cacheable("bookstock")
     @Override
-    public int getBookStock(final String title, final String author) {
-        log.info("Getting book stock by isbn: {}, {}", title, author);
-        final int bookStock = bookRepository.getBookStock(title, author);
+    public int getBookStock(final long isbn) {
+        log.info("Getting book stock by isbn: {}", isbn);
+        final int bookStock = bookRepository.getBookStock(isbn);
         log.info("Current stock of item: {}", bookStock);
         return bookStock;
     }
@@ -83,21 +82,19 @@ public class BookServiceImpl implements BookService {
     /**
      * Stores results from Bookstore DB(Book table) as a List
      *
-     * @param - title
-     * @param - author
+     * @param - isbn
      * @return - Returns a boolean if Book exists or not
      */
     @Cacheable("instock)")
     @Override
-    public boolean inStock(final String title, final String author) {
-        final List<Book> bookList = bookRepository.findByTitleAndAuthor(title, author);
-        final int inStock = bookList.size();
+    public boolean inStock(final long isbn) {
+        final Optional<Book> book = bookRepository.findById(isbn);
+        final int inStock = book.get().getStock();
         return inStock > 0;
     }
 
     /**
      * Finds Books by Category
-     * //TODO: complete sql call
      *
      * @param category
      * @return - List<Book>
@@ -111,7 +108,6 @@ public class BookServiceImpl implements BookService {
 
     /**
      * Finds Books by search term using fuzzy search logic
-     * //TODO: add fuzzy search logic
      *
      * @param search
      * @return - List<Book>

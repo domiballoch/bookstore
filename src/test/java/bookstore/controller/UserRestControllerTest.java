@@ -70,7 +70,7 @@ public class UserRestControllerTest {
     @SneakyThrows
     @Test
     public void findUserById() {
-        when(userService.findUserById(4)).thenReturn(Optional.ofNullable(returnOneUser()));
+        when(userService.findUserById(4)).thenReturn(Optional.of(returnOneUser()));
         final ResultActions resultActions =
                 mockMvc.perform(get("/rest/findUser/{userId}", 4)
                         .accept(MediaType.APPLICATION_JSON_VALUE))

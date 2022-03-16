@@ -137,7 +137,7 @@ public class BasketServiceTest {
         when(basketService.submitOrder(any(Optional.class))).thenReturn(newOrder);
         when(orderRepository.save(any(Orders.class))).thenReturn(newOrder);
 
-        final Orders result = basketService.submitOrder(Optional.ofNullable(CREATE_ONE_USER));
+        final Orders result = basketService.submitOrder(Optional.of(CREATE_ONE_USER));
 
         assertThat(result.getBooksList()).isEqualTo(basket);
         assertThat(result).isEqualTo(newOrder);

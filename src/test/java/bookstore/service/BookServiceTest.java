@@ -76,10 +76,10 @@ public class BookServiceTest {
     @Test
     public void shouldReturnOneBookByIsbn(){
         final long isbn = 4;
-        when(bookRepository.findById(any(Long.class))).thenReturn(Optional.ofNullable(returnOneBook()));
+        when(bookRepository.findById(any(Long.class))).thenReturn(Optional.of(returnOneBook()));
         final Optional<Book> result = bookService.findBookByIsbn(isbn);
 
-        assertThat(result).isEqualTo(Optional.ofNullable(returnOneBook()));
+        assertThat(result).isEqualTo(Optional.of(returnOneBook()));
         verify(bookRepository, times(1)).findById(any(Long.class));
     }
 
@@ -96,18 +96,16 @@ public class BookServiceTest {
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
-    @DisplayName("Should return book in stock")
-    @Test
-    public void shouldReturnBookInStock(){
-        final String title = "title3";
-        final String author = "author3";
-        when(bookRepository.findByTitleAndAuthor(any(String.class), any(String.class))).thenReturn(BOOKLIST);
-        final boolean result = bookService.inStock("title3", "author3");
-
-        assertThat(result).isEqualTo(true);
-        verify(bookRepository, times(1)).findByTitleAndAuthor(any(String.class),
-                any(String.class));
-    }
+//    @DisplayName("Should return book in stock")
+//    @Test
+//    public void shouldReturnBookInStock(){
+//        when(bookRepository.findByTitleAndAuthor(any(String.class), any(String.class))).thenReturn(BOOKLIST);
+//        final boolean result = bookService.inStock(1L);
+//
+//        assertThat(result).isEqualTo(true);
+//        verify(bookRepository, times(1)).findByTitleAndAuthor(any(String.class),
+//                any(String.class));
+//    }
 
     @DisplayName("Should return book by search term")
     @Test
@@ -140,31 +138,33 @@ public class BookServiceTest {
     @DisplayName("Should return book stock")
     @Test
     public void shouldReturnBookStock() {
-        when(bookRepository.getBookStock(any(String.class), any(String.class))).thenReturn(1);
-        final int result = bookService.getBookStock("Title", "Author");
+        when(bookRepository.getBookStock(any(Long.class))).thenReturn(10);
+        final int result = bookService.getBookStock(1L);
 
-        assertThat(result).isEqualTo(1);
-        verify(bookRepository, times(1)).getBookStock(any(String.class), any(String.class));
+        assertThat(result).isEqualTo(10);
+        verify(bookRepository, times(1)).getBookStock(any(Long.class));
     }
 
     @DisplayName("Should return book is in stock")
     @Test
     public void shouldReturnTrueIfBookIsInStock() {
-        when(bookRepository.findByTitleAndAuthor(any(String.class), any(String.class))).thenReturn(List.of(returnOneBook()));
-        final boolean result = bookService.inStock("Title", "Author");
+        when(bookRepository.findById(any(Long.class))).thenReturn(Optional.of(returnOneBook()));
+        final boolean result = bookService.inStock(4L);
 
         assertThat(result).isEqualTo(true);
-        verify(bookRepository, times(1)).findByTitleAndAuthor(any(String.class), any(String.class));
+        verify(bookRepository, times(1)).findById(any(Long.class));
     }
 
     @DisplayName("Should return book out of stock")
     @Test
     public void shouldReturnFalseIfBookIsOutOfStock() {
-        when(bookRepository.findByTitleAndAuthor(any(String.class), any(String.class))).thenReturn(Collections.EMPTY_LIST);
-        final boolean result = bookService.inStock("Title", "Author");
+        final Book book = returnOneBook();
+        book.setStock(0);
+        when(bookRepository.findById(any(Long.class))).thenReturn(Optional.of(book));
+        final boolean result = bookService.inStock(4L);
 
         assertThat(result).isEqualTo(false);
-        verify(bookRepository, times(1)).findByTitleAndAuthor(any(String.class), any(String.class));
+        verify(bookRepository, times(1)).findById(any(Long.class));
     }
 
     @DisplayName("Should add book to basket and reduce stock")

@@ -71,10 +71,10 @@ public class UserServiceTest {
     @Test
     public void shouldReturnUserById(){
         final long userId = 4;
-        when(userRepository.findById(any(Long.class))).thenReturn(Optional.ofNullable(returnOneUser()));
+        when(userRepository.findById(any(Long.class))).thenReturn(Optional.of(returnOneUser()));
         final Optional<Users> result = userService.findUserById(userId);
 
-        assertThat(result).isEqualTo(Optional.ofNullable(returnOneUser()));
+        assertThat(result).isEqualTo(Optional.of(returnOneUser()));
         verify(userRepository, times(1)).findById(any(Long.class));
     }
 
