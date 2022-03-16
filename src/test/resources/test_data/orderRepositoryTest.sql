@@ -23,5 +23,3 @@ VALUES
 (3003, 2003, 3, 29.99, '2022-03-03 11:00:00'),
 (3004, 2004, 4, 39.99, '2022-03-04 12:00:00'),
 (3005, 2005, 5, 49.99, '2022-03-05 13:00:00');
-
---TODO:Need to add orderDetails table and entity to pass basket and user to order!

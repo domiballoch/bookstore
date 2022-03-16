@@ -2,10 +2,12 @@ package bookstore.utils;
 
 import bookstore.domain.Book;
 import bookstore.domain.Category;
+import bookstore.domain.Orders;
 import bookstore.domain.Users;
 import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,8 +18,6 @@ public class TestDataUtils {
 
     //----- Book data -----//
 
-    public static final String TITLE = "title1";
-    public static final String AUTHOR ="author1";
     public static final List<Book> BOOKLIST = new ArrayList<>();
 
     public static final Book CREATE_ONE_BOOK = Book.builder()
@@ -64,7 +64,7 @@ public class TestDataUtils {
                 .build();
     }
 
-    public static void returnBookList() {
+    public static void populateBookList() {
         Book book1 = Book.builder()
                 .isbn(1L)
                 .category(Category.SCIENCE_FICTION)
@@ -97,7 +97,7 @@ public class TestDataUtils {
 
     public List<Book> getSpecificBookFromBookList_IfMatchByName(final String param) {
         //initialise
-        returnBookList();
+        populateBookList();
         final String name = "^(" + param + ").*"; //regex
 
        return BOOKLIST.stream().filter(book -> book.getTitle()
@@ -167,6 +167,18 @@ public class TestDataUtils {
                 .postCode("SW3").build();
 
         USERLIST.addAll(Arrays.asList(user1, user2, user3));
+    }
+
+    //----- Order data -----//
+
+    public static Orders returnOrder(final int totalItems, final BigDecimal totalPrice) {
+        final Orders newOrder = Orders.builder()
+                .orderId(1L)
+                .totalItems(totalItems)
+                .totalPrice(totalPrice)
+                .orderDate(LocalDateTime.now())
+                .build();
+        return newOrder;
     }
 
 //    public static void prepareAccountData(){

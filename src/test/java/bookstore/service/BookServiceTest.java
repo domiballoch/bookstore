@@ -20,9 +20,9 @@ import java.util.List;
 import java.util.Optional;
 
 import static bookstore.utils.TestDataUtils.CREATE_ONE_BOOK;
-import static bookstore.utils.BookConstants.DATABASE_NOT_AVAILABLE;
+import static bookstore.utils.BookStoreConstants.DATABASE_NOT_AVAILABLE;
 import static bookstore.utils.TestDataUtils.BOOKLIST;
-import static bookstore.utils.TestDataUtils.returnBookList;
+import static bookstore.utils.TestDataUtils.populateBookList;
 import static bookstore.utils.TestDataUtils.returnOneBook;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -46,7 +46,7 @@ public class BookServiceTest {
 
     @BeforeEach
     public void prepareData() {
-        returnBookList();
+        populateBookList();
     }
 
     @DisplayName("Should return all books")
@@ -95,17 +95,6 @@ public class BookServiceTest {
 
         assertTrue(actualMessage.contains(expectedMessage));
     }
-
-//    @DisplayName("Should return book in stock")
-//    @Test
-//    public void shouldReturnBookInStock(){
-//        when(bookRepository.findByTitleAndAuthor(any(String.class), any(String.class))).thenReturn(BOOKLIST);
-//        final boolean result = bookService.inStock(1L);
-//
-//        assertThat(result).isEqualTo(true);
-//        verify(bookRepository, times(1)).findByTitleAndAuthor(any(String.class),
-//                any(String.class));
-//    }
 
     @DisplayName("Should return book by search term")
     @Test
