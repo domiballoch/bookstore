@@ -14,9 +14,9 @@ public interface BookService {
     
     Book findBookByIsbnWeb(final long isbn);
 
-    int getBookStock(final String title, final String Author);
+    int getBookStock(final long isbn);
 
-    boolean inStock(final String title, final String Author);
+    boolean inStock(final long isbn);
 
     List<Book> findBooksByCategory(final Category category);
 

@@ -81,10 +81,9 @@ public class BookRepositoryIT {
         assertThat(books.get(1).getTitle()).isEqualTo("Short Tales");
     }
 
-    @Disabled //TODO:fix
     @Test
     public void getBookStock() {
-        final int stock = bookRepository.getBookStock("A Foreign Land", "Mr Kite");
+        final int stock = bookRepository.getBookStock(1003);
 
         assertThat(stock).isEqualTo(10);
     }

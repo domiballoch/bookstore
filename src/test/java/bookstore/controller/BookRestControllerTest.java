@@ -70,7 +70,7 @@ public class BookRestControllerTest {
     @SneakyThrows
     @Test
     public void findBookByIsbn() {
-        when(bookService.findBookByIsbn(4)).thenReturn(Optional.ofNullable(returnOneBook()));
+        when(bookService.findBookByIsbn(4)).thenReturn(Optional.of(returnOneBook()));
         final ResultActions resultActions =
                 mockMvc.perform(get("/rest/findBook/{isbn}", 4)
                 .accept(MediaType.APPLICATION_JSON_VALUE))
@@ -157,4 +157,6 @@ public class BookRestControllerTest {
                         .andExpect(status().isNotFound());
         verify(bookService, times(1)).findBooksByCategory(any(Category.class));
     }
+
+    //TODO:Test getBookstock?
 }
