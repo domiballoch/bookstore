@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import java.util.List;
 import java.util.Optional;
 
-import static bookstore.utils.BookConstants.USER_NOT_FOUND;
+import static bookstore.utils.BookStoreConstants.USER_NOT_FOUND;
 import static bookstore.utils.RestControllerTestHelper.getResponseFrom;
 import static bookstore.utils.TestDataUtils.CREATE_ONE_USER;
 import static bookstore.utils.TestDataUtils.USERLIST;

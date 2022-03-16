@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Optional;
 
-import static bookstore.utils.BookConstants.BOOK_NOT_FOUND;
+import static bookstore.utils.BookStoreConstants.BOOK_NOT_FOUND;
 
 //TODO:Add controller advice
 @Slf4j

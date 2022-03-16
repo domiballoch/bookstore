@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static bookstore.utils.BookConstants.DATABASE_NOT_AVAILABLE;
+import static bookstore.utils.BookStoreConstants.DATABASE_NOT_AVAILABLE;
 
 /**
  * Using Cachable to speed up processing

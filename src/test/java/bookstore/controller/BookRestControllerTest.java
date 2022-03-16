@@ -24,7 +24,7 @@ import java.util.Optional;
 
 import static bookstore.utils.TestDataUtils.BOOKLIST;
 import static bookstore.utils.TestDataUtils.returnOneBook;
-import static bookstore.utils.BookConstants.BOOK_NOT_FOUND;
+import static bookstore.utils.BookStoreConstants.BOOK_NOT_FOUND;
 import static bookstore.utils.RestControllerTestHelper.getResponseFrom;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;

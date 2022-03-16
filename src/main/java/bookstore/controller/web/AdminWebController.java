@@ -23,7 +23,7 @@ import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
-import static bookstore.utils.BookConstants.BOOK_NOT_FOUND;
+import static bookstore.utils.BookStoreConstants.BOOK_NOT_FOUND;
 
 @Slf4j
 @Controller

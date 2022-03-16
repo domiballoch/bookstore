@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static bookstore.utils.BookConstants.DATABASE_NOT_AVAILABLE;
+import static bookstore.utils.BookStoreConstants.DATABASE_NOT_AVAILABLE;
 import static bookstore.utils.TestDataUtils.CREATE_ANOTHER_USER;
 import static bookstore.utils.TestDataUtils.CREATE_ONE_USER;
 import static bookstore.utils.TestDataUtils.USERLIST;

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-import static bookstore.utils.BookConstants.BOOK_NOT_FOUND;
+import static bookstore.utils.BookStoreConstants.BOOK_NOT_FOUND;
 
 @Service
 @Slf4j

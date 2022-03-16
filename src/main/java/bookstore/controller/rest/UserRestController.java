@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Optional;
 
-import static bookstore.utils.BookConstants.USER_NOT_FOUND;
+import static bookstore.utils.BookStoreConstants.USER_NOT_FOUND;
 
 @Slf4j
 @RestController
