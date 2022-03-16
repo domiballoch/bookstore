@@ -97,7 +97,7 @@ public class AdminWebController {
 //	public String updateBook(@RequestParam long isbn, ModelMap model) {
 //		Optional<Book> book = bookService.findBookByIsbn(isbn);
 //		if(!book.isPresent()) {
-//			log.warn(BOOK_NOT_FOUND, book);
+//			log.info(BOOK_NOT_FOUND, book);
 //			return "/findAllBooks";
 //		} else {
 //			model.put("book", book);

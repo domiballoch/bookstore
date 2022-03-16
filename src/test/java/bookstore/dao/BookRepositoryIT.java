@@ -63,18 +63,18 @@ public class BookRepositoryIT {
         assertThat(books.get(1).getTitle()).isEqualTo("Short Tales");
     }
 
-    @Disabled //TODO:fix
+    @Disabled
     @Test
     public void findBookByCategory_OneResult() {
-        final List<Book> books = bookRepository.findBooksByCategory(Category.HORROR);
+        final List<Book> books = bookRepository.findByCategory(Category.HORROR);
 
         assertThat(books.get(0).getTitle()).isEqualTo("The Crab Man");
     }
 
-    @Disabled //TODO:fix
+    @Disabled
     @Test
     public void findBookByCategory_TwoResults() {
-        final List<Book> books = bookRepository.findBooksByCategory(Category.FICTION);
+        final List<Book> books = bookRepository.findByCategory(Category.FICTION);
 
         assertThat(books.size()).isEqualTo(2);
         assertThat(books.get(0).getTitle()).isEqualTo("Tall Tales");
@@ -87,15 +87,6 @@ public class BookRepositoryIT {
         final int stock = bookRepository.getBookStock("A Foreign Land", "Mr Kite");
 
         assertThat(stock).isEqualTo(10);
-    }
-
-    @Disabled //TODO:fix
-    @Test
-    public void findByTitleAndAuthor() {
-        final List<Book> books = bookRepository.findByTitleAndAuthor("A Foreign Land", "Mr Kite");
-
-        assertThat(books.get(0).getTitle()).isEqualTo("A Foreign Land");
-        assertThat(books.get(0).getAuthor()).isEqualTo("Mr Kite");
     }
 
     @Test

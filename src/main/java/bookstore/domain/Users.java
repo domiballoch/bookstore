@@ -1,6 +1,7 @@
 package bookstore.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -73,6 +74,7 @@ public class Users implements Serializable {
     @Column(name = "post_code")
     private String postCode;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "orderId", fetch = FetchType.EAGER, cascade = { CascadeType.REMOVE })
     private List<Orders> orders;
 }

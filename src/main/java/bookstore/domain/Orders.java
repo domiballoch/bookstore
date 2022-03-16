@@ -1,6 +1,7 @@
 package bookstore.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -52,10 +53,12 @@ public class Orders implements Serializable {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime orderDate;
 
+    @JsonIgnore
     @ManyToOne(targetEntity = Users.class)
     @JoinColumn(name="userId")
     private Optional<Users> users;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "isbn", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
     private List<Book> booksList;
 

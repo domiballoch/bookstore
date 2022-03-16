@@ -73,7 +73,7 @@ public class AdminServiceImpl implements AdminService {
         try {
         bookRepository.deleteById(isbn);
         } catch(BookstoreNotFoundException e) {
-        	log.warn(BOOK_NOT_FOUND);
+        	log.info(BOOK_NOT_FOUND);
         }
         log.info("Deleted book from bookstore by isbn: {}", isbn);
     }

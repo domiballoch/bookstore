@@ -1,5 +1,6 @@
 package bookstore.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -72,6 +73,7 @@ public class Book implements Serializable {
     @Column(name = "stock")
     private int stock;
 
+    @JsonIgnore
     @ManyToOne(targetEntity = Orders.class)
     @JoinColumn(name="orderId")
     private Orders order;
