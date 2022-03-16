@@ -12,18 +12,20 @@ import java.util.List;
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-    @Query(value = "SELECT * FROM book b WHERE b.title = 'title' AND b.author = 'author'", nativeQuery=true)
-    public List<Book> findByTitleAndAuthor(final String title, final String author);
+    //TODO:Not really needed - delete?
+    @Query(value = "SELECT * FROM book b WHERE b.title = ':title' AND b.author = ':author'", nativeQuery=true)
+    List<Book> findByTitleAndAuthor(@Param("title") final String title, @Param("author") final String author);
 
-    @Query(value = "SELECT * FROM book b WHERE b.category = ':category'", nativeQuery=true)
-    public List<Book> findBooksByCategory(@Param("category") final Category category);
+    List<Book> findByCategory(final Category category);
 
     @Query(value = "SELECT * FROM book b WHERE b.title LIKE CONCAT('%', :search, '%')", nativeQuery=true)
-    public List<Book> findBookBySearchTermIgnoreCase(@Param("search") final String search);
-    //'(\"[a-zA-Z]{3}\")%'"
-    //LIKE SUBSTR('search%', 1, 4)"
+    List<Book> findBookBySearchTermIgnoreCase(@Param("search") final String search);
 
+    //TODO:Redo query criteria
     @Query(value = "SELECT COUNT(*) FROM book b WHERE b.title = 'title' AND b.author = 'author'", nativeQuery=true)
-    public int getBookStock(final String title, final String author);
+    int getBookStock(final String title, final String author);
+
+    @Query(value = "SELECT stock FROM book b WHERE b.isbn = isbn", nativeQuery = true)
+    int getBookStockNew(final long isbn);
 
 }

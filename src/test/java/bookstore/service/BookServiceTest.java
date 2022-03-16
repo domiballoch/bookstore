@@ -128,13 +128,13 @@ public class BookServiceTest {
     public void shouldReturnBookByCategory(){
         List<Book> resultList = new ArrayList<>();
         resultList.add(returnOneBook());
-        when(bookRepository.findBooksByCategory(any(Category.class))).thenReturn(resultList);
+        when(bookRepository.findByCategory(any(Category.class))).thenReturn(resultList);
         final List<Book> results = bookService.findBooksByCategory(Category.SCIENCE_FICTION);
 
         assertThat(results).isNotNull();
         assertThat(results.get(0).getCategory()).isEqualTo(Category.SCIENCE_FICTION);
         assertThat(results.get(0)).isEqualTo(returnOneBook());
-        verify(bookRepository, times(1)).findBooksByCategory(any(Category.class));
+        verify(bookRepository, times(1)).findByCategory(any(Category.class));
     }
 
     @DisplayName("Should return book stock")

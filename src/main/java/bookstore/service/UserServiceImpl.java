@@ -78,7 +78,7 @@ public class UserServiceImpl implements UserService {
         try {
             userRepository.deleteById(userId);
         } catch(BookstoreNotFoundException e) {
-            log.warn(USER_NOT_FOUND);
+            log.info(USER_NOT_FOUND);
         }
         log.info("Deleted user by id: {}", userId);
     }

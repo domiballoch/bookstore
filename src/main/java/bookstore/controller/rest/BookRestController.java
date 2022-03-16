@@ -66,4 +66,6 @@ public class BookRestController {
         log.info("No results found: {}", r);
         return new ResponseEntity<T>(t, HttpStatus.NOT_FOUND);
     }
+
+    //TODO:Get bookstock
 }

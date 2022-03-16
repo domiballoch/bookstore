@@ -106,7 +106,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> findBooksByCategory(final Category category) {
         log.info("Finding book by category: {}", category);
-       return bookRepository.findBooksByCategory(category);
+       return bookRepository.findByCategory(category);
     }
 
     /**
