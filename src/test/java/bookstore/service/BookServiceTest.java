@@ -164,7 +164,7 @@ public class BookServiceTest {
         book.setStock(10);
         bookService.addBookToBasket(book);
 
-        assertThat(basket.size()).isEqualTo(1);
+        assertThat(basket.getBooks().size()).isEqualTo(1);
         assertThat(book.getStock()).isEqualTo(9);
     }
 

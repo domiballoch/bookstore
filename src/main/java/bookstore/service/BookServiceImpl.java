@@ -4,6 +4,7 @@ import bookstore.dao.BookRepository;
 import bookstore.domain.Basket;
 import bookstore.domain.Book;
 import bookstore.domain.Category;
+import bookstore.domain.OrderDetails;
 import bookstore.exception.BookstoreDataException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,8 +130,13 @@ public class BookServiceImpl implements BookService {
         log.info("Adding book by to basket: {}", book);
         //add book to a basket list and reduce stock by quantity
         //cache evict
-        basket.add(book);
+        basket.addBook(book);
         book.setStock(book.getStock()-1);
+    }
+
+    @Override
+    public void updateBookStock(final OrderDetails orderDetails) {
+        //add code
     }
 
 }

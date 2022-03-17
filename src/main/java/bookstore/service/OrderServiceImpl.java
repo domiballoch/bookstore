@@ -2,14 +2,10 @@ package bookstore.service;
 
 import bookstore.dao.OrderRepository;
 import bookstore.domain.Basket;
-import bookstore.domain.Orders;
-import bookstore.domain.Users;
+import bookstore.domain.OrderDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -25,22 +21,27 @@ public class OrderServiceImpl implements OrderService {
     private BasketService basketService;
 
     /**
-     * Saves order to DB
+     * Saves order details to DB
      *
-     * @param user
+     * @param orderDetails
      * @return
      */
     @Override
-    public Orders submitOrder(final Optional<Users> user) {
-        log.info("Saving order: {} {}", user.toString(), basket);
-        Orders order = Orders.builder()
-                .totalItems(basket.size())
-                .totalPrice(basketService.calculateBasket(basket))
-                .orderDate(LocalDateTime.now())
-                .build();
-        orderRepository.save(order);
-        log.info("Order complete: {} {}", order.toString(), user.toString());
+    public void submitOrder(final OrderDetails orderDetails) {
+        log.info("Saving order details: {} {}", orderDetails.toString());
+        OrderDetails newOrderDetails = OrderDetails.builder()
+                .books(orderDetails.getBooks())
+                .totalPrice(orderDetails.getTotalPrice())
+                .orderDate(orderDetails.getOrderDate())
+                .user(orderDetails.getUser()).build();
+
+        orderRepository.save(newOrderDetails);
+
+        log.info("Order complete: {} {}", newOrderDetails.toString());
         basketService.clearBasketAfterOrder();
-        return order;
     }
+    //TODO:Stock & Order flow
+    //1.Stock of object should reduce once added to basket
+    //2.Once Order is saved, List of isbns's saved under Orders, Users
+    //3.Stock property of Book is updated with patch in DB (Stock should have separate table)
 }

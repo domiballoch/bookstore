@@ -2,7 +2,7 @@ package bookstore.utils;
 
 import bookstore.domain.Book;
 import bookstore.domain.Category;
-import bookstore.domain.Orders;
+import bookstore.domain.OrderDetails;
 import bookstore.domain.Users;
 import lombok.experimental.UtilityClass;
 
@@ -171,12 +171,13 @@ public class TestDataUtils {
 
     //----- Order data -----//
 
-    public static Orders returnOrder(final int totalItems, final BigDecimal totalPrice) {
-        final Orders newOrder = Orders.builder()
+    public static OrderDetails returnOrder(final List<Book> books, final BigDecimal totalPrice, final Users user) {
+        final OrderDetails newOrder = OrderDetails.builder()
                 .orderId(1L)
-                .totalItems(totalItems)
+                .books(books)
                 .totalPrice(totalPrice)
                 .orderDate(LocalDateTime.now())
+                .user(user)
                 .build();
         return newOrder;
     }

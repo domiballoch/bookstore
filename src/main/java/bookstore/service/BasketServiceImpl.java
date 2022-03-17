@@ -40,10 +40,10 @@ public class BasketServiceImpl implements BasketService {
      */
     @Override
     public BigDecimal calculateBasket(final Basket basket) {
-        final BigDecimal totalPrice = basket.stream()
+        final BigDecimal totalPrice = basket.getBooks().stream()
                                             .map(Book::getPrice)
                                             .reduce(BigDecimal.ZERO, BigDecimal::add);
-        return totalPrice;
+        return totalPrice; //TODO:Add quantity
     }
 
     /**
@@ -58,13 +58,13 @@ public class BasketServiceImpl implements BasketService {
         log.info("Removing book from basket: {}", book);
         List<Object> removedBooks = new ArrayList<>();
 
-        basket.stream().forEach(b -> {
+        basket.getBooks().stream().forEach(b -> {
             b.equals(book);
             removedBooks.add(b);
         });
 
-        if(CollectionUtils.containsAny(removedBooks, basket)) {
-            basket.removeAll(removedBooks);
+        if(CollectionUtils.containsAny(removedBooks, basket.getBooks())) {
+            basket.getBooks().removeAll(removedBooks);
             log.info("Removed book(s) from basket: {}", removedBooks);
             book.setStock(book.getStock() +1);
         }
@@ -74,7 +74,7 @@ public class BasketServiceImpl implements BasketService {
      * Clears basket after order
      */
     public void clearBasketAfterOrder() {
-        basket.clear();
+        basket.getBooks().clear();
         log.info("Basket cleared");
     }
 
@@ -83,8 +83,8 @@ public class BasketServiceImpl implements BasketService {
      */
     @Override
     public void clearBasket() {
-        basket.forEach(book -> book.setStock(book.getStock()+1));
-        basket.clear();
+        basket.getBooks().forEach(book -> book.setStock(book.getStock()+1));
+        basket.getBooks().clear();
         log.info("Basket cleared and stock reset");
     }
 }

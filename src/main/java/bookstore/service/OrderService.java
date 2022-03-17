@@ -1,11 +1,8 @@
 package bookstore.service;
 
-import bookstore.domain.Orders;
-import bookstore.domain.Users;
-
-import java.util.Optional;
+import bookstore.domain.OrderDetails;
 
 public interface OrderService {
 
-    Orders submitOrder(final Optional<Users> user);
+    void submitOrder(final OrderDetails orderDetails);
 }
