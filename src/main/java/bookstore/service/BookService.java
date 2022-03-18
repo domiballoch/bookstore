@@ -2,7 +2,6 @@ package bookstore.service;
 
 import bookstore.domain.Book;
 import bookstore.domain.Category;
-import bookstore.domain.OrderDetails;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +24,6 @@ public interface BookService {
 
     void addBookToBasket(final Book book);
 
-    void updateBookStock(final OrderDetails orderDetails);
+    void updateBookStock(final List<Book> books);
 
 }

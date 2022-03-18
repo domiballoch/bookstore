@@ -23,7 +23,6 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
-import java.util.List;
 
 @Builder(toBuilder = true)
 @Data
@@ -42,7 +41,7 @@ public class Users implements Serializable {
     private Long userId;
 
     @Column(insertable = false, updatable = false)
-    private Long orderId;
+    private Long fk_orderDetailsId;
 
     @NotEmpty(message = "First name must not be empty")
     @Max(value = 50, message = "First name length must be less than one hundred chars")
@@ -75,6 +74,6 @@ public class Users implements Serializable {
     private String postCode;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "orderId", fetch = FetchType.EAGER, cascade = { CascadeType.REMOVE })
-    private List<Orders> orders;
+    @OneToMany(mappedBy = "orderDetailsId", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+    private OrderDetails orderDetails;
 }

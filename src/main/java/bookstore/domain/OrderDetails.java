@@ -9,17 +9,23 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Builder(toBuilder = true)
 @Data
@@ -28,7 +34,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = {"orderDetailsId"})
-@ToString(of = {"orderDetailsId", "books", "totalPrice", "orderDate", "user"})
+@ToString(of = {"orderDetailsId", "bookList", "totalPrice", "orderDate", "user"})
 public class OrderDetails implements Serializable {
 
     @Id
@@ -37,10 +43,13 @@ public class OrderDetails implements Serializable {
     private Long orderDetailsId;
 
     @Column(insertable = false, updatable = false)
-    private Long orderId;
+    private Long fk_userId;
 
-    @Column(name = "books")
-    private List<Book> books; //TODO:Link Book Table
+    @Column(insertable = false, updatable = false)
+    private Long fk_isbn;
+
+    @Transient
+    private List<Book> bookList;
 
     @Column(name = "total_price")
     private BigDecimal totalPrice;
@@ -52,7 +61,17 @@ public class OrderDetails implements Serializable {
     @Column(name = "user")
     private Users user;
 
+//    @JsonIgnore
+//    @OneToOne(targetEntity = Orders.class)
+//    @JoinColumn(name="orderId")
+//    private Orders order;
+
     @JsonIgnore
-    @OneToOne(targetEntity = Orders.class)
-    private Orders order;
+    @ManyToOne(targetEntity = Users.class)
+    @JoinColumn(name="userId")
+    private Optional<Users> users;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "isbn", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+    private Optional<Book> book;
 }

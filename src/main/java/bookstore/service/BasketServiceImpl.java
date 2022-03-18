@@ -58,7 +58,7 @@ public class BasketServiceImpl implements BasketService {
         log.info("Removing book from basket: {}", book);
         List<Object> removedBooks = new ArrayList<>();
 
-        basket.getBooks().stream().forEach(b -> {
+        basket.getBooks().forEach(b -> {
             b.equals(book);
             removedBooks.add(b);
         });

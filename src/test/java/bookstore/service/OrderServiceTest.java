@@ -69,7 +69,7 @@ public class OrderServiceTest {
         when(orderRepository.save(any(OrderDetails.class))).thenReturn(newOrder);
         //doNothing().when(basketService).clearBasketAfterOrder();
 
-        orderService.submitOrder(newOrder);
+        orderService.submitOrder(CREATE_ONE_USER);
 
         //orderRepo -> findAll -> assert result
         //assertThat(result).isEqualTo(newOrder);

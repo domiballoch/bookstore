@@ -8,18 +8,18 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Optional;
 
 @Builder(toBuilder = true)
 @Data
@@ -27,7 +27,7 @@ import java.util.Optional;
 @Table(name = "orders")
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = {"id"})
+@EqualsAndHashCode(of = {"orderId"})
 @ToString(of = {"orderId", "orderDetailsList"})
 public class Orders implements Serializable {
 
@@ -37,21 +37,13 @@ public class Orders implements Serializable {
     private Long orderId;
 
     @Column(insertable = false, updatable = false)
-    private Long userId;
+    private Long fk_orderDetailsId;
 
-    @Column(insertable = false, updatable = false)
-    private Long orderDetailsId;
-
-    @Column(name = "order_details")
+    @Transient
     private List<OrderDetails> orderDetailsList;
 
     @JsonIgnore
-    @ManyToOne(targetEntity = Users.class)
-    @JoinColumn(name="userId")
-    private Optional<Users> users;
-
-    @JsonIgnore
-    @OneToOne(mappedBy = "orderDetailsId")//, fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+    @OneToOne(mappedBy = "orderDetailsId", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
     private OrderDetails orderDetails;
 
 }

@@ -174,7 +174,7 @@ public class TestDataUtils {
     public static OrderDetails returnOrder(final List<Book> books, final BigDecimal totalPrice, final Users user) {
         final OrderDetails newOrder = OrderDetails.builder()
                 .orderId(1L)
-                .books(books)
+                .bookList(books)
                 .totalPrice(totalPrice)
                 .orderDate(LocalDateTime.now())
                 .user(user)

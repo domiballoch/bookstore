@@ -1,11 +1,16 @@
 package bookstore.service;
 
 import bookstore.dao.OrderRepository;
+import bookstore.dao.UserRepository;
 import bookstore.domain.Basket;
 import bookstore.domain.OrderDetails;
+import bookstore.domain.Users;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -18,30 +23,40 @@ public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private BasketService basketService;
+
+    @Autowired
+    private BookService bookService;
 
     /**
      * Saves order details to DB
+     * Populated basket(books), total price, dateTime, user details added to orderDetails
+     * user details checked if exist, if false then save details
      *
-     * @param orderDetails
-     * @return
+     * @param user
      */
     @Override
-    public void submitOrder(final OrderDetails orderDetails) {
-        log.info("Saving order details: {} {}", orderDetails.toString());
+    public void submitOrder(final Users user) {
+        final Optional<Users> foundUser = userRepository.findById(user.getUserId());
+        foundUser.ifPresent(u -> {
+            userRepository.save(u);
+            log.info("User not found so saving details {}", user.toString());
+        });
+
+        log.info("Saving order details: {}", user.toString());
         OrderDetails newOrderDetails = OrderDetails.builder()
-                .books(orderDetails.getBooks())
-                .totalPrice(orderDetails.getTotalPrice())
-                .orderDate(orderDetails.getOrderDate())
-                .user(orderDetails.getUser()).build();
+                .bookList(basket.getBooks())
+                .totalPrice(basketService.calculateBasket(basket))
+                .orderDate(LocalDateTime.now())
+                .user(user).build();
 
         orderRepository.save(newOrderDetails);
+        log.info("Order complete: {}", newOrderDetails.toString());
 
-        log.info("Order complete: {} {}", newOrderDetails.toString());
+        bookService.updateBookStock(basket.getBooks());
         basketService.clearBasketAfterOrder();
     }
-    //TODO:Stock & Order flow
-    //1.Stock of object should reduce once added to basket
-    //2.Once Order is saved, List of isbns's saved under Orders, Users
-    //3.Stock property of Book is updated with patch in DB (Stock should have separate table)
 }
