@@ -24,4 +24,6 @@ public interface BookService {
 
     void addBookToBasket(final Book book);
 
+    void updateBookStock(final List<Book> books);
+
 }

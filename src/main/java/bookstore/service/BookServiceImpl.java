@@ -5,6 +5,7 @@ import bookstore.domain.Basket;
 import bookstore.domain.Book;
 import bookstore.domain.Category;
 import bookstore.exception.BookstoreDataException;
+import bookstore.exception.BookstoreNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static bookstore.utils.BookStoreConstants.DATABASE_NOT_AVAILABLE;
+import static bookstore.utils.BookStoreConstants.OUT_OF_STOCK;
 
 /**
  * Using Cachable to speed up processing
@@ -120,17 +122,35 @@ public class BookServiceImpl implements BookService {
     }
 
     /**
-     * Adds Book to Basket(List)
+     * Adds Book to Basket(List) if in stock
+     * If not in stock, throw not found exception
+     * //cache evict
      *
      * @param book
      */
     @Override
     public void addBookToBasket(final Book book) {
-        log.info("Adding book by to basket: {}", book);
-        //add book to a basket list and reduce stock by quantity
-        //cache evict
-        basket.add(book);
-        book.setStock(book.getStock()-1);
+        if(inStock(book.getIsbn()) == true) {
+            basket.addBook(book);
+            log.info("Book added to basket: {}", book);
+            book.setStock(book.getStock() - 1);
+        } else {
+            log.info("Book is out of stock {}", book);
+            throw new BookstoreNotFoundException(OUT_OF_STOCK);
+        }
+    }
+
+    /**
+     * Updates book stock in DB for each book after order is saved
+     *
+     * @param books
+     */
+    @Override
+    public void updateBookStock(final List<Book> books) {
+        log.info("Updating book stock");
+        books.forEach(book -> {
+            bookRepository.updateBookStock(book.getStock());
+        });
     }
 
 }

@@ -1,6 +1,5 @@
 package bookstore.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,15 +15,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Builder(toBuilder = true)
 @Data
@@ -32,8 +27,8 @@ import java.util.Optional;
 @Table(name = "orders")
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = {"id"})
-@ToString(of = {"orderId", "totalItems", "totalPrice", "orderDate"})
+@EqualsAndHashCode(of = {"orderId"})
+@ToString(of = {"orderId", "orderDetailsList"})
 public class Orders implements Serializable {
 
     @Id
@@ -42,24 +37,13 @@ public class Orders implements Serializable {
     private Long orderId;
 
     @Column(insertable = false, updatable = false)
-    private Long userId;
+    private Long fk_orderDetailsId;
 
-    @Column(name = "total_items")
-    private int totalItems;
-
-    @Column(name = "total_price")
-    private BigDecimal totalPrice;
-
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime orderDate;
+    @Transient
+    private List<OrderDetails> orderDetailsList;
 
     @JsonIgnore
-    @ManyToOne(targetEntity = Users.class)
-    @JoinColumn(name="userId")
-    private Optional<Users> users;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "isbn", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-    private List<Book> booksList;
+    @OneToOne(mappedBy = "orderDetailsId", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+    private OrderDetails orderDetails;
 
 }

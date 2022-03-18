@@ -1,6 +1,5 @@
 package bookstore.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,8 +14,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
@@ -73,10 +70,10 @@ public class Book implements Serializable {
     @Column(name = "stock")
     private int stock;
 
-    @JsonIgnore
-    @ManyToOne(targetEntity = Orders.class)
-    @JoinColumn(name="orderId")
-    private Orders order;
+//    @JsonIgnore
+//    @ManyToOne(targetEntity = OrderDetails.class)
+//    @JoinColumn(name="orderDetailsId")
+//    private OrderDetails orderDetails;
 
 //    @NotNull(message = "Quantity cannot be null")
 //    @Column(name = "quantity")

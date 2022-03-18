@@ -42,12 +42,12 @@ public class BasketServiceTest {
         bookService.addBookToBasket(book);
 
         assertThat(book.getStock()).isEqualTo(9);
-        assertThat(basket.size()).isEqualTo(1);
+        assertThat(basket.getBooks().size()).isEqualTo(1);
 
         basketService.removeBookFromBasket(book);
 
         assertThat(book.getStock()).isEqualTo(10);
-        assertThat(basket.size()).isEqualTo(0);
+        assertThat(basket.getBooks().size()).isEqualTo(0);
     }
 
     @DisplayName("Should sum total price of basket")
@@ -80,14 +80,14 @@ public class BasketServiceTest {
         bookService.addBookToBasket(book2);
         bookService.addBookToBasket(book3);
 
-        assertThat(basket).size().isEqualTo(3);
+        assertThat(basket.getBooks()).size().isEqualTo(3);
         assertThat(book1.getStock()).isEqualTo(9);
         assertThat(book2.getStock()).isEqualTo(9);
         assertThat(book3.getStock()).isEqualTo(9);
 
         basketService.clearBasket();
 
-        assertThat(basket).size().isEqualTo(0);
+        assertThat(basket.getBooks()).size().isEqualTo(0);
         assertThat(book1.getStock()).isEqualTo(10);
         assertThat(book2.getStock()).isEqualTo(10);
         assertThat(book3.getStock()).isEqualTo(10);
