@@ -132,7 +132,7 @@ public class BookServiceImpl implements BookService {
      * @param book
      */
     @Override
-    public void addBookToBasket(final Book book) {
+    public Basket addBookToBasket(final Book book) {
         if(inStock(book.getIsbn()) == true) {
             basket.addBook(book);
             log.info("Book added to basket: {}", book);
@@ -142,6 +142,7 @@ public class BookServiceImpl implements BookService {
             log.info("Book is out of stock {}", book);
             throw new BookstoreNotFoundException(OUT_OF_STOCK);
         }
+        return basket;
     }
 
     /**

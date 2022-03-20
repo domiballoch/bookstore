@@ -1,5 +1,6 @@
 package bookstore.service;
 
+import bookstore.domain.Basket;
 import bookstore.domain.Book;
 import bookstore.domain.Category;
 
@@ -22,7 +23,7 @@ public interface BookService {
 
     List<Book> findBookBySearchTermIgnoreCase(final String search);
 
-    void addBookToBasket(final Book book);
+    Basket addBookToBasket(final Book book);
 
     void updateBookStock(final List<Book> books);
 

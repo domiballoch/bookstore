@@ -35,16 +35,6 @@ public class AdminWebController {
     
     @Autowired
     private BookService bookService;
-
-    //Add comments to new methods
-	//Add stock to tests
-	//Add controllerAdvice
-	//Removed caches and just keep category ref data
-	//Finish update book for rest
-	//Clean up code and complete more tests
-	//Add security and admin rights
-	//Complete Basket logic - buttons and add strategy
-	//Add css, bootstrap or JS
     
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {

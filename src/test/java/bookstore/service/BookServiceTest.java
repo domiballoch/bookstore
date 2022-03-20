@@ -175,6 +175,21 @@ public class BookServiceTest {
         assertThat(book.getStock()).isEqualTo(9);
     }
 
+    @DisplayName("Should update stock")
+    @Test
+    public void shouldUpdateStock() {
+        //add books to basket
+        //submit order (user)
+        //assert book stock is updated
+
+        //when(bookRepository.updateBookStock(any(Integer.class))).thenReturn();
+
+        //bookService.updateBookStock(BOOKLIST);
+
+        //assertThat();
+        //verify(bookRepository, times(1)).updateBookStock(any(Integer.class));
+    }
+
     //unhappy paths
     //TODO:@DisplayName("Should not allow empty or null or min or max)
 }

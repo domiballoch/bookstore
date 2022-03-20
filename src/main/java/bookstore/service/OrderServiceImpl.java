@@ -5,13 +5,17 @@ import bookstore.dao.UserRepository;
 import bookstore.domain.Basket;
 import bookstore.domain.OrderDetails;
 import bookstore.domain.Users;
+import bookstore.exception.BookstoreDataException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Optional;
+
+import static bookstore.utils.BookStoreConstants.DATABASE_NOT_AVAILABLE;
 
 @Slf4j
 @Service
@@ -31,6 +35,30 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private BookService bookService;
+
+    /**
+     * Returns all orders
+     *
+     * @return
+     */
+    @Override
+    public List<OrderDetails> findAllOrders() {
+        log.info("Finding all orders");
+        return orderRepository.findAll();
+    }
+
+    /**
+     * Finds order by orderDetailsId
+     *
+     * @param orderDetailsId
+     * @return
+     */
+    @Override
+    public Optional<OrderDetails> findOrderById(long orderDetailsId) {
+        log.info("Finding order by orderDetailsId: {}", orderDetailsId);
+        return Optional.ofNullable(orderRepository.findById(orderDetailsId)
+                .orElseThrow(() -> new BookstoreDataException(DATABASE_NOT_AVAILABLE)));
+    }
 
     /**
      * Saves orderDetails to DB
