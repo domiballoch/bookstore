@@ -43,7 +43,7 @@ public class BasketServiceImpl implements BasketService {
         final BigDecimal totalPrice = basket.getBooks().stream()
                                             .map(Book::getPrice)
                                             .reduce(BigDecimal.ZERO, BigDecimal::add);
-        return totalPrice; //TODO:Add quantity
+        return totalPrice;
     }
 
     /**

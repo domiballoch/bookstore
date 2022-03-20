@@ -3,8 +3,8 @@ package bookstore.dao;
 import bookstore.domain.Basket;
 import bookstore.domain.Book;
 import bookstore.domain.OrderDetails;
+import bookstore.domain.Users;
 import bookstore.service.BasketService;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Spy;
@@ -37,7 +37,9 @@ public class OrderRepositoryIT {
     @Autowired
     private OrderRepository orderRepository;
 
-    @Disabled
+    @Autowired
+    private UserRepository userRepository;
+
     @Test
     public void saveOrder() {
         final Book book1 = CREATE_ONE_BOOK;
@@ -52,8 +54,12 @@ public class OrderRepositoryIT {
         basket.addBook(book3);
         assertThat(basket.getBooks()).size().isEqualTo(3);
 
-        final OrderDetails newOrder = returnOrder(basket.getBooks(), basketService.calculateBasket(basket), CREATE_ONE_USER);
+        final Users newUser = CREATE_ONE_USER;
+        newUser.setUserId(2006L);
+        userRepository.save(newUser);
 
+        final OrderDetails newOrder = returnOrder(basket.getBooks(), newUser, basketService.calculateBasket(basket));
+        newOrder.setOrderDetailsId(3006L);
         final OrderDetails result = orderRepository.save(newOrder);
 
         assertThat(result).isEqualTo(newOrder);

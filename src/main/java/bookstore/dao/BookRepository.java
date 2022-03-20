@@ -20,6 +20,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     @Query(value = "SELECT stock FROM book b WHERE b.isbn = isbn", nativeQuery = true)
     int getBookStock(final long isbn);
 
-    @Query(value = "UPDATE book b SET b.stock = stock")
+    @Query(value = "UPDATE Book b SET b.stock = stock")
     void updateBookStock(final int stock);
 }

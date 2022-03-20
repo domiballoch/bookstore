@@ -31,6 +31,9 @@ public class BookServiceImpl implements BookService {
     private BookRepository bookRepository;
 
     @Autowired
+    private BasketService basketService;
+
+    @Autowired
     private Basket basket;
 
     /**
@@ -134,6 +137,7 @@ public class BookServiceImpl implements BookService {
             basket.addBook(book);
             log.info("Book added to basket: {}", book);
             book.setStock(book.getStock() - 1);
+            log.info("Total price is {} ", basketService.calculateBasket(basket));
         } else {
             log.info("Book is out of stock {}", book);
             throw new BookstoreNotFoundException(OUT_OF_STOCK);

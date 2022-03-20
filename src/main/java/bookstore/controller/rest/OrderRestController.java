@@ -1,6 +1,6 @@
 package bookstore.controller.rest;
 
-import bookstore.domain.Orders;
+import bookstore.domain.OrderDetails;
 import bookstore.domain.Users;
 import bookstore.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +20,8 @@ public class OrderRestController {
     private OrderService orderService;
 
     @PostMapping(value = "/submitOrder")
-    public ResponseEntity<Orders> submitOrder(final Users user) {
-        orderService.submitOrder(user);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<OrderDetails> submitOrder(final Users user) {
+        final OrderDetails orderDetails = orderService.submitOrder(user);
+        return new ResponseEntity<>(orderDetails, HttpStatus.OK);
     }
 }

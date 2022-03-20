@@ -14,14 +14,15 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static bookstore.utils.TestDataUtils.CREATE_ONE_BOOK;
 import static bookstore.utils.BookStoreConstants.DATABASE_NOT_AVAILABLE;
 import static bookstore.utils.TestDataUtils.BOOKLIST;
+import static bookstore.utils.TestDataUtils.CREATE_ONE_BOOK;
 import static bookstore.utils.TestDataUtils.populateBookList;
 import static bookstore.utils.TestDataUtils.returnOneBook;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,6 +38,9 @@ public class BookServiceTest {
 
     @Spy
     private Basket basket;
+
+    @Spy
+    private BasketService basketService;
 
     @Mock
     private BookRepository bookRepository;
@@ -162,6 +166,9 @@ public class BookServiceTest {
         final Book book = CREATE_ONE_BOOK;
         //stock is 10
         book.setStock(10);
+
+        when(bookRepository.findById(any(Long.class))).thenReturn(Optional.of(book));
+        when(basketService.calculateBasket(any(Basket.class))).thenReturn(BigDecimal.valueOf(49.99));
         bookService.addBookToBasket(book);
 
         assertThat(basket.getBooks().size()).isEqualTo(1);
@@ -169,6 +176,5 @@ public class BookServiceTest {
     }
 
     //unhappy paths
-    //TODO:@DisplayName("Should not allow empty or null or min or max - separate tests")
-    //TODO:Do this for Book and User tests
+    //TODO:@DisplayName("Should not allow empty or null or min or max)
 }

@@ -47,42 +47,61 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE IF NOT EXISTS users
 (
 user_id bigint NOT NULL auto_increment,
-order_id bigint NOT NULL,
 first_name varchar(255) NOT NULL,
 last_name varchar(255) NOT NULL,
 address_line_1 varchar(255) NOT NULL,
 address_line_2 varchar(255) NOT NULL,
 post_code varchar(255) NOT NULL,
 PRIMARY KEY (user_id)
-#FOREIGN KEY (order_id) REFERENCES orders(order_id)
 )
 engine=InnoDB
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
 
 alter table users
-add foreign key (order_id) references orders(order_id);
+add foreign key (fk_order_id) references orders(order_id);
 
 
-### ORDER TABLE ###
+### ORDER DETAILS TABLE ###
 
-DROP TABLE IF EXISTS orders;
-CREATE TABLE IF NOT EXISTS orders
+DROP TABLE IF EXISTS order_details;
+CREATE TABLE IF NOT EXISTS order_details
 (
-order_id bigint NOT NULL auto_increment,
-user_id bigint NOT NULL,
-total_items integer NOT NULL,
-total_price decimal(19,2) NOT NULL,
+order_details_id bigint NOT NULL auto_increment,
+fk_user_id bigint,
+fk_isbn bigint,
 order_date datetime NOT NULL,
-PRIMARY KEY (order_id)
-#FOREIGN KEY (user_id) REFERENCES users(user_id)
+PRIMARY KEY (order_details_id)
 )
 engine=InnoDB
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
 
-alter table orders
-add foreign key (user_id) references users(user_id);
+alter table order_details
+add foreign key (fk_user_id) references users(user_id);
+
+alter table order_details
+add foreign key (fk_isbn) references book(isbn);
+
+
+### ORDER TABLE ### ***NOT USED***
+
+#DROP TABLE IF EXISTS orders;
+#CREATE TABLE IF NOT EXISTS orders
+#(
+#order_id bigint NOT NULL auto_increment,
+#fk_order_details_id bigint,
+#total_price decimal(19,2) NOT NULL,
+#order_date datetime NOT NULL,
+#PRIMARY KEY (order_id)
+#)
+#engine=InnoDB
+#AUTO_INCREMENT = 1
+#DEFAULT CHARACTER SET = latin1;
+
+#alter table orders drop foreign key orders_ibfk_1;
+#alter table orders
+#add foreign key (fk_order_details_id) references order_details(order_details_id);
 
 
 ## INSERT DATA ##
@@ -93,14 +112,32 @@ VALUES
 (0002, 'COOKING', 'Italian Dinners', 'J Oliver', 24.99, 50),
 (0003, 'SCIENCE_FICTION', 'Mars Robots', 'Mr Bean', 11.99, 10);
 
-INSERT INTO users (user_id, order_id, first_name, last_name, address_line_1, address_line_2, post_code)
+INSERT INTO users (user_id, first_name, last_name, address_line_1, address_line_2, post_code)
 VALUES
-(0001, 0001, 'John', 'Smith', '10 Apple Lane', 'London', 'SW12PQ'),
-(0002, 0002, 'Jane', 'Richards', '20 Orange Close', 'London', 'SW14TY'),
-(0003, 0003, 'James', 'Jones', '30 Cherry Tree Road', 'London', 'SW18RP');
+(0001, 'John', 'Smith', '10 Apple Lane', 'London', 'SW12PQ'),
+(0002, 'Jane', 'Richards', '20 Orange Close', 'London', 'SW14TY'),
+(0003, 'James', 'Jones', '30 Cherry Tree Road', 'London', 'SW18RP');
 
-INSERT INTO orders (order_id, user_id, total_items, total_price, order_date)
+INSERT INTO order_details (order_details_id, fk_user_id, fk_isbn, order_date)
 VALUES
-(0001, 0001, 1, 25.00, '2022-03-11'),
-(0002, 0002, 2, 40.00, '2022-03-11'),
-(0003, 0003, 3, 100.00, '2022-03-11');
+(0001, 0001, 0001, '2022-03-11'),
+(0002, 0001, 0002, '2022-03-11'),
+(0003, 0001, 0003, '2022-03-11'),
+(0004, 0002, 0007, '2022-03-11'),
+(0005, 0002, 0009, '2022-03-11'),
+(0006, 0003, 0010, '2022-03-11');
+
+#How to link all orderDetails of one order into order with total price?
+INSERT INTO orders (orders_id, fk_user_details_id, total_price, order_date)
+VALUES
+(0001, ?, 41.97, '2022-03-11'),
+(0002, ?, 10.99, '2022-03-11'),
+(0003, ?, 100.00, '2022-03-11');
+
+### FOR DROPPING FK's ###
+
+#alter table users drop foreign key users_ibfk_1;
+#alter table order_details drop foreign key orders_details_ibfk_1;
+#alter table order_details drop foreign key orders_details_ibfk_2;
+#alter table order_details drop foreign key orders_details_ibfk_3;
+#alter table order_details drop foreign key orders_details_ibfk_4;
