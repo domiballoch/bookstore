@@ -63,6 +63,7 @@ Get
 http://localhost:8080/bookstore/calcBasket/rest
 <br>Post<br/>
 http://localhost:8080/bookstore/addBookToBasket/rest
+http://localhost:8080/bookstore/removeBookFromBasket/rest
 
 <h4>Order</h4>
 Get

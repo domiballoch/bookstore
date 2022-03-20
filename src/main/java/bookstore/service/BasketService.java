@@ -11,7 +11,7 @@ public interface BasketService {
 
     BigDecimal calculateBasket(final Basket basket);
 
-    void removeBookFromBasket(final Book book);
+    Basket removeBookFromBasket(final Book book);
 
     void clearBasketAfterOrder();
 

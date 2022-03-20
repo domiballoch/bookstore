@@ -54,7 +54,7 @@ public class BasketServiceImpl implements BasketService {
      * @param book
      */
     @Override
-    public void removeBookFromBasket(final Book book) {
+    public Basket removeBookFromBasket(final Book book) {
         log.info("Removing book from basket: {}", book);
         List<Object> removedBooks = new ArrayList<>();
 
@@ -68,6 +68,7 @@ public class BasketServiceImpl implements BasketService {
             log.info("Removed book(s) from basket: {}", removedBooks);
             book.setStock(book.getStock() +1);
         }
+        return basket;
     }
 
     /**
