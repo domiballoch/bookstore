@@ -3,6 +3,7 @@ package bookstore.service;
 import bookstore.dao.OrderRepository;
 import bookstore.domain.Basket;
 import bookstore.domain.Book;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,20 +34,23 @@ public class BasketServiceTest {
     @Autowired
     private OrderRepository orderRepository;
 
+    @BeforeEach
+    private void init() {
+        basket.getBooks().clear();
+    }
+
     @DisplayName("Should remove book from basket and increase stock")
     @Test
     public void shouldRemoveBookFromBasketAndIncreaseStock() {
         final Book book = CREATE_ONE_BOOK;
-        //stock is 10
         book.setStock(10);
-        bookService.addBookToBasket(book);
+        basket.addBook(book);
 
-        assertThat(book.getStock()).isEqualTo(9);
         assertThat(basket.getBooks().size()).isEqualTo(1);
 
         basketService.removeBookFromBasket(book);
 
-        assertThat(book.getStock()).isEqualTo(10);
+        assertThat(book.getStock()).isEqualTo(11);
         assertThat(basket.getBooks().size()).isEqualTo(0);
     }
 
@@ -59,9 +63,10 @@ public class BasketServiceTest {
         book1.setStock(10);
         book2.setStock(10);
         book3.setStock(10);
-        bookService.addBookToBasket(book1);
-        bookService.addBookToBasket(book2);
-        bookService.addBookToBasket(book3);
+        basket.addBook(book1);
+        basket.addBook(book2);
+        basket.addBook(book3);
+
         final BigDecimal totalPrice = basketService.calculateBasket(basket);
 
         assertThat(totalPrice).isEqualByComparingTo(new BigDecimal("88.67"));
@@ -76,20 +81,17 @@ public class BasketServiceTest {
         book1.setStock(10);
         book2.setStock(10);
         book3.setStock(10);
-        bookService.addBookToBasket(book1);
-        bookService.addBookToBasket(book2);
-        bookService.addBookToBasket(book3);
+        basket.addBook(book1);
+        basket.addBook(book2);
+        basket.addBook(book3);
 
         assertThat(basket.getBooks()).size().isEqualTo(3);
-        assertThat(book1.getStock()).isEqualTo(9);
-        assertThat(book2.getStock()).isEqualTo(9);
-        assertThat(book3.getStock()).isEqualTo(9);
 
         basketService.clearBasket();
 
         assertThat(basket.getBooks()).size().isEqualTo(0);
-        assertThat(book1.getStock()).isEqualTo(10);
-        assertThat(book2.getStock()).isEqualTo(10);
-        assertThat(book3.getStock()).isEqualTo(10);
+        assertThat(book1.getStock()).isEqualTo(11);
+        assertThat(book2.getStock()).isEqualTo(11);
+        assertThat(book3.getStock()).isEqualTo(11);
     }
 }

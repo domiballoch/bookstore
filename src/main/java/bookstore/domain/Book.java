@@ -70,18 +70,4 @@ public class Book implements Serializable {
     @Column(name = "stock")
     private int stock;
 
-//    @JsonIgnore
-//    @ManyToOne(targetEntity = OrderDetails.class)
-//    @JoinColumn(name="orderDetailsId")
-//    private OrderDetails orderDetails;
-
-//    @NotNull(message = "Quantity cannot be null")
-//    @Column(name = "quantity")
-//    private int quantity;
-    
-//    @Column(name="created_at")
-//    @Temporal(TemporalType.DATE)
-//    @DateTimeFormat(pattern="yyyy-MM-dd")
-//    private Date createdAt = new LocalDateTime();
-
 }

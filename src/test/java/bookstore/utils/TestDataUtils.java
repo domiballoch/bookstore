@@ -8,6 +8,7 @@ import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -171,24 +172,14 @@ public class TestDataUtils {
 
     //----- Order data -----//
 
-    public static OrderDetails returnOrder(final List<Book> books, final BigDecimal totalPrice, final Users user) {
+    public static OrderDetails returnOrder(final List<Book> books, final Users user, BigDecimal totalPrice) {
         final OrderDetails newOrder = OrderDetails.builder()
-                .orderId(1L)
+                .orderDetailsId(1L)
                 .bookList(books)
                 .totalPrice(totalPrice)
-                .orderDate(LocalDateTime.now())
-                .user(user)
+                .users(user)
+                .orderDate(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .build();
         return newOrder;
     }
-
-//    public static void prepareAccountData(){
-//        new Account(1,
-//                "Francis@google.com",
-//                "password1");
-//        new Account(2,
-//                "Emily@google.com",
-//                "password2");
-//    }
-
 }

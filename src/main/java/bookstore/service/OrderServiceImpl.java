@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 @Slf4j
@@ -32,31 +33,32 @@ public class OrderServiceImpl implements OrderService {
     private BookService bookService;
 
     /**
-     * Saves order details to DB
-     * Populated basket(books), total price, dateTime, user details added to orderDetails
-     * user details checked if exist, if false then save details
+     * Saves orderDetails to DB
+     * User checked if exist, if false then save details
+     * Basket is added to orderDetails and attached to user with date
      *
      * @param user
      */
     @Override
-    public void submitOrder(final Users user) {
+    public OrderDetails submitOrder(final Users user) {
         final Optional<Users> foundUser = userRepository.findById(user.getUserId());
         foundUser.ifPresent(u -> {
             userRepository.save(u);
             log.info("User not found so saving details {}", user.toString());
         });
 
-        log.info("Saving order details: {}", user.toString());
+        log.info("Saving order details: {}");
         OrderDetails newOrderDetails = OrderDetails.builder()
                 .bookList(basket.getBooks())
                 .totalPrice(basketService.calculateBasket(basket))
-                .orderDate(LocalDateTime.now())
-                .user(user).build();
+                .users(user)
+                .orderDate(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS)).build();
 
         orderRepository.save(newOrderDetails);
         log.info("Order complete: {}", newOrderDetails.toString());
 
         bookService.updateBookStock(basket.getBooks());
         basketService.clearBasketAfterOrder();
+        return newOrderDetails;
     }
 }

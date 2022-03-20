@@ -1,7 +1,6 @@
 package bookstore.dao;
 
 import bookstore.domain.Users;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +61,6 @@ public class UserRepositoryIT {
         assertThat(userList.get(5).getPostCode()).isEqualTo("SW4");
     }
 
-    @Disabled //TODO:Fix cascade
     @Test
     public void deleteOneUser() {
         userRepository.deleteById(2005L);

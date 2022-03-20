@@ -25,7 +25,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Builder(toBuilder = true)
 @Data
@@ -34,7 +33,7 @@ import java.util.Optional;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = {"orderDetailsId"})
-@ToString(of = {"orderDetailsId", "bookList", "totalPrice", "orderDate", "user"})
+@ToString(of = {"orderDetailsId", "bookList", "totalPrice", "users", "orderDate"})
 public class OrderDetails implements Serializable {
 
     @Id
@@ -49,29 +48,19 @@ public class OrderDetails implements Serializable {
     private Long fk_isbn;
 
     @Transient
-    private List<Book> bookList;
-
-    @Column(name = "total_price")
     private BigDecimal totalPrice;
 
     @Column(name = "order_date")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime orderDate;
 
-    @Column(name = "user")
-    private Users user;
-
-//    @JsonIgnore
-//    @OneToOne(targetEntity = Orders.class)
-//    @JoinColumn(name="orderId")
-//    private Orders order;
-
     @JsonIgnore
     @ManyToOne(targetEntity = Users.class)
     @JoinColumn(name="userId")
-    private Optional<Users> users;
+    private Users users;
 
     @JsonIgnore
     @OneToMany(mappedBy = "isbn", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-    private Optional<Book> book;
+    private List<Book> bookList;
+
 }
