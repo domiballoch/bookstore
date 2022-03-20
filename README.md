@@ -59,7 +59,7 @@ http://localhost:8080/bookstore/deleteUser/rest/{isbn}
 
 <h4>Basket</h4>
 Get
-http://localhost:8080/bookstore/getBasket/rest
+<br>http://localhost:8080/bookstore/getBasket/rest</br>
 http://localhost:8080/bookstore/calcBasket/rest
 <br>Post<br/>
 http://localhost:8080/bookstore/addBookToBasket/rest
