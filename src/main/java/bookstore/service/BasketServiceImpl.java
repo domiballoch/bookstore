@@ -26,21 +26,20 @@ public class BasketServiceImpl implements BasketService {
     @Autowired
     private Basket basket;
 
-    public Basket getBasket() {
-        //show books and price calc
-        calculateBasket(basket);
-        return basket;
+    public List<Book> getBasket() {
+        return basket.getBooks();
     }
 
     /**
      * Calculates total of basket
      *
-     * @param basket
+     * @param bookList
      * @return
      */
     @Override
-    public BigDecimal calculateBasket(final Basket basket) {
-        final BigDecimal totalPrice = basket.getBooks().stream()
+    public BigDecimal calculateBasket(List<Book> bookList) {
+        bookList = basket.getBooks();
+        final BigDecimal totalPrice = bookList.stream()
                                             .map(Book::getPrice)
                                             .reduce(BigDecimal.ZERO, BigDecimal::add);
         return totalPrice;
@@ -51,24 +50,24 @@ public class BasketServiceImpl implements BasketService {
      * First adds removed Book(s) to separate list the compares against Basket
      * If Basket contains any then they get removed - avoiding ConcurrentModificationException of Stream
      *
-     * @param book
+     * @param isbn
      */
     @Override
-    public Basket removeBookFromBasket(final Book book) {
-        log.info("Removing book from basket: {}", book);
-        List<Object> removedBooks = new ArrayList<>();
+    public List<Book> removeBookFromBasket(final long isbn) {
+        log.info("Removing book from basket: {}", isbn);
+        List<Book> removedBooks = new ArrayList<>();
 
         basket.getBooks().forEach(b -> {
-            b.equals(book);
+            b.getIsbn().equals(isbn);
             removedBooks.add(b);
         });
 
         if(CollectionUtils.containsAny(removedBooks, basket.getBooks())) {
             basket.getBooks().removeAll(removedBooks);
             log.info("Removed book(s) from basket: {}", removedBooks);
-            book.setStock(book.getStock() +1);
+            removedBooks.forEach(b -> b.setStock(b.getStock() +1));
         }
-        return basket;
+        return basket.getBooks();
     }
 
     /**

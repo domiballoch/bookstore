@@ -2,7 +2,6 @@ package bookstore.dao;
 
 import bookstore.domain.Book;
 import bookstore.domain.Category;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +62,6 @@ public class BookRepositoryIT {
         assertThat(books.get(1).getTitle()).isEqualTo("Short Tales");
     }
 
-    @Disabled
     @Test
     public void findBookByCategory_OneResult() {
         final List<Book> books = bookRepository.findByCategory(Category.HORROR);
@@ -71,7 +69,6 @@ public class BookRepositoryIT {
         assertThat(books.get(0).getTitle()).isEqualTo("The Crab Man");
     }
 
-    @Disabled
     @Test
     public void findBookByCategory_TwoResults() {
         final List<Book> books = bookRepository.findByCategory(Category.FICTION);
@@ -114,6 +111,17 @@ public class BookRepositoryIT {
         assertThat(bookRepository.findById(1005L)).isEqualTo(Optional.empty());
     }
 
-    //TODO:Test for invalid entries
+    @Test
+    public void updateBookstock() {
+        final Optional<Book> book = bookRepository.findById(1001L);
+        assertThat(book.get().getStock()).isEqualTo(25);
+
+        book.get().setStock(24);
+        bookRepository.updateBookStock(1001);
+
+        final int result = bookRepository.getBookStock(1001);
+        //final Optional<Book> result = bookRepository.findById(1001L);
+        assertThat(result).isEqualTo(24);
+    }
 
 }

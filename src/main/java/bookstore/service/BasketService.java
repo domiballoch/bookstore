@@ -1,17 +1,17 @@
 package bookstore.service;
 
-import bookstore.domain.Basket;
 import bookstore.domain.Book;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public interface BasketService {
 
-    Basket getBasket();
+    List<Book> getBasket();
 
-    BigDecimal calculateBasket(final Basket basket);
+    BigDecimal calculateBasket(final List<Book> bookList);
 
-    Basket removeBookFromBasket(final Book book);
+    List<Book> removeBookFromBasket(final long isbn);
 
     void clearBasketAfterOrder();
 

@@ -60,7 +60,6 @@ public class UserRestControllerTest {
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                         .andDo(print())
                         .andExpect(status().isOk());
-        //.andExpect(jsonPath("$.[]", hasSize(4)));
 
         final List<Users> result = getResponseFrom(resultActions, objectMapper, new TypeReference<>() {});
         assertThat(result).isEqualTo((USERLIST));
@@ -134,7 +133,7 @@ public class UserRestControllerTest {
     @SneakyThrows
     @Test
     public void shouldThrow_BookstoreNotFoundException() {
-        mockMvc.perform(get("/rest/findUser/{userId}", 10)
+        mockMvc.perform(get("/rest/findUser/{userId}", 99999)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof BookstoreNotFoundException))

@@ -21,7 +21,7 @@ import static bookstore.utils.TestDataUtils.CREATE_ANOTHER_USER;
 import static bookstore.utils.TestDataUtils.CREATE_ONE_USER;
 import static bookstore.utils.TestDataUtils.USERLIST;
 import static bookstore.utils.TestDataUtils.returnOneUser;
-import static bookstore.utils.TestDataUtils.returnUserData;
+import static bookstore.utils.TestDataUtils.populateUserData;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -41,7 +41,7 @@ public class UserServiceTest {
 
     @BeforeEach
     public void prepareData() {
-        returnUserData();
+        populateUserData();
     }
 
     @DisplayName("Should return all users")

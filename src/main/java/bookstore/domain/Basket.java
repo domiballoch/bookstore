@@ -9,6 +9,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,11 +20,13 @@ import java.util.List;
 @AllArgsConstructor
 @ToString(of = {"books"})
 @Component
-public class Basket  {
+public class Basket {
 
     private List<Book> books = new ArrayList<>();
 
     private int quantity; //TODO:Not implemented
+
+    private BigDecimal totalPrice;
 
 //    /**
 //     * So not to allow books to be added via a getter method

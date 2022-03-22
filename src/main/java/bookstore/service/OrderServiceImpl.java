@@ -54,7 +54,7 @@ public class OrderServiceImpl implements OrderService {
      * @return
      */
     @Override
-    public Optional<OrderDetails> findOrderById(long orderDetailsId) {
+    public Optional<OrderDetails> findOrderById(final long orderDetailsId) {
         log.info("Finding order by orderDetailsId: {}", orderDetailsId);
         return Optional.ofNullable(orderRepository.findById(orderDetailsId)
                 .orElseThrow(() -> new BookstoreDataException(DATABASE_NOT_AVAILABLE)));
@@ -75,10 +75,9 @@ public class OrderServiceImpl implements OrderService {
             log.info("User not found so saving details {}", user.toString());
         });
 
-        log.info("Saving order details: {}");
+        log.info("Saving order details");
         OrderDetails newOrderDetails = OrderDetails.builder()
                 .bookList(basket.getBooks())
-                .totalPrice(basketService.calculateBasket(basket))
                 .users(user)
                 .orderDate(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS)).build();
 

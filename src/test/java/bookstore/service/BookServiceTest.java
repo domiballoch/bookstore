@@ -31,6 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.times;
 import static org.mockito.BDDMockito.verify;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -41,6 +42,9 @@ public class BookServiceTest {
 
     @Spy
     private BasketService basketService;
+
+    @Spy
+    private OrderService orderService;
 
     @Mock
     private BookRepository bookRepository;
@@ -168,8 +172,8 @@ public class BookServiceTest {
         book.setStock(10);
 
         when(bookRepository.findById(any(Long.class))).thenReturn(Optional.of(book));
-        when(basketService.calculateBasket(any(Basket.class))).thenReturn(BigDecimal.valueOf(49.99));
-        bookService.addBookToBasket(book);
+        when(basketService.calculateBasket(any(List.class))).thenReturn(BigDecimal.valueOf(49.99));
+        bookService.addBookToBasket(5);
 
         assertThat(basket.getBooks().size()).isEqualTo(1);
         assertThat(book.getStock()).isEqualTo(9);
@@ -178,16 +182,19 @@ public class BookServiceTest {
     @DisplayName("Should update stock")
     @Test
     public void shouldUpdateStock() {
-        //add books to basket
-        //submit order (user)
-        //assert book stock is updated
+        when(bookRepository.findById(any(Long.class))).thenReturn(Optional.of(CREATE_ONE_BOOK));
+        assertThat(CREATE_ONE_BOOK.getStock()).isEqualTo(10);
+        bookService.addBookToBasket(5);
 
-        //when(bookRepository.updateBookStock(any(Integer.class))).thenReturn();
+        assertThat(basket.getBooks().get(0).getStock()).isEqualTo(9);
+        assertThat(basket.getBooks().size()).isEqualTo(1);
 
-        //bookService.updateBookStock(BOOKLIST);
+        doNothing().when(bookRepository).updateBookStock(any(Integer.class));
+        bookService.updateBookStock(basket.getBooks());
 
-        //assertThat();
-        //verify(bookRepository, times(1)).updateBookStock(any(Integer.class));
+        when(bookRepository.getBookStock(any(Long.class))).thenReturn(9);
+        assertThat(bookService.getBookStock(5)).isEqualTo(9);
+        verify(bookRepository, times(1)).updateBookStock(any(Integer.class));
     }
 
     //unhappy paths
