@@ -34,43 +34,44 @@ Login with root or create user and change yml
 <h4>Book</h4>
 Get
 <br>http://localhost:8080/bookstore/rest/findAllBooks<br/>
-http://localhost:8080/bookstore/findBook/rest/{isbn}
+http://localhost:8080/bookstore/rest/findBook/{isbn}
+http://localhost:8080/bookstore/rest/getBookstock/{isbn}
 <br>Post<br/>
-http://localhost:8080/bookstore/addNewBook/rest
+http://localhost:8080/bookstore/rest/addNewBook
 <br>Put<br/>
-http://localhost:8080/bookstore/updateBook/rest/{isbn}
+http://localhost:8080/bookstore/rest/updateBook/{isbn}
 <br>Delete</br>
-http://localhost:8080/bookstore/deleteBook/rest/{isbn}
+http://localhost:8080/bookstore/rest/deleteBook/{isbn}
 <br>Search by search term<br/>
-http://localhost:8080/bookstore/search/rest/{search}
+http://localhost:8080/bookstore/rest/search/{search}
 <br>Search by category<br/>
-http://localhost:8080/bookstore/category/rest/{category}
+http://localhost:8080/bookstore/rest/category/{category}
 
 <h4>User</h4>
 Get
 <br>http://localhost:8080/bookstore/rest/findAllUsers<br/>
-http://localhost:8080/bookstore/findUser/rest/{isbn}
+http://localhost:8080/bookstore/rest/findUser/{isbn}
 <br>Post<br/>
-http://localhost:8080/bookstore/addNewUser/rest
+http://localhost:8080/bookstore/rest/addNewUser
 <br>Put<br/>
-http://localhost:8080/bookstore/updateUser/rest/{isbn}
+http://localhost:8080/bookstore/rest/updateUser/{isbn}
 <br>Delete</br>
-http://localhost:8080/bookstore/deleteUser/rest/{isbn}
+http://localhost:8080/bookstore/rest/deleteUser/{isbn}
 
 <h4>Basket</h4>
 Get
-<br>http://localhost:8080/bookstore/getBasket/rest</br>
-http://localhost:8080/bookstore/calcBasket/rest
+<br>http://localhost:8080/bookstore/rest/getBasket</br>
 <br>Post<br/>
-http://localhost:8080/bookstore/addBookToBasket/rest
-http://localhost:8080/bookstore/removeBookFromBasket/rest
+http://localhost:8080/bookstore/rest/addBookToBasket/{isbn}
+<br>Delete<br/>
+http://localhost:8080/bookstore/rest/removeBookFromBasket/{isbn}
 
 <h4>Order</h4>
 Get
 <br>http://localhost:8080/bookstore/rest/findAllOrders<br/>
-http://localhost:8080/bookstore/findOrder/rest/{isbn}
+http://localhost:8080/bookstore/rest/findOrder/{isbn}
 <br>Post<br/>
-http://localhost:8080/bookstore/submitOrder/rest
+http://localhost:8080/bookstore/rest/submitOrder
 
 <br>Endpoints - health check exposed only<br/>
 http://localhost:8080/bookstore/actuator/health
@@ -78,13 +79,13 @@ http://localhost:8080/bookstore/actuator/health
 <h4>Endpoints - views (JSP)</h4>
 Get
 <br>http://localhost:8080/bookstore/findAllBooks<br/>
-http://localhost:8080/bookstore/findBook
+http://localhost:8080/bookstore/web/findBook
 <br>Post<br/>
-http://localhost:8080/bookstore/addNewBook
+http://localhost:8080/bookstore/web/addNewBook
 <br>Put<br/>
-http://localhost:8080/bookstore/updateBook
+http://localhost:8080/bookstore/web/updateBook
 <br>Delete<br/>
-http://localhost:8080/bookstore/deleteBook
+http://localhost:8080/bookstore/web/deleteBook
 
 Swagger - to come...
 

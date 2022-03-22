@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -62,10 +63,21 @@ public class BookRestController {
         return new ResponseEntity<>(results, HttpStatus.OK);
     }
 
+    @PostMapping(value = "/addBookToBasket/{isbn}")
+    public ResponseEntity<List<Book>> addBookToBasket(@PathVariable final long isbn) {
+        final List<Book> basket = bookService.addBookToBasket(isbn);
+        return new ResponseEntity<>(basket, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getBookstock/{isbn}")
+    public ResponseEntity<Integer> getBookstock(@PathVariable final long isbn) {
+        final int stock = bookService.getBookStock(isbn);
+        return new ResponseEntity(stock, HttpStatus.OK);
+        }
+
     private <T>  ResponseEntity<T> noResultsFound(final T t, final T r) {
         log.info("No results found: {}", r);
         return new ResponseEntity<T>(t, HttpStatus.NOT_FOUND);
     }
-
-    //TODO:Get bookstock
 }
+

@@ -1,5 +1,6 @@
 package bookstore.utils;
 
+import bookstore.domain.Basket;
 import bookstore.domain.Book;
 import bookstore.domain.Category;
 import bookstore.domain.OrderDetails;
@@ -18,8 +19,6 @@ import java.util.stream.Collectors;
 public class TestDataUtils {
 
     //----- Book data -----//
-
-    public static final List<Book> BOOKLIST = new ArrayList<>();
 
     public static final Book CREATE_ONE_BOOK = Book.builder()
             .isbn(5L)
@@ -48,12 +47,6 @@ public class TestDataUtils {
             .stock(10)
             .build();
 
-    public static void filterBookListByTitleAndAuthor(String title, String author) {
-        long inStock = BOOKLIST.stream()
-                .filter(book ->
-                        book.getTitle() == title && book.getAuthor() == author).count();
-    }
-
     public static Book returnOneBook() {
         return Book.builder()
                 .isbn(4L)
@@ -64,6 +57,8 @@ public class TestDataUtils {
                 .stock(10)
                 .build();
     }
+
+    public static final List<Book> BOOKLIST = new ArrayList<>();
 
     public static void populateBookList() {
         Book book1 = Book.builder()
@@ -94,6 +89,12 @@ public class TestDataUtils {
                 .build();
 
         BOOKLIST.addAll(Arrays.asList(book1, book2, book3));
+    }
+
+    public static void filterBookListByTitleAndAuthor(String title, String author) {
+        long inStock = BOOKLIST.stream()
+                .filter(book ->
+                        book.getTitle() == title && book.getAuthor() == author).count();
     }
 
     public List<Book> getSpecificBookFromBookList_IfMatchByName(final String param) {
@@ -144,7 +145,7 @@ public class TestDataUtils {
 
     public static final List<Users> USERLIST = new ArrayList<>();
 
-    public static void returnUserData(){
+    public static void populateUserData(){
         Users user1 = Users.builder()
                 .userId(1L)
                 .firstName("Francis")
@@ -172,14 +173,69 @@ public class TestDataUtils {
 
     //----- Order data -----//
 
-    public static OrderDetails returnOrder(final List<Book> books, final Users user, BigDecimal totalPrice) {
+    public static final OrderDetails CREATE_ONE_ORDER = OrderDetails.builder()
+            .orderDetailsId(1L)
+            .bookList(List.of(CREATE_ONE_BOOK))
+            .users(CREATE_ONE_USER)
+            .orderDate(LocalDateTime.now().minusDays(3).truncatedTo(ChronoUnit.SECONDS)).build();
+
+
+    public static final OrderDetails CREATE_ANOTHER_ORDER = OrderDetails.builder()
+            .orderDetailsId(2L)
+            .bookList(List.of(CREATE_ANOTHER_BOOK, CREATE_YET_ANOTHER_BOOK))
+            .users(CREATE_ANOTHER_USER)
+            .orderDate(LocalDateTime.now().minusDays(2).truncatedTo(ChronoUnit.SECONDS)).build();
+
+
+    public static final OrderDetails CREATE_YET_ANOTHER_ORDER = OrderDetails.builder()
+            .orderDetailsId(3L)
+            .bookList(List.of(returnOneBook()))
+            .users(CREATE_YET_ANOTHER_USER)
+            .orderDate(LocalDateTime.now().minusDays(1).truncatedTo(ChronoUnit.SECONDS)).build();
+
+
+    public static OrderDetails returnOneOrder(final List<Book> books, final Users user) {
         final OrderDetails newOrder = OrderDetails.builder()
-                .orderDetailsId(1L)
+                .orderDetailsId(4L)
                 .bookList(books)
-                .totalPrice(totalPrice)
                 .users(user)
                 .orderDate(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .build();
         return newOrder;
+    }
+
+    public static final List<OrderDetails> ORDERLIST = new ArrayList<>();
+
+    public static void populateOrderData(){
+        OrderDetails order1 = OrderDetails.builder()
+                .orderDetailsId(5L)
+                .bookList(BOOKLIST)
+                .users(CREATE_ONE_USER)
+                .orderDate(LocalDateTime.now().minusDays(1).truncatedTo(ChronoUnit.SECONDS))
+                .build();
+
+        OrderDetails order2 = OrderDetails.builder()
+                .orderDetailsId(6L)
+                .bookList(BOOKLIST)
+                .users(CREATE_ANOTHER_USER)
+                .orderDate(LocalDateTime.now().minusDays(2).truncatedTo(ChronoUnit.SECONDS))
+                .build();
+
+        OrderDetails order3 = OrderDetails.builder()
+                .orderDetailsId(7L)
+                .bookList(BOOKLIST)
+                .users(CREATE_YET_ANOTHER_USER)
+                .orderDate(LocalDateTime.now().minusDays(3).truncatedTo(ChronoUnit.SECONDS))
+                .build();
+
+        ORDERLIST.addAll(Arrays.asList(order1, order2, order3));
+    }
+
+    public static final Basket BASKET = new Basket();
+
+    public static void populateBasket(){
+        BASKET.addBook(CREATE_ONE_BOOK);
+        BASKET.addBook(CREATE_ANOTHER_BOOK);
+        BASKET.addBook(CREATE_YET_ANOTHER_BOOK);
     }
 }

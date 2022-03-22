@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static bookstore.utils.BookStoreConstants.BOOK_NOT_FOUND;
 import static bookstore.utils.BookStoreConstants.DATABASE_NOT_AVAILABLE;
 import static bookstore.utils.BookStoreConstants.OUT_OF_STOCK;
 
@@ -93,7 +94,7 @@ public class BookServiceImpl implements BookService {
     @Cacheable("instock)")
     @Override
     public boolean inStock(final long isbn) {
-        final Optional<Book> book = bookRepository.findById(isbn);
+        final Optional<Book> book = bookRepository.findById(isbn); //book null?
         final int inStock = book.get().getStock();
         return inStock > 0;
     }
@@ -129,20 +130,22 @@ public class BookServiceImpl implements BookService {
      * If not in stock, throw not found exception
      * //cache evict
      *
-     * @param book
+     * @param isbn
      */
     @Override
-    public Basket addBookToBasket(final Book book) {
-        if(inStock(book.getIsbn()) == true) {
-            basket.addBook(book);
-            log.info("Book added to basket: {}", book);
-            book.setStock(book.getStock() - 1);
-            log.info("Total price is {} ", basketService.calculateBasket(basket));
-        } else {
-            log.info("Book is out of stock {}", book);
+    public List<Book> addBookToBasket(final long isbn) {
+        if(inStock(isbn) == false) {
+            log.info("Book is out of stock {}", isbn);
             throw new BookstoreNotFoundException(OUT_OF_STOCK);
         }
-        return basket;
+        final Optional<Book> book = Optional.ofNullable(bookRepository.findById(isbn).orElseThrow(()
+                -> new BookstoreNotFoundException(BOOK_NOT_FOUND)));
+        basket.addBook(book.get());
+        log.info("Book added to basket: {}", book);
+        basket.setTotalPrice(basketService.calculateBasket(basket.getBooks()));
+        log.info("Total price is {} ", basket.getTotalPrice());
+        book.get().setStock(book.get().getStock() - 1);
+        return basket.getBooks();
     }
 
     /**

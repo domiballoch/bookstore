@@ -48,7 +48,7 @@ public class BasketServiceTest {
 
         assertThat(basket.getBooks().size()).isEqualTo(1);
 
-        basketService.removeBookFromBasket(book);
+        basketService.removeBookFromBasket(5);
 
         assertThat(book.getStock()).isEqualTo(11);
         assertThat(basket.getBooks().size()).isEqualTo(0);
@@ -67,7 +67,7 @@ public class BasketServiceTest {
         basket.addBook(book2);
         basket.addBook(book3);
 
-        final BigDecimal totalPrice = basketService.calculateBasket(basket);
+        final BigDecimal totalPrice = basketService.calculateBasket(basket.getBooks());
 
         assertThat(totalPrice).isEqualByComparingTo(new BigDecimal("88.67"));
     }

@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .addressLine1(user.getAddressLine1())
-                .addressLine2(user.getAddressLine1())
+                .addressLine2(user.getAddressLine2())
                 .postCode(user.getPostCode())
                 .build();
         userRepository.save(newUser);
