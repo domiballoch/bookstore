@@ -4,8 +4,11 @@ import bookstore.dao.OrderRepository;
 import bookstore.dao.UserRepository;
 import bookstore.domain.Basket;
 import bookstore.domain.OrderDetails;
+import bookstore.domain.UserMapper;
 import bookstore.domain.Users;
+import bookstore.exception.BookstoreBasketException;
 import bookstore.exception.BookstoreDataException;
+import bookstore.exception.BookstoreValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +18,9 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
+import static bookstore.utils.BookStoreConstants.BASKET_IS_EMPTY;
 import static bookstore.utils.BookStoreConstants.DATABASE_NOT_AVAILABLE;
+import static bookstore.utils.BookStoreConstants.INCORRECT_DETAILS;
 
 @Slf4j
 @Service
@@ -35,6 +40,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private BookService bookService;
+
+    @Autowired
+    private UserMapper userMapper;
 
     /**
      * Returns all orders
@@ -69,23 +77,35 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     public OrderDetails submitOrder(final Users user) {
+        if(basket.getBooks().isEmpty()) {
+            throw new BookstoreBasketException(BASKET_IS_EMPTY);
+        }
+        OrderDetails newOrderDetails = null;
         final Optional<Users> foundUser = userRepository.findById(user.getUserId());
-        foundUser.ifPresent(u -> {
-            userRepository.save(u);
+        if(!foundUser.isPresent()) {
+            userRepository.save(user);
             log.info("User not found so saving details {}", user.toString());
-        });
+        } if(validateUser(Optional.of(user)) == false) {
+                log.info("User details from search do not match stored records");
+                throw new BookstoreValidationException(INCORRECT_DETAILS);
+            } else {
+            log.info("User found, saving order details {}", user.toString());
+            newOrderDetails = OrderDetails.builder()
+                    .bookList(basket.getBooks())
+                    //.users(userMapper.savedUser(user)) //TODO:fix
+                    .users(user)
+                    .orderDate(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS)).build();
 
-        log.info("Saving order details");
-        OrderDetails newOrderDetails = OrderDetails.builder()
-                .bookList(basket.getBooks())
-                .users(user)
-                .orderDate(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS)).build();
-
-        orderRepository.save(newOrderDetails);
-        log.info("Order complete: {}", newOrderDetails.toString());
-
+            orderRepository.save(newOrderDetails);
+            log.info("Order complete: {}", newOrderDetails.toString());
+        }
         bookService.updateBookStock(basket.getBooks());
         basketService.clearBasketAfterOrder();
         return newOrderDetails;
+    }
+
+    private boolean validateUser(final Optional<Users> user) {
+        final Optional<Users> foundUser = userRepository.findById(user.get().getUserId());
+        return user.get().equals(foundUser.get()) ? true : false;
     }
 }

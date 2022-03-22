@@ -190,6 +190,7 @@ public class BookRestControllerTest {
      * Add Basket controller tests and any missing service tests - done
      * Add Book updateBookstock test - done - fix submit order test
      * Add Order controller tests and service, IT tests - done - fix exception test
+     * Add some more exception and unhappy path tests (submit order)
      * Move quantity price & total price to basket response
      * Add join query result users, books, orderDetails
      * Add web tests for test coverage
