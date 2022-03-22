@@ -46,6 +46,4 @@ public class OrderRestController {
         final OrderDetails orderDetails = orderService.submitOrder(user);
         return new ResponseEntity<>(orderDetails, HttpStatus.OK);
     }
-
-    //Delete
 }
