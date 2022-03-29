@@ -4,7 +4,6 @@ import bookstore.dao.BookRepository;
 import bookstore.domain.Basket;
 import bookstore.domain.Book;
 import bookstore.domain.Category;
-import bookstore.exception.BookstoreDataException;
 import bookstore.exception.BookstoreNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static bookstore.utils.BookStoreConstants.DATABASE_NOT_AVAILABLE;
 import static bookstore.utils.BookStoreConstants.OUT_OF_STOCK;
 import static bookstore.utils.BookStoreConstants.USER_NOT_FOUND;
 
@@ -59,15 +57,14 @@ public class BookServiceImpl implements BookService {
     @Override
     public Optional<Book> findBookByIsbn(final long isbn){
         log.info("Finding book by isbn: {}", isbn);
-        return Optional.ofNullable(bookRepository.findById(isbn)
-                .orElseThrow(() -> new BookstoreDataException(DATABASE_NOT_AVAILABLE)));
+        return bookRepository.findById(isbn);
     }
     
     @Override
     public Book findBookByIsbnWeb(final long isbn){
         log.info("Finding book by isbn: {}", isbn);
         return bookRepository.findById(isbn)
-                .orElseThrow(() -> new BookstoreDataException(DATABASE_NOT_AVAILABLE));
+                .orElseThrow(() -> new BookstoreNotFoundException(USER_NOT_FOUND, isbn));
     }
 
     /**
@@ -95,7 +92,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public boolean inStock(final long isbn) {
         final Optional<Book> book = Optional.ofNullable(bookRepository.findById(isbn)
-                .orElseThrow(() -> new BookstoreNotFoundException(USER_NOT_FOUND)));
+                .orElseThrow(() -> new BookstoreNotFoundException(USER_NOT_FOUND, isbn)));
         final int inStock = book.get().getStock();
         return inStock > 0;
     }
@@ -137,7 +134,7 @@ public class BookServiceImpl implements BookService {
     public List<Book> addBookToBasket(final long isbn) {
         if(inStock(isbn) == false) {
             log.info("Book is out of stock {}", isbn);
-            throw new BookstoreNotFoundException(OUT_OF_STOCK);
+            throw new BookstoreNotFoundException(OUT_OF_STOCK, isbn);
         } //already checked book exists...
         final Optional<Book> book = bookRepository.findById(isbn);
         basket.addBook(book.get());

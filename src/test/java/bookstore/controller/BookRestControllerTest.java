@@ -195,7 +195,15 @@ public class BookRestControllerTest {
      * Add join query result users, books, orderDetails
      * Add web tests for test coverage
      * Create json requests and add flow to readme
-     * Make sure everything is working correctly
-     * Remove not null from primary keys
+     *
+     * Add controller advice
+     * Use constructor injection
+     * Fix id error in entity relationship
+     * Fix request validation
+     * Fix Cachable
+     * Add find all orders with Users and Books
+     * Test exception handlers
+     * Add total price back to Order Json response
+     * Change log.info to error for not_found and other errors
      */
 }

@@ -2,14 +2,11 @@ package bookstore.service;
 
 import bookstore.dao.BookRepository;
 import bookstore.domain.Book;
-import bookstore.exception.BookstoreNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-
-import static bookstore.utils.BookStoreConstants.BOOK_NOT_FOUND;
 
 @Service
 @Slf4j
@@ -70,11 +67,12 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void deleteBookFromBookstoreByIsbn(final long isbn) {
         log.info("Deleting book from bookstore by isbn: {}", isbn);
-        try {
+//        try {
+//        bookRepository.deleteById(isbn);
+//        } catch(BookstoreNotFoundException e) {
+//        	log.info(BOOK_NOT_FOUND);
+//        }
         bookRepository.deleteById(isbn);
-        } catch(BookstoreNotFoundException e) {
-        	log.info(BOOK_NOT_FOUND);
-        }
         log.info("Deleted book from bookstore by isbn: {}", isbn);
     }
 
@@ -101,8 +99,9 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Book updateBookInBookstoreJson(final Book book, final long isbn) {
-        Optional<Book> foundBook = Optional.ofNullable(bookRepository.findById(isbn)
-                .orElseThrow(() -> new BookstoreNotFoundException(BOOK_NOT_FOUND)));
+//        Optional<Book> foundBook = Optional.ofNullable(bookRepository.findById(isbn)
+//                .orElseThrow(() -> new BookstoreNotFoundException(BOOK_NOT_FOUND)));
+        Optional<Book> foundBook = bookRepository.findById(isbn);
         log.info("Updating book: {}", foundBook.toString());
         bookRepository.delete(foundBook.get());
         book.setIsbn(isbn);

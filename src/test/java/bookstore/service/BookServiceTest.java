@@ -4,8 +4,9 @@ import bookstore.dao.BookRepository;
 import bookstore.domain.Basket;
 import bookstore.domain.Book;
 import bookstore.domain.Category;
-import bookstore.exception.BookstoreDataException;
+import bookstore.exception.BookstoreNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,7 +21,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static bookstore.utils.BookStoreConstants.DATABASE_NOT_AVAILABLE;
+import static bookstore.utils.BookStoreConstants.BOOK_NOT_FOUND;
 import static bookstore.utils.TestDataUtils.BOOKLIST;
 import static bookstore.utils.TestDataUtils.CREATE_ONE_BOOK;
 import static bookstore.utils.TestDataUtils.populateBookList;
@@ -91,14 +92,15 @@ public class BookServiceTest {
         verify(bookRepository, times(1)).findById(any(Long.class));
     }
 
+    @Disabled //Not needed as using controller advice
     @DisplayName("Should throw bookstore not found exception when return one book by isbn")
     @Test
     public void shouldThrowBookstoreNotFoundException_WhenReturnOneBookByIsbn(){
-        final long isbn = 10;
-        Exception exception = assertThrows(BookstoreDataException.class, () -> {
+        final long isbn = 99999;
+        Exception exception = assertThrows(BookstoreNotFoundException.class, () -> {
             bookService.findBookByIsbn(isbn);
         });
-        final String expectedMessage = DATABASE_NOT_AVAILABLE;
+        final String expectedMessage = BOOK_NOT_FOUND;
         final String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));
