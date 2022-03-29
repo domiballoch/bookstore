@@ -7,7 +7,7 @@ public class UserMapper {
 
     public Users savedUser(final Users param) {
 
-        final Users mappedUser = null;
+        final Users mappedUser = new Users();
         mappedUser.setFirstName(param.getFirstName());
         mappedUser.setLastName(param.getLastName());
         mappedUser.setAddressLine1(param.getAddressLine1());

@@ -1,6 +1,7 @@
 package bookstore.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -38,9 +39,11 @@ public class OrderDetails implements Serializable {
     @Column(name = "order_details_id")
     private Long orderDetailsId;
 
+    @JsonIgnore
     @Column(insertable = false, updatable = false)
     private Long fk_userId;
 
+    @JsonIgnore
     @Column(insertable = false, updatable = false)
     private Long fk_isbn;
 
@@ -48,12 +51,10 @@ public class OrderDetails implements Serializable {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime orderDate;
 
-    //@JsonIgnore
-    @ManyToOne(targetEntity = Users.class)
-    @JoinColumn(name="userId")
+    @ManyToOne//(targetEntity = Users.class)
+    @JoinColumn(name="fk_userId") //add bi-directional
     private Users users;
 
-    //@JsonIgnore
     @OneToMany(mappedBy = "isbn", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
     private List<Book> bookList;
 

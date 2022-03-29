@@ -1,7 +1,6 @@
 package bookstore.controller.web;
 
 import bookstore.domain.Book;
-import bookstore.exception.BookstoreNotFoundException;
 import bookstore.service.AdminService;
 import bookstore.service.BookService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,8 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-
-import static bookstore.utils.BookStoreConstants.BOOK_NOT_FOUND;
 
 @Slf4j
 @Controller
@@ -72,14 +69,14 @@ public class AdminWebController {
     
 	@GetMapping(value = "/updateBook") //TODO:Not working - add modelAttribute?
 	public String updateBookInBookstore(@RequestParam final long isbn, final ModelMap model) {
-		try {
+		//try {
 		final Book book = bookService.findBookByIsbnWeb(isbn);
 		model.put("book", book);
 		//model.addAttribute("category", Category.values());
-		} catch(BookstoreNotFoundException e) {
-			log.info(BOOK_NOT_FOUND, e.getMessage());
-			return "/findAllBooks";
-		}
+		//} catch(BookstoreNotFoundException e) {
+			//log.info(BOOK_NOT_FOUND, e.getMessage());
+			//return "/findAllBooks";
+		//}
 		return "add-new-book";
 	}
     

@@ -3,6 +3,7 @@ package bookstore.controller.rest;
 import bookstore.domain.Users;
 import bookstore.exception.BookstoreNotFoundException;
 import bookstore.service.UserService;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,10 +40,11 @@ public class UserRestController {
         return new ResponseEntity<>(userList, HttpStatus.OK);
     }
 
+    @SneakyThrows
     @GetMapping(value = "/findUser/{userId}")
     public ResponseEntity<Optional<Users>> findUserById(@PathVariable final long userId) {
         final Optional<Users> user = Optional.ofNullable(userService.findUserById(userId)
-                .orElseThrow(() -> new BookstoreNotFoundException(USER_NOT_FOUND)));
+                .orElseThrow(() -> new BookstoreNotFoundException(USER_NOT_FOUND, userId)));
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
@@ -59,7 +61,6 @@ public class UserRestController {
     }
 
     //Using PUT for idempotency - resending the whole Entity
-
     @PutMapping(value = "/updateUser/{userId}")
     public ResponseEntity<Users> updateUser(@RequestBody final Users user, @PathVariable final long userId) {
         final Users updatedUser = userService.updateUser(user, userId);

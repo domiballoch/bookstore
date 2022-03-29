@@ -7,7 +7,6 @@ import bookstore.domain.Basket;
 import bookstore.domain.Book;
 import bookstore.domain.OrderDetails;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -98,7 +97,6 @@ public class OrderServiceTest {
         verify(orderRepository, times(1)).findById(any(Long.class));
     }
 
-    @Disabled
     @DisplayName("Should submit order")
     @Test
     public void shouldSubmitOrder() {

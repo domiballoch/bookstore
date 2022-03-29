@@ -7,7 +7,6 @@ import bookstore.domain.OrderDetails;
 import bookstore.domain.UserMapper;
 import bookstore.domain.Users;
 import bookstore.exception.BookstoreBasketException;
-import bookstore.exception.BookstoreDataException;
 import bookstore.exception.BookstoreValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static bookstore.utils.BookStoreConstants.BASKET_IS_EMPTY;
-import static bookstore.utils.BookStoreConstants.DATABASE_NOT_AVAILABLE;
 import static bookstore.utils.BookStoreConstants.INCORRECT_DETAILS;
 
 @Slf4j
@@ -64,8 +62,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Optional<OrderDetails> findOrderById(final long orderDetailsId) {
         log.info("Finding order by orderDetailsId: {}", orderDetailsId);
-        return Optional.ofNullable(orderRepository.findById(orderDetailsId)
-                .orElseThrow(() -> new BookstoreDataException(DATABASE_NOT_AVAILABLE)));
+        return orderRepository.findById(orderDetailsId);
     }
 
     /**
@@ -91,11 +88,12 @@ public class OrderServiceImpl implements OrderService {
             } else {
             log.info("User found, saving order details {}", user.toString());
             newOrderDetails = OrderDetails.builder()
-                    .bookList(basket.getBooks())
-                    //.users(userMapper.savedUser(user)) //TODO:fix
+                    .orderDate(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                     .users(user)
-                    .orderDate(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS)).build();
+                    .bookList(basket.getBooks())
+                    .build();
 
+            //newOrderDetails.getUsers().setUserId(null);
             orderRepository.save(newOrderDetails);
             log.info("Order complete: {}", newOrderDetails.toString());
         }

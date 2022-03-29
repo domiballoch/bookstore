@@ -2,8 +2,8 @@ package bookstore.service;
 
 import bookstore.dao.UserRepository;
 import bookstore.domain.Users;
-import bookstore.exception.BookstoreDataException;
 import bookstore.exception.BookstoreNotFoundException;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static bookstore.utils.BookStoreConstants.DATABASE_NOT_AVAILABLE;
 import static bookstore.utils.BookStoreConstants.USER_NOT_FOUND;
 
 @Slf4j
@@ -41,8 +40,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<Users> findUserById(final long userId){
         log.info("Finding user by id: {}", userId);
-        return Optional.ofNullable(userRepository.findById(userId)
-                .orElseThrow(() -> new BookstoreDataException(DATABASE_NOT_AVAILABLE)));
+        return userRepository.findById(userId);
     }
 
     /**
@@ -75,11 +73,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(long userId) {
         log.info("Deleting user by id: {}", userId);
-        try {
             userRepository.deleteById(userId);
-        } catch(BookstoreNotFoundException e) {
-            log.info(USER_NOT_FOUND);
-        }
         log.info("Deleted user by id: {}", userId);
     }
 
@@ -90,10 +84,12 @@ public class UserServiceImpl implements UserService {
      * @param userId
      * @return
      */
+    @SneakyThrows
     @Override
     public Users updateUser(final Users user, final long userId) {
+        //TODO:Exceptions should not be thrown in service class
         Optional<Users> foundUser = Optional.ofNullable(userRepository.findById(userId)
-                .orElseThrow(() -> new BookstoreNotFoundException(USER_NOT_FOUND)));
+                .orElseThrow(() -> new BookstoreNotFoundException(USER_NOT_FOUND, userId)));
         log.info("Updating user: {}", foundUser.toString());
         userRepository.delete(foundUser.get());
         user.setUserId(userId);

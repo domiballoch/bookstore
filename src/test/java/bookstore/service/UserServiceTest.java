@@ -2,8 +2,9 @@ package bookstore.service;
 
 import bookstore.dao.UserRepository;
 import bookstore.domain.Users;
-import bookstore.exception.BookstoreDataException;
+import bookstore.exception.BookstoreNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,12 +17,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static bookstore.utils.BookStoreConstants.DATABASE_NOT_AVAILABLE;
+import static bookstore.utils.BookStoreConstants.USER_NOT_FOUND;
 import static bookstore.utils.TestDataUtils.CREATE_ANOTHER_USER;
 import static bookstore.utils.TestDataUtils.CREATE_ONE_USER;
 import static bookstore.utils.TestDataUtils.USERLIST;
-import static bookstore.utils.TestDataUtils.returnOneUser;
 import static bookstore.utils.TestDataUtils.populateUserData;
+import static bookstore.utils.TestDataUtils.returnOneUser;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -78,14 +79,15 @@ public class UserServiceTest {
         verify(userRepository, times(1)).findById(any(Long.class));
     }
 
+    @Disabled //Not needed as using controller advice
     @DisplayName("Should throw bookstore not found exception when return one user by id")
     @Test
     public void shouldThrowBookstoreNotFoundException_WhenReturnOneUserById(){
-        final long userId = 10;
-        Exception exception = assertThrows(BookstoreDataException.class, () -> {
+        final long userId = 99999;
+        Exception exception = assertThrows(BookstoreNotFoundException.class, () -> {
             userService.findUserById(userId);
         });
-        final String expectedMessage = DATABASE_NOT_AVAILABLE;
+        final String expectedMessage = USER_NOT_FOUND;
         final String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));
