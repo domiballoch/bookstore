@@ -183,27 +183,4 @@ public class BookRestControllerTest {
         assertThat(result).isEqualTo(10);
         verify(bookService, times(1)).getBookStock(any(Long.class));
     }
-
-    /**
-     * Change addBookToBasket & RemoveBookFromBasket to param(isbn) - done
-     * Alter controller tests & add service tests and/alter IT tests - done
-     * Add Basket controller tests and any missing service tests - done
-     * Add Book updateBookstock test - done - fix submit order test
-     * Add Order controller tests and service, IT tests - done - fix exception test
-     * Add some more exception and unhappy path tests (submit order)
-     * Move quantity price & total price to basket response
-     * Add join query result users, books, orderDetails
-     * Add web tests for test coverage
-     * Create json requests and add flow to readme
-     *
-     * Add controller advice
-     * Use constructor injection
-     * Fix id error in entity relationship
-     * Fix request validation
-     * Fix Cachable
-     * Add find all orders with Users and Books
-     * Test exception handlers
-     * Add total price back to Order Json response
-     * Change log.info to error for not_found and other errors
-     */
 }
