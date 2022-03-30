@@ -4,7 +4,6 @@ import bookstore.dao.OrderRepository;
 import bookstore.dao.UserRepository;
 import bookstore.domain.Basket;
 import bookstore.domain.OrderDetails;
-import bookstore.domain.UserMapper;
 import bookstore.domain.Users;
 import bookstore.exception.BookstoreBasketException;
 import bookstore.exception.BookstoreValidationException;
@@ -38,9 +37,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private BookService bookService;
-
-    @Autowired
-    private UserMapper userMapper;
 
     /**
      * Returns all orders

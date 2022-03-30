@@ -19,5 +19,5 @@
      * Add total price back to Order Json response
      * Change log.info to error for not_found and other errors
      * Add tests for code coverage (validation etc)
-     * Add DTO's
+     * Add DTO's and tests - done
      */
