@@ -13,8 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static bookstore.utils.BookStoreConstants.OUT_OF_STOCK;
-import static bookstore.utils.BookStoreConstants.USER_NOT_FOUND;
+import static bookstore.utils.BookStoreConstants.BOOK_NOT_FOUND;
 
 /**
  * Using Cachable to speed up processing
@@ -22,8 +21,8 @@ import static bookstore.utils.BookStoreConstants.USER_NOT_FOUND;
  * When book is updated - use cachePut(value="book", key="#book.isbn")
  * Add Cache test with timer
  */
-@Service
 @Slf4j
+@Service
 public class BookServiceImpl implements BookService {
 
     @Autowired
@@ -64,7 +63,7 @@ public class BookServiceImpl implements BookService {
     public Book findBookByIsbnWeb(final long isbn){
         log.info("Finding book by isbn: {}", isbn);
         return bookRepository.findById(isbn)
-                .orElseThrow(() -> new BookstoreNotFoundException(USER_NOT_FOUND, isbn));
+                .orElseThrow(() -> new BookstoreNotFoundException(BOOK_NOT_FOUND, isbn));
     }
 
     /**
@@ -91,8 +90,11 @@ public class BookServiceImpl implements BookService {
     @Cacheable("instock)")
     @Override
     public boolean inStock(final long isbn) {
-        final Optional<Book> book = Optional.ofNullable(bookRepository.findById(isbn)
-                .orElseThrow(() -> new BookstoreNotFoundException(USER_NOT_FOUND, isbn)));
+        final Optional<Book> book = bookRepository.findById(isbn);
+        if(!book.isPresent()) {
+            log.info("Book is out of stock {}", isbn);
+            throw new BookstoreNotFoundException(BOOK_NOT_FOUND, isbn);
+        }
         final int inStock = book.get().getStock();
         return inStock > 0;
     }
@@ -132,10 +134,7 @@ public class BookServiceImpl implements BookService {
      */
     @Override
     public List<Book> addBookToBasket(final long isbn) {
-        if(inStock(isbn) == false) {
-            log.info("Book is out of stock {}", isbn);
-            throw new BookstoreNotFoundException(OUT_OF_STOCK, isbn);
-        } //already checked book exists...
+        inStock(isbn);
         final Optional<Book> book = bookRepository.findById(isbn);
         basket.addBook(book.get());
         log.info("Book added to basket: {}", book);

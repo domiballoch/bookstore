@@ -51,11 +51,13 @@ public class OrderDetails implements Serializable {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime orderDate;
 
+    //@JsonBackReference
     @ManyToOne//(targetEntity = Users.class)
     @JoinColumn(name="fk_userId") //add bi-directional
     private Users users;
 
-    @OneToMany(mappedBy = "isbn", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-    private List<Book> bookList;
+    //@JsonManagedReference
+    @OneToMany(mappedBy = "isbn", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})//{ CascadeType.MERGE, CascadeType.REMOVE })
+    private List<Book> bookList; //child entity not to be saved
 
 }

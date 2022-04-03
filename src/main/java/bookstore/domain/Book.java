@@ -42,6 +42,10 @@ public class Book implements Serializable {
     @Column(name = "isbn")
     private Long isbn;
 
+//    @JsonIgnore
+//    @Column(insertable = false, updatable = false)
+//    private Long orderDetailsId;
+
     @NotNull(message = "Category cannot be null")
     @Enumerated(EnumType.STRING)
     @Column(name = "category")
@@ -70,4 +74,8 @@ public class Book implements Serializable {
     @Column(name = "stock")
     private int stock;
 
+//    @JsonIgnore
+//    @ManyToOne//(targetEntity = OrderDetails.class)
+//    @JoinColumn(name="orderDetailsId") //add bi-directional
+//    private OrderDetails orderDetails;
 }

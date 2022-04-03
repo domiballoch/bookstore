@@ -31,6 +31,9 @@ public class UserRestController {
     @Autowired
     private UserService userService;
 
+    //@Autowired
+    //private UserMapper userMapper;
+
     @GetMapping(value = "/findAllUsers")
     public ResponseEntity<List<Users>> findAllUsers() {
         final List<Users> userList = userService.findAllUsers();
@@ -45,6 +48,7 @@ public class UserRestController {
     public ResponseEntity<Optional<Users>> findUserById(@PathVariable final long userId) {
         final Optional<Users> user = Optional.ofNullable(userService.findUserById(userId)
                 .orElseThrow(() -> new BookstoreNotFoundException(USER_NOT_FOUND, userId)));
+        //final Optional<UserDTO> userDTO = user.map(userMapper::toDto);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 

@@ -22,7 +22,7 @@ import java.util.List;
 @Component
 public class Basket {
 
-    private List<Book> books = new ArrayList<>();
+    private List<Book> books = new ArrayList<>(); //Todo: change to set
 
     private int quantity; //TODO:Not implemented
 
@@ -44,6 +44,8 @@ public class Basket {
      * @param book
      */
     public void addBook(final Book book){
-        books.add(book);
+        if(!books.contains(book)) {
+            books.add(book);
+        }
     }
 }
