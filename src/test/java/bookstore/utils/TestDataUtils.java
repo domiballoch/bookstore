@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -88,7 +87,7 @@ public class TestDataUtils {
                 .stock(10)
                 .build();
 
-        BOOKLIST.addAll(Arrays.asList(book1, book2, book3));
+        BOOKLIST.addAll(List.of(book1, book2, book3));
     }
 
     public static void filterBookListByTitleAndAuthor(String title, String author) {
@@ -168,7 +167,7 @@ public class TestDataUtils {
                 .addressLine2("London")
                 .postCode("SW3").build();
 
-        USERLIST.addAll(Arrays.asList(user1, user2, user3));
+        USERLIST.addAll(List.of(user1, user2, user3));
     }
 
     //----- Order data -----//
@@ -228,7 +227,7 @@ public class TestDataUtils {
                 .orderDate(LocalDateTime.now().minusDays(3).truncatedTo(ChronoUnit.SECONDS))
                 .build();
 
-        ORDERLIST.addAll(Arrays.asList(order1, order2, order3));
+        ORDERLIST.addAll(List.of(order1, order2, order3));
     }
 
     public static final Basket BASKET = new Basket();

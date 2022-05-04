@@ -74,6 +74,6 @@ public class Users implements Serializable {
     @Column(name = "post_code")
     private String postCode;
 
-    @OneToMany(mappedBy = "orderDetailsId", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-    private List<OrderDetails> orderDetailsList; //child entity not to be saved
+    @OneToMany(mappedBy = "orderDetailsId", fetch = FetchType.EAGER, cascade = { CascadeType.ALL }, orphanRemoval = true)
+    private List<OrderDetails> orderDetailsList;
 }

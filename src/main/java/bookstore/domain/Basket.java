@@ -22,7 +22,7 @@ import java.util.List;
 @Component
 public class Basket {
 
-    private List<Book> books = new ArrayList<>(); //Todo: change to set
+    private List<Book> books = new ArrayList<>(); //Todo: change to set for uniqueness
 
     private int quantity; //TODO:Not implemented
 

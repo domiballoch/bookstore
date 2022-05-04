@@ -61,9 +61,7 @@ public class AdminWebController {
 
     @GetMapping(value = "/deleteBook")
     public String deleteBookFromBookstore(final @RequestParam long isbn) {
-    	adminService.deleteBookFromBookstoreByIsbn(isbn);
-    	//logic here - if valid return success else findAllBooks
-    	//return "delete-book-success"; //not working
+    	adminService.deleteBookFromBookstoreByIsbn(isbn); //if exists
         return "redirect:/web/findAllBooks";
     }
     
@@ -79,18 +77,6 @@ public class AdminWebController {
 		//}
 		return "add-new-book";
 	}
-    
-//	@GetMapping(value = "/updateBook")
-//	public String updateBook(@RequestParam long isbn, ModelMap model) {
-//		Optional<Book> book = bookService.findBookByIsbn(isbn);
-//		if(!book.isPresent()) {
-//			log.info(BOOK_NOT_FOUND, book);
-//			return "/findAllBooks";
-//		} else {
-//			model.put("book", book);
-//		}
-//		return "add-new-book";
-//	}
 
 	@PostMapping(value = "/updateBook")
 	public String saveUpdatedBook(ModelMap model, @Valid Book book, BindingResult result) {
