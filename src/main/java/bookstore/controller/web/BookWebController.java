@@ -18,11 +18,12 @@ public class BookWebController {
     
     @GetMapping(value = "/findAllBooks")
     public ModelAndView findAllBooks() {
-//		String name = getLoggedInUserName(model);
-//		model.put("todos", repository.findByUser(name));
-    	// if user instanceOf user then hide admin buttons
         return new ModelAndView("show-all-books", "books", bookService.findAllBooks());
-
     }
+
+    //TODO:Not finished
+    //String name = getLoggedInUserName(model);
+    //model.put("todos", repository.findByUser(name));
+    //if user instanceOf user then hide admin buttons
 
 }

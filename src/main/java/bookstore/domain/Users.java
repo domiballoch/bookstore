@@ -9,16 +9,20 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
+import java.util.List;
 
 @Builder(toBuilder = true)
 @Data
@@ -35,6 +39,10 @@ public class Users implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long userId;
+
+//    @JsonIgnore
+//    @Column(insertable = false, updatable = false)
+//    private Long fk_orderDetailsId;
 
     @NotEmpty(message = "First name must not be empty")
     @Max(value = 50, message = "First name length must be less than one hundred chars")
@@ -65,4 +73,7 @@ public class Users implements Serializable {
     @Min(value = 3, message = "Postcode length must be greater than zero")
     @Column(name = "post_code")
     private String postCode;
+
+    @OneToMany(mappedBy = "orderDetailsId", fetch = FetchType.EAGER, cascade = { CascadeType.ALL }, orphanRemoval = true)
+    private List<OrderDetails> orderDetailsList;
 }

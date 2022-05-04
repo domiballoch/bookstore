@@ -10,6 +10,7 @@ import bookstore.exception.BookstoreValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -68,6 +69,7 @@ public class OrderServiceImpl implements OrderService {
      *
      * @param user
      */
+    @Transactional
     @Override
     public OrderDetails submitOrder(final Users user) {
         if(basket.getBooks().isEmpty()) {
@@ -89,7 +91,7 @@ public class OrderServiceImpl implements OrderService {
                     .bookList(basket.getBooks())
                     .build();
 
-            //newOrderDetails.getUsers().setUserId(null);
+            //newOrderDetails.getBookList().forEach(book -> book.setIsbn(null));
             orderRepository.save(newOrderDetails);
             log.info("Order complete: {}", newOrderDetails.toString());
         }

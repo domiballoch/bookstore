@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     @Query(value = "SELECT stock FROM book b WHERE b.isbn = :isbn", nativeQuery = true)
     int getBookStock(@Param("isbn") final long isbn);
 
+    @Transactional
     @Modifying
     @Query(value = "UPDATE Book b SET b.stock = stock", nativeQuery = true)
     void updateBookStock(final int stock);
