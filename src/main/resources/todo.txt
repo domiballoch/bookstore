@@ -21,4 +21,5 @@
      * Add tests for code coverage (validation etc)
      * Add DTO's and tests - done
      * Wire up DTO's
+     * Add msg queue for learning
      */
