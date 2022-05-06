@@ -72,6 +72,11 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
 
+springdoc:
+  packagesToScan: bookstore
+  pathsToMatch: /swagger-ui, v3/api-docs, /** #/bookstore/rest/**
+  swagger-ui-path: /swagger-ui/index.html
+
 log:
   service: ${spring.application.name}
   appender: CONSOLE
