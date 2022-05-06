@@ -8,10 +8,11 @@
 <h4>Description</h4>
 Bookstore with full rest and (some)web functionality using get, post, delete, put
 <br/>Fully tested at controller, service & repository level
+<br/>To view API documentation - run project the visit: http://localhost:8080/bookstore/swagger-ui/index.html
 
 <h4>Prerequisites</h4>
 Java 11
-<br/>Spring Boot 2.4.5
+<br/>Spring Boot 2.6.1
 <br/>Maven 3.6.3
 <br/>MySQL 8
 
@@ -86,8 +87,6 @@ http://localhost:8080/bookstore/web/addNewBook
 http://localhost:8080/bookstore/web/updateBook
 <br>Delete<br/>
 http://localhost:8080/bookstore/web/deleteBook
-
-Swagger - to come...
 
 <h4>Logging level</h4>
 info - set filepath as/if required
