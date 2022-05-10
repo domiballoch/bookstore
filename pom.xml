@@ -12,8 +12,8 @@
 	<groupId>bookstore</groupId>
 	<artifactId>demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Bookstore</name>
-	<description>Bookstore project</description>
+	<name>Bookstore API</name>
+	<description>A personal project and sandpit for dev proof of concepts</description>
 
 	<properties>
 		<java.version>11</java.version>
